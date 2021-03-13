@@ -1,0 +1,7 @@
+FROM python:3-slim
+WORKDIR /app
+COPY requirements.txt ./
+COPY serviceAccountKey.json ./
+RUN pip3 install --no-cache-dir -r requirements.txt
+COPY ./owner.py .
+CMD ["python", "./owner.py"]

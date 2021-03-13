@@ -1,0 +1,12 @@
+apiVersion: skaffold/v2beta12
+kind: Config
+metadata:
+  name: k-s
+deploy:
+  kubectl:
+    manifests:
+    - ingress.yaml
+    - kubernetes-dashboard.yaml
+    - mariadb-definition.yaml
+    - mariadb-pv.yaml
+    - owner-definition.yaml

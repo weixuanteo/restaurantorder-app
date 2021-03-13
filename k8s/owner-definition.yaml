@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: owner
+  name: owner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: owner
+  template:
+    metadata:
+      labels:
+        app: owner
+    spec:
+      containers:
+      - image: docker.io/weixuantepo/owner:latest
+        imagePullPolicy: Never
+        name: owner
+        env:
+        - name: DB_URL
+          value: "mysql+mysqlconnector://root:root@mariadb:3306/owner"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: owner-service
+  labels:
+    app: owner-service
+spec:
+  type: NodePort
+  ports:
+  - port: 5000
+    targetPort: 5000
+    protocol: TCP
+  selector:
+    app: owner
