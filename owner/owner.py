@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import firebase_admin
-from firebase_admin import credentials, auth
+from firebase_admin import credentials, auth, exceptions
 from os import environ
 import logging
 
@@ -43,6 +43,25 @@ class Owner(db.Model):
             "email": self.email
         }
 
+@app.route("/owner/<oid>", methods=['GET'])
+def get_owner(oid):
+    owner = Owner.query.filter_by(oid=oid).first()
+   
+    if owner is None:
+        return jsonify(
+            {
+                "status": "error",
+                "message": "Owner of id {0} does not exists".format(oid)
+            }
+        )
+
+    return jsonify(
+        {
+            "status": "success",
+            "data": owner.json()
+        }
+    )
+
 @app.route("/owner/registration", methods=['POST'])
 def add_new_owner():
     data = request.get_json()
@@ -76,15 +95,6 @@ def add_new_owner():
                 "message": "Error occured creating user with Firebase Auth, check user properties"
             }
         ), 500
-
-
-    # if (Owner.query.filter_by(oid=user.uid).first()):
-    #     return jsonify(
-    #         {
-    #             "status": "error",
-    #             "message": "Owner already exists"
-    #         }
-    #     ), 400
     
     # app.logger.info(user.uid, user.display_name, user.email)
     db.create_all()
@@ -108,6 +118,58 @@ def add_new_owner():
             "data": owner.json()
         }
     ), 201
+
+@app.route("/owner/<oid>", methods=['PUT'])
+def update_owner(oid):
+    owner = Owner.query.filter_by(oid=oid).first()
+   
+    if owner is None:
+        return jsonify(
+            {
+                "status": "error",
+                "message": "Owner of id {0} does not exists".format(oid)
+            }
+        )
+
+    data = request.get_json()
+    if "name" in data:
+        owner.name = data["name"]
+    if "email" in data:
+        owner.email = data["email"]
+
+    try:
+        user = auth.update_user(
+            oid,
+            email=owner.email,
+            display_name=owner.name
+        )
+    except exceptions.FirebaseError as e:
+        return jsonify(
+            {
+                "status": "error",
+                "message": "An error occured updating on Firebase"
+            }
+        ), 500
+
+    
+    try:
+        db.session.add(owner)
+        db.session.commit()
+    except:
+        return jsonify(
+            {
+                "status": "error",
+                "message": "An error occured updating owner"
+            }
+        ), 500
+
+
+    return jsonify(
+        {
+            "status": "success",
+            "data": owner.json()
+        }
+    )
 
 
 if __name__ == '__main__':
