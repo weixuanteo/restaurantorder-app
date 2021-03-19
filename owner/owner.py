@@ -15,14 +15,14 @@ cred = credentials.Certificate("serviceAccountKey.json")
 firebase_admin.initialize_app(cred)
 
 db = SQLAlchemy(app)
-# query = """
-#     CREATE DATABASE
-#     IF NOT EXISTS {db}
-# """.format(db="owner")
+query = """
+    CREATE DATABASE
+    IF NOT EXISTS {db}
+""".format(db="owner")
 
-# engine = db.create_engine('mysql+mysqlconnector://root:root@mariadb:3306',{})
-# engine.execute(query)
-# db.create_engine('mysql+mysqlconnector://root:root@mariadb:3306/owner',{})
+engine = db.create_engine('mysql+mysqlconnector://root:root@mariadb:3306',{})
+engine.execute(query)
+db.create_engine('mysql+mysqlconnector://root:root@mariadb:3306/owner',{})
 
 class Owner(db.Model):
     __tablename__ = 'owner'
@@ -59,7 +59,14 @@ def add_new_owner():
             password=owner_password,
             display_name=owner_name
         )
-
+    except firebase_admin._auth_utils.EmailAlreadyExistsError as e:
+        print(e)
+        return jsonify(
+            {
+                "status": "error",
+                "message": "Email address already exists in Firebase Auth"
+            }
+        ), 500
 
     except ValueError as e:
         print(e)
@@ -69,15 +76,6 @@ def add_new_owner():
                 "message": "Error occured creating user with Firebase Auth, check user properties"
             }
         ), 500
-
-    # except Exception as e:
-    #     print(e)
-    #     return jsonify(
-    #         {
-    #             "status": "error",
-    #             "message": "Error occured creating user with Firebase Auth"
-    #         }
-    #     ), 500
 
 
     # if (Owner.query.filter_by(oid=user.uid).first()):

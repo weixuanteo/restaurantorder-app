@@ -15,8 +15,8 @@ spec:
         app: owner
     spec:
       containers:
-      - image: docker.io/weixuantepo/owner:latest
-        imagePullPolicy: Always
+      - image: weixuantepo/owner
+        imagePullPolicy: Never
         name: owner
         env:
         - name: DB_URL
