@@ -1,15 +1,19 @@
 # IS213 ESD Project - Restaurant Ordering System
 
 ### Table of Contents
-- [Local Development Setup](#local-development-setup)
-  * [Enabling Kubernetes on Docker Desktop](#enabling-kubernetes-on-docker-desktop)
-  * [Deploying MariaDB](#deploying-mariadb)
-  * [Deploying Owner Service](#deploying-owner-service)
-  * [Deploying NGINX Ingress](#deploying-nginx-ingress)
-  * [Port Forward MariaDB](#port-forward-mariadb)
-  * [Test Owner Serivce](#test-owner-serivce)
-- [Kubernetes Cheatsheet](#kubernetes-cheatsheet)
-  * [Some basic commands](#some-basic-commands)
+  * [Local Development Setup](#local-development-setup)
+    + [Enabling Kubernetes on Docker Desktop](#enabling-kubernetes-on-docker-desktop)
+    + [Deploying MariaDB](#deploying-mariadb)
+    + [Deploying Owner Service](#deploying-owner-service)
+    + [Deploying NGINX Ingress](#deploying-nginx-ingress)
+    + [Port Forward MariaDB](#port-forward-mariadb)
+    + [Test Owner Serivce](#test-owner-serivce)
+  * [Kubernetes Cheatsheet](#kubernetes-cheatsheet)
+    + [Some basic commands](#some-basic-commands)
+- [Skaffold Development Setup](#skaffold-development-setup)
+  * [What is Skaffold?](#what-is-skaffold)
+  * [MacOS Setup](#macos-setup)
+  * [Windows Setup](#windows-setup)
 
 ### Local Development Setup
 This local setup should be applicable to MacOS (ARM64, AMD64), Windows
@@ -120,7 +124,7 @@ kubectl delete -f <some yaml file here>.yaml
 ```
 
 ## Skaffold Development Setup
-### What is Skaffold?
+### What is Skaffold
 Traditionally, you will need to build the image, update the image on the yaml file, kubectl apply on the new yaml file, test. It is a long process and Skaffold will basically handle all that for you and you just need to focus on the code
 See: https://skaffold.dev/
 ### MacOS Setup
