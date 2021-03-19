@@ -13,6 +13,8 @@
 
 ### Local Development Setup
 This local setup should be applicable to MacOS (ARM64, AMD64), Windows
+> If you want a different setup, WAY faster setup to code see Skaffold section
+<br>
 
 See [Kubernetes Components](https://kubernetes.io/docs/concepts/overview/components/) for the overview of what makes up Kubernetes
 
@@ -71,7 +73,7 @@ CREATE DATABASE owner;
 #### Test Owner Serivce
 Open up Postman and create a POST request to localhost/owner/registration to create a new owner
 
-![postman screenshot](https://uc079f5d8e62da4d9720a608eba9.previews.dropboxusercontent.com/p/thumb/ABFQLWIDHSvJuzAgj3oQZeRENlitvIHAunr0UAHHJSVt44xIUczkIRcqSTTNoW7B4GUZxrHXWsspnfAaakIBlHer5IbzwZl24R0Rnli8lep8c3x8N7Rm91OKLGSBIpcq1z4KnJEymcI_KOMh2jO68Nh0KgqBtcxMzqBDKqTaVHDAbunfAKtt01mEZJ_BB26XZBWy7hRIrfFlE2sqLtlJKfW4dqzvyLU8O5otxhgdjGJ3yAebhE_SjvDPv-3Bcky_rFMbe1jQmpe54ZywwCeETlJoz_bRF5bg7RYvkljwi-_Qa2a8AMu-WNyHC5iU6P9T8xmRrihoh0jXlWZW1mkWBr8QQA0jm-Vmb-eiIzaM8yrAUV-PhUEEJxPVovo5hX2KbJ7PY5eI3TGc7KFdx8Y6qWqr/p.png)
+![postman screenshot](https://previews.dropbox.com/p/thumb/ABGApKGGj_xwhMn2akWdR9TbAGYVXmOkDS2ob_hAhs56DxDU_rlNBXU_TsQkiGlugUupk-KmHmnI7LonuQetMI9ss8t0UNKf_eFu-nlyKPUepzNtuLizaCVtlzWxmUGnneu8DC1KEPyKZ9z4yKgzKlXI8nU0oBNyIOH5KiYhkmiPBNNPBbmVrx1saCUP88wT4_uK-Gy89rsHYzqCyj5VdZXe6xJE5kltgki-6Z6bRQfkEwNN-PEqL2iAMkHeQiZWiGFiWDEResyTZ4d0qsEEgedcqBweTFeZUsDpfNCYkmBvMf6AjfX7ERmsEUWXr-gX8i7DJSE-ZTe9E5-vXpG5Lw1RU5dBinZSvdl1SffhTWXuXJ_lhkLvTn_7yBS25nJRhzs/p.png)
 
 Set a JSON request body in Postman with the the POST request. The request is a success if the a similiar message to the one above appears
 
@@ -115,4 +117,29 @@ kubectl replace -f <some yaml file here>.yaml
 Delete a container/service
 ```bash
 kubectl delete -f <some yaml file here>.yaml
+```
+
+## Skaffold Development Setup
+### What is Skaffold?
+Traditionally, you will need to build the image, update the image on the yaml file, kubectl apply on the new yaml file, test. It is a long process and Skaffold will basically handle all that for you and you just need to focus on the code
+See: https://skaffold.dev/
+### MacOS Setup
+```bash
+curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-darwin-amd64 && \
+sudo install skaffold /usr/local/bin/
+```
+
+Inside the folder of restuarantorder-app
+```bash
+skaffold dev
+```
+
+### Windows Setup
+* Download Skaffold [here](https://storage.googleapis.com/skaffold/releases/latest/skaffold-windows-amd64.exe)
+* Hit Windows Key, type Edit environment variables for your account
+* Select Path and click edit
+* Add a new path to where skaffold.exe is
+* Open CMD
+```bash
+skaffold dev
 ```
