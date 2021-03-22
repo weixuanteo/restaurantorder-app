@@ -14,3 +14,7 @@ spec:
         backend:
           serviceName: owner-service
           servicePort: 5000
+      - path: /restaurant
+        backend:
+          serviceName: restaurant-service
+          servicePort: 5000

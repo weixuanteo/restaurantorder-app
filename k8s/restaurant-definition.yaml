@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: restaurant
+  name: restaurant
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: restaurant
+  template:
+    metadata:
+      labels:
+        app: restaurant
+    spec:
+      containers:
+      - image: weixuantepo/restaurant
+        imagePullPolicy: Never
+        name: restaurant
+        env:
+        - name: DB_URL
+          value: "mysql+mysqlconnector://root:root@mariadb:3306/restaurant"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: restaurant-service
+  labels:
+    app: restaurant-service
+spec:
+  type: NodePort
+  ports:
+  - port: 5000
+    targetPort: 5000
+    protocol: TCP
+  selector:
+    app: restaurant
