@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: rest_order
+  name: rest_order
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rest_order
+  template:
+    metadata:
+      labels:
+        app: rest_order
+    spec:
+      containers:
+      - image: weixuantepo/rest_order
+        imagePullPolicy: Never
+        name: rest_order
+        env:
+        - name: DB_URL
+          value: "mysql+mysqlconnector://root:root@mariadb:3306/rest_order"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: rest_order-service
+  labels:
+    app: rest_order-service
+spec:
+  type: NodePort
+  ports:
+  - port: 5000
+    targetPort: 5000
+    protocol: TCP
+  selector:
+    app: rest_order
