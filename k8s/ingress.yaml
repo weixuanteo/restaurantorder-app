@@ -18,3 +18,7 @@ spec:
         backend:
           serviceName: restaurant-service
           servicePort: 5000
+      - ath: /order
+        backend:
+          serviceName: order-service
+          servicePort: 5000
