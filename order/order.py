@@ -18,18 +18,18 @@ firebase_admin.initialize_app(cred)
 
 db = SQLAlchemy(app)
 
-query = """
-    CREATE DATABASE
-    IF NOT EXISTS {db}
-""".format(db="order")
+# query = """
+#     CREATE SCHEMA
+#     IF NOT EXISTS {db}
+# """.format(db="order")
 
-engine = db.create_engine('mysql+mysqlconnector://root:root@mariadb:3306',{})
-engine.execute(query)
-db.create_engine('mysql+mysqlconnector://root:root@mariadb:3306/order',{})
+# engine = db.create_engine('mysql+mysqlconnector://root:root@mariadb:3306',{})
+# engine.execute(query)
+# db.create_engine('mysql+mysqlconnector://root:root@mariadb:3306/order',{})
 
 #Order
 class Order(db.Model):
-    __tablename__ = 'rest_order'
+    __tablename__ = 'order'
 
     order_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     created_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
@@ -70,7 +70,7 @@ class Order(db.Model):
 class OrderStatus(db.Model):
     __tablename__ = 'order_status'
 
-    order_id = db.Column(db.Integer, db.ForeignKey('rest_order.order_id'), primary_key=True,autoincrement=False)
+    order_id = db.Column(db.Integer, db.ForeignKey('order.order_id'), primary_key=True,autoincrement=False)
     status = db.Column(db.String(10), nullable=False)
     updated_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
    
@@ -92,7 +92,7 @@ class OrderStatus(db.Model):
 class OrderItem(db.Model):
     __tablename__ = 'order_item'
 
-    order_id = db.Column(db.Integer, db.ForeignKey('rest_order.order_id'), primary_key=True,autoincrement=False)
+    order_id = db.Column(db.Integer, db.ForeignKey('order.order_id'), primary_key=True,autoincrement=False)
     item_id = db.Column(db.String(10), primary_key=True,autoincrement=False)
     qty = db.Column(db.Integer, nullable=False)
     order = db.relationship(
@@ -299,4 +299,4 @@ def update_status(order_id):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5003, debug=True)
+    app.run(host='0.0.0.0', port=5002, debug=True)

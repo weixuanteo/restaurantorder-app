@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - image: gcr.io/restaurantorder-sg/restaurant
-        imagePullPolicy: Never
+        imagePullPolicy: Always
         name: restaurant
         env:
         - name: DB_URL
