@@ -4,7 +4,7 @@ metadata:
   name: restaurantorder-app
 build:
   artifacts:
-  - image: weixuantepo/owner
+  - image: owner
     context: owner
     sync:
       manual:
@@ -12,6 +12,7 @@ build:
           dest: "."
     docker:
       dockerfile: Dockerfile
+
 deploy:
   kubectl:
     manifests:
@@ -19,3 +20,11 @@ deploy:
     - k8s/mariadb-definition.yaml
     - k8s/mariadb-pv.yaml
     - k8s/owner-definition.yaml
+    - k8s/restaurant-definition.yaml
+    - k8s/order-definition.yaml
+
+profiles:
+- name: cloudbuild
+  build:
+    googleCloudBuild:
+      projectId: restaurantorder-sg

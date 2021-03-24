@@ -15,7 +15,7 @@ spec:
         app: restaurant
     spec:
       containers:
-      - image: weixuantepo/restaurant
+      - image: gcr.io/restaurantorder-sg/restaurant
         imagePullPolicy: Never
         name: restaurant
         env:

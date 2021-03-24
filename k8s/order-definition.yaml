@@ -8,28 +8,28 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: rest_order
+      app: order
   template:
     metadata:
       labels:
-        app: rest_order
+        app: order
     spec:
       containers:
-      - image: weixuantepo/rest_order
+      - image: gcr.io/restaurantorder-sg/order
         imagePullPolicy: Never
-        name: rest_order
+        name: order
         env:
         - name: DB_URL
-          value: "mysql+mysqlconnector://root:root@mariadb:3306/rest_order"
+          value: "mysql+mysqlconnector://root:root@mariadb:3306/order"
 
 ---
 
 apiVersion: v1
 kind: Service
 metadata:
-  name: rest_order-service
+  name: order-service
   labels:
-    app: rest_order-service
+    app: order-service
 spec:
   type: NodePort
   ports:

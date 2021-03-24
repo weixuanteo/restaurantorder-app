@@ -21,11 +21,11 @@ db = SQLAlchemy(app)
 query = """
     CREATE DATABASE
     IF NOT EXISTS {db}
-""".format(db="rest_order")
+""".format(db="order")
 
 engine = db.create_engine('mysql+mysqlconnector://root:root@mariadb:3306',{})
 engine.execute(query)
-db.create_engine('mysql+mysqlconnector://root:root@mariadb:3306/owner',{})
+db.create_engine('mysql+mysqlconnector://root:root@mariadb:3306/order',{})
 
 #Order
 class Order(db.Model):

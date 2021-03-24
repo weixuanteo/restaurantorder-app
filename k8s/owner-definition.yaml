@@ -15,7 +15,7 @@ spec:
         app: owner
     spec:
       containers:
-      - image: weixuantepo/owner
+      - image: gcr.io/restaurantorder-sg/owner
         imagePullPolicy: Never
         name: owner
         env:
