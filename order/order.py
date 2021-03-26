@@ -11,19 +11,16 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DB_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-cred = credentials.Certificate("serviceAccountKey.json")
-firebase_admin.initialize_app(cred)
-
 db = SQLAlchemy(app)
 
-query = """
-    CREATE DATABASE
-    IF NOT EXISTS {db}
-""".format(db="order")
+# query = """
+#     CREATE SCHEMA
+#     IF NOT EXISTS `{db}`
+# """.format(db="order")
 
-engine = db.create_engine('mysql+mysqlconnector://root:root@mariadb:3306',{})
-engine.execute(query)
-db.create_engine('mysql+mysqlconnector://root:root@mariadb:3306/owner',{})
+# engine = db.create_engine('mysql+mysqlconnector://root:root@mariadb:3306',{})
+# engine.execute(query)
+# db.create_engine('mysql+mysqlconnector://root:root@mariadb:3306/order',{})
 
 #Order
 class Order(db.Model):

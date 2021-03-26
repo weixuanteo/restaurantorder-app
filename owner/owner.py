@@ -15,14 +15,14 @@ cred = credentials.Certificate("serviceAccountKey.json")
 firebase_admin.initialize_app(cred)
 
 db = SQLAlchemy(app)
-query = """
-    CREATE DATABASE
-    IF NOT EXISTS {db}
-""".format(db="owner")
+# query = """
+#     CREATE SCHEMA
+#     IF NOT EXISTS `{db}`
+# """.format(db="owner")
 
-engine = db.create_engine('mysql+mysqlconnector://root:root@mariadb:3306',{})
-engine.execute(query)
-db.create_engine('mysql+mysqlconnector://root:root@mariadb:3306/owner',{})
+# engine = db.create_engine('mysql+mysqlconnector://root:root@mariadb:3306',{})
+# engine.execute(query)
+# db.create_engine('mysql+mysqlconnector://root:root@mariadb:3306/owner',{})
 
 class Owner(db.Model):
     __tablename__ = 'owner'
