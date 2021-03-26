@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
-import firebase_admin
-from firebase_admin import credentials, auth, exceptions
+import bcrypt
 from os import environ
 import logging
 
@@ -11,8 +10,8 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DB_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-cred = credentials.Certificate("serviceAccountKey.json")
-firebase_admin.initialize_app(cred)
+# cred = credentials.Certificate("serviceAccountKey.json")
+# firebase_admin.initialize_app(cred)
 
 db = SQLAlchemy(app)
 # query = """
@@ -27,20 +26,22 @@ db = SQLAlchemy(app)
 class Owner(db.Model):
     __tablename__ = 'owner'
 
-    oid = db.Column(db.String(64), primary_key=True, autoincrement=False)
+    oid = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(128), nullable=False)
     email = db.Column(db.String(64), nullable=False)
+    password = db.Column(db.String(128), nullable=False)
     
-    def __init__(self, oid, name, email):
-        self.oid = oid
+    def __init__(self, name, email, password):
         self.name = name
         self.email = email
+        self.password = password
 
     def json(self):
         return {
             "oid": self.oid,
             "name": self.name,
-            "email": self.email
+            "email": self.email,
+            "password": self.password
         }
 
 @app.route("/owner/<oid>", methods=['GET'])
@@ -70,35 +71,21 @@ def add_new_owner():
     owner_email = data["email"]
     owner_password = data["password"]
 
-    print(owner_name, owner_email, owner_password)
-
-    try:
-        user = auth.create_user(
-            email=owner_email,
-            password=owner_password,
-            display_name=owner_name
+    owner = Owner.query.filter_by(email=owner_email).first()
+    if owner is not None:
+        return jsonify(
+            {
+                "status": "error",
+                "message": "Owner of email {0} already exists".format(owner.email)
+            }
         )
-    except firebase_admin._auth_utils.EmailAlreadyExistsError as e:
-        print(e)
-        return jsonify(
-            {
-                "status": "error",
-                "message": "Email address already exists in Firebase Auth"
-            }
-        ), 500
-
-    except ValueError as e:
-        print(e)
-        return jsonify(
-            {
-                "status": "error",
-                "message": "Error occured creating user with Firebase Auth, check user properties"
-            }
-        ), 500
     
     # app.logger.info(user.uid, user.display_name, user.email)
+    hash_salt = bcrypt.gensalt()
+    hash_password = bcrypt.hashpw(owner_password.encode('utf8'), hash_salt)
+
     db.create_all()
-    owner = Owner(user.uid, user.display_name, user.email)
+    owner = Owner(owner_name, owner_email, hash_password)
     # app.logger.info(owner)
 
     try:
@@ -138,21 +125,6 @@ def update_owner(oid):
         owner.email = data["email"]
 
     try:
-        user = auth.update_user(
-            oid,
-            email=owner.email,
-            display_name=owner.name
-        )
-    except exceptions.FirebaseError as e:
-        return jsonify(
-            {
-                "status": "error",
-                "message": "An error occured updating on Firebase"
-            }
-        ), 500
-
-    
-    try:
         db.session.add(owner)
         db.session.commit()
     except:
@@ -170,6 +142,39 @@ def update_owner(oid):
             "data": owner.json()
         }
     )
+
+@app.route("/owner/auth", methods=['POST'])
+def auth_owner():
+
+    data = request.get_json()
+    
+    owner_email = data["email"]
+    owner_password = data["password"]
+
+    owner = Owner.query.filter_by(email=owner_email).first()
+    if owner is None:
+        return jsonify(
+            {
+                "status": "error",
+                "message": "Owner does not exists"
+            }
+        )
+    
+    is_authenticated = bcrypt.checkpw(owner_password.encode('utf8'), owner.password.encode('utf8'))
+    if (not is_authenticated):
+        return jsonify(
+            {
+                "status": "error",
+                "message": "Auth failed"
+            }
+        )
+    
+    return jsonify(
+            {
+                "status": "success",
+                "data": owner.json() 
+            }
+        )
 
 
 if __name__ == '__main__':
