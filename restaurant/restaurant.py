@@ -1,7 +1,5 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
-import firebase_admin
-from firebase_admin import credentials, auth
 from os import environ
 import logging
 
@@ -75,7 +73,7 @@ def get_restaurant(rest_id):
         }
     )
 
-@app.route("/restaurant/registration", methods=['POST'])
+@app.route("/restaurant", methods=['POST'])
 def add_new_restaurant():
     data = request.get_json()
 
@@ -106,7 +104,7 @@ def add_new_restaurant():
         }
     ), 201
 
-@app.route("/restaurant/updaterestaurant/<rest_id>", methods=['PUT'])
+@app.route("/restaurant/<rest_id>", methods=['PUT'])
 def update_restaurant(rest_id):
     restaurant = Restaurant.query.filter_by(rest_id=rest_id).first()
    

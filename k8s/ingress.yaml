@@ -18,8 +18,8 @@ spec:
       - path: /restaurant
         backend:
           serviceName: restaurant-service
-          servicePort: 5001
+          servicePort: 5000
       - path: /order
         backend:
           serviceName: order-service
-          servicePort: 5002
+          servicePort: 5000

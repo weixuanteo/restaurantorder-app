@@ -76,3 +76,21 @@
   margin-top: 1em;
 }
 
+#tagIcon {
+  font-size: 30px;
+  justify-self: center;
+}
+
+#openClose {
+  color: rgb(90,218,111);
+  display: inline-block;
+}
+
+#openingStatus {
+  margin-top: 0.5em;
+}
+
+#horizontalMenu {
+  margin: 0 auto;
+}
+
