@@ -29,6 +29,7 @@ class Restaurant(db.Model):
 
     def json(self):
         return {
+            "rest_id": self.rest_id,
             "name": self.name,
             "is_open": self.is_open,
             "address": self.address

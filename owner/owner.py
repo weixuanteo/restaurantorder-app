@@ -89,6 +89,8 @@ def add_new_owner():
     owner_email = data["email"]
     owner_password = data["password"]
 
+    db.create_all()
+
     owner = Owner.query.filter_by(email=owner_email).first()
     if owner is not None:
         return jsonify(
@@ -102,7 +104,6 @@ def add_new_owner():
     hash_salt = bcrypt.gensalt()
     hash_password = bcrypt.hashpw(owner_password.encode('utf8'), hash_salt)
 
-    db.create_all()
     owner = Owner(owner_name, owner_email, hash_password)
     # app.logger.info(owner)
 
