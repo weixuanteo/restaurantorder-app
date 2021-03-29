@@ -30,6 +30,14 @@ build:
           dest: "."
     docker:
       dockerfile: Dockerfile
+  - image: weixuantepo/create-restaurant
+    context: create_restaurant
+    sync:
+      manual:
+        - src: "*.py"
+          dest: "."
+    docker:
+      dockerfile: Dockerfile
 deploy:
   kubectl:
     manifests:
@@ -39,3 +47,4 @@ deploy:
     - k8s/owner-definition.yaml
     - k8s/restaurant-definition.yaml
     - k8s/order-definition.yaml
+    - k8s/create-restaurant-definition.yaml

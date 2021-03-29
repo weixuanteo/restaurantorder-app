@@ -3,10 +3,12 @@ from flask_sqlalchemy import SQLAlchemy
 from os import environ
 import logging
 
+ON_RECEIVE_STATUS = 'Received'
+
 logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
-#app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DB_URL')
+# app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DB_URL')
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root@localhost:3306/rest_order'
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DB_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -32,7 +34,6 @@ class Order(db.Model):
     rest_id = db.Column(db.Integer, nullable=False)
     order_type = db.Column(db.String(10), nullable=False)
     comments = db.Column(db.String(10), nullable=False)
-   
     
     def __init__(self,rest_id,order_type,comments):
         
@@ -46,43 +47,41 @@ class Order(db.Model):
             "rest_id": self.rest_id,
             "order_type": self.order_type,
             "comments": self.comments
+            # "order_status":self.order_status
+            
         }
 
         order['order_item'] = []
         for item in self.order_item:
             order['order_item'].append(item.json())
 
+        order['order_status'] = []
+        for status in self.order_status:
+            order['order_status'].append(status.json())
+
+        # order["order_status"] = self.order_status
+
         return order
 
-        # return {
-            
-        #     "rest_id": self.rest_id,
-        #     "order_type": self.order_type,
-        #     "comments": self.comments
-        # }
 
+# what is the point of this table?
 #Order Status
 class OrderStatus(db.Model):
     __tablename__ = 'order_status'
 
     order_id = db.Column(db.Integer, db.ForeignKey('order.order_id'), primary_key=True,autoincrement=False)
-    status = db.Column(db.String(10), nullable=False)
+    status = db.Column(db.String(10), nullable=False,primary_key=True, autoincrement=False)
     updated_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
+    order = db.relationship(
+        'Order', primaryjoin='OrderStatus.order_id == Order.order_id', backref='order_status')
    
-    def __init__(self,order_id,status):
-        
-        self.order_id = order_id
+    def __init__(self,status):
         self.status = status
 
     def json(self):
-        return {
+        return {"status": self.status}
             
-            "order_id": self.order_id,
-            "status": self.status
-        }
-
 #Order Item
-#No need restid? 
 ## remember to add in item as foreign key
 class OrderItem(db.Model):
     __tablename__ = 'order_item'
@@ -94,9 +93,9 @@ class OrderItem(db.Model):
         'Order', primaryjoin='OrderItem.order_id == Order.order_id', backref='order_item')
         
    
-    def __init__(self,order_id,item_id,qty):
+    def __init__(self,item_id,qty):
         
-        self.order_id = order_id
+        # self.order_id = order_id
         self.item_id = item_id
         self.qty = qty
 
@@ -110,7 +109,6 @@ class OrderItem(db.Model):
 @app.route("/order/<order_id>", methods=['GET'])
 def get_order(order_id):
     order = Order.query.filter_by(order_id=order_id).first()
-    # orderStatus = OrderStatus.query.filter_by(order_id=order_id).first()
 
     if order is None:
         return jsonify(
@@ -131,20 +129,28 @@ def get_order(order_id):
 def create_order():
 
     data = request.get_json()
+
     rest_id = data["rest_id"]
     order_type = data["order_type"]
     comments = data['comments']
     order_items = data['order_items']
 
-
-    print(rest_id,order_type,comments)
+    #print(rest_id,order_type,comments)
 
     db.create_all()
     order = Order(rest_id,order_type,comments)
 
+    for item in order_items:
+        order.order_item.append(OrderItem(item_id=item['item_id'],qty=item['qty']))
+    
+    status = OrderStatus(ON_RECEIVE_STATUS)
+    order.order_status.append(status)
+
     try:
+
         db.session.add(order)
         db.session.commit()
+
     except:
         return jsonify(
             {
@@ -153,74 +159,17 @@ def create_order():
             }
         ), 500
     
-    order_id = order.order_id 
-    create_order_status(order_id)
-    create_order_item(order_id,order_items,order)
     return jsonify(
         {
             "status": "success",
             "data": order.json()
         }
     ), 201
-
-
-def create_order_status(order_id):
-    status = 'received'
-    db.create_all()
-    orderStatus = OrderStatus(order_id,status)
-
-    try:
-        db.session.add(orderStatus)
-        db.session.commit()
-    except:
-        return jsonify(
-            {
-                "status": "error",
-                "message": "An error occured creating order status"
-            }
-        ), 500
-    
-    return jsonify(
-        {
-            "status": "success",
-            "data": orderStatus.json()
-        }
-    ), 201
-
-
-def create_order_item(order_id,order_items,order):
-
-    all_items = []
-    for item in order_items:
-        newitem = OrderItem(item_id=item['item_id'],order_id=order_id, qty=item['qty'])
-        all_items.append(newitem)
-
-    try:
-        # db.session.flush()
-        db.session.add_all(all_items)
-        db.session.commit()
-        # db.session.flush()
-    except:
-        return jsonify(
-            {
-                "status": "error",
-                "message": "An error occured creating order item"
-            }
-        ), 500
-    
-    return jsonify(
-        {
-            "status": "success",
-            "data": order.json()
-        }
-    ), 201
-
-
 
 @app.route("/order/updateorder/<order_id>", methods=['PUT'])
 def update_order(order_id):
     order = Order.query.filter_by(order_id=order_id).first()
-   
+    
     if order is None:
         return jsonify(
             {
@@ -236,9 +185,27 @@ def update_order(order_id):
         order.email = data["order_type"]
     if 'comments' in data:
         order.comments = data["comments"]
+    if 'order_items' in data:
+
+        order_status = OrderItem.query.filter_by(order_id=order_id).delete()
+
+        try:
+        #db.session.add(order)
+            db.session.commit()
+        except:
+            return jsonify(
+                {
+                    "status": "error",
+                    "message": "An error occured deleting order_item"
+                }
+            ), 500
+
+
+        for item in data['order_items']:
+            order.order_item.append(OrderItem(item_id=item['item_id'],qty=item['qty']))
     
     try:
-        # db.session.add(order)
+        #db.session.add(order)
         db.session.commit()
     except:
         return jsonify(
