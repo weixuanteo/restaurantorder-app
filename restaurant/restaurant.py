@@ -21,6 +21,7 @@ class Restaurant(db.Model):
     name = db.Column(db.String(128), nullable=False)
     is_open = db.Column(db.Boolean, nullable=False, default=False)
     address = db.Column(db.String(300), nullable=False)
+    items = db.relationship('RestaurantItems', backref='restaurant', lazy=True)
     
     def __init__(self, name, is_open, address):
         self.name = name
@@ -32,7 +33,8 @@ class Restaurant(db.Model):
             "rest_id": self.rest_id,
             "name": self.name,
             "is_open": self.is_open,
-            "address": self.address
+            "address": self.address,
+            "items":[item.json() for item in self.items]
         }
         
 @app.route("/restaurant")
@@ -74,7 +76,7 @@ def get_restaurant(rest_id):
         }
     )
 
-@app.route("/restaurant", methods=['POST'])
+@app.route("/restaurant/registration", methods=['POST'])
 def add_new_restaurant():
     data = request.get_json()
 
@@ -291,51 +293,56 @@ class RestaurantItems(db.Model):
     __tablename__ = 'restaurant_items'
 
     rest_id = db.Column(db.Integer, db.ForeignKey('restaurant.rest_id'), primary_key=True,autoincrement=False)
-    item_id = db.Column(db.Integer, db.ForeignKey('item.item_id'), primary_key=True,autoincrement=False)
-    restaurant = db.relationship('Restaurant', primaryjoin='RestaurantItems.rest_id == Restaurant.rest_id', backref='restaurant_items')
-    item = db.relationship('Item', primaryjoin='RestaurantItems.item_id == Item.item_id', backref='restaurant_items')
+    item_id = db.Column(db.Integer, primary_key=True,autoincrement=False)
+    # restaurant = db.relationship('Restaurant', primaryjoin='RestaurantItems.rest_id == Restaurant.rest_id', backref='restaurant_items')
+    # item = db.relationship('Item', primaryjoin='RestaurantItems.item_id == Item.item_id', backref='restaurant_items')
    
     def __init__(self,rest_id,item_id):
-        
         self.rest_id = rest_id
         self.item_id = item_id
 
     def json(self):
         return {
-            "rest_id": self.rest_id,
+            # "rest_id": self.rest_id,
             "item_id": self.item_id
         }
 
-# @app.route("/restaurant/restaurantitem/registration", methods=['POST'])
+@app.route("/restaurant/restaurantitem/registration", methods=['POST'])
+def link_restaurant_item():
+    data = request.get_json()
 
-# def link_restaurant_item():
-#     data = request.get_json()
+    rest_id = data['rest_id']
+    item_id = data['item_id']
 
-#     rest_id = data['rest_id']
-#     item_id = data['item_id']
+    rest_item = RestaurantItems(rest_id,item_id)
+    restaurant = Restaurant.query.filter_by(rest_id=rest_id).first()
+    if restaurant is None:
+        return jsonify(
+            {   
+                "status":"error",
+                "message": "Restaurant does not exists"
+            }
+        ),404
 
-#     print(rest_id,item_id)
+    restaurant.items.append(rest_item)
 
-#     db.create_all()
-#     restaurantitem = Item(rest_id,item_id)
+    try:
+        db.session.add(restaurant)
+        db.session.commit()
+    except:
+        return jsonify(
+            {
+                "status": "error",
+                "message": "An error occured linking restaurant and item"
+            }
+        ), 500
 
-#     try:
-#         db.session.add(restaurantitem)
-#         db.session.commit()
-#     except:
-#         return jsonify(
-#             {
-#                 "status": "error",
-#                 "message": "An error occured linking restaurant and item"
-#             }
-#         ), 500
-
-#     return jsonify(
-#         {
-#             "status": "success",
-#             "data": restaurantitem.json()
-#         }
-#     ), 201
+    return jsonify(
+        {
+            "status": "success",
+            "data": restaurant.json()
+        }
+    ), 201
 
 
 
