@@ -8,7 +8,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
 
-@app.route("/new_restaurant/<oid>", methods=['POST'])
+@app.route("/create_restaurant/<oid>", methods=['POST'])
 def create_new_restaurant(oid):
     data = request.get_json()
     rest_name = data["name"]
@@ -23,7 +23,7 @@ def create_new_restaurant(oid):
                 "status": "error",
                 "message": "error in checking owner"
             }
-        )
+        ), 500
     
     response_data = response.json()
 
@@ -40,7 +40,7 @@ def create_new_restaurant(oid):
                 "status": "error",
                 "message": "error in calling restaurant service"
             }
-        )
+        ), 500
     
     rest_id = response.json()["data"]["rest_id"]
     body = {"owner_id": owner_id, "rest_id": rest_id}
@@ -53,7 +53,7 @@ def create_new_restaurant(oid):
                 "status": "error",
                 "message": "error in calling owner service"
             }
-        )
+        ), 500
     
     return jsonify(
         {

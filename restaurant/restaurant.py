@@ -76,7 +76,7 @@ def get_restaurant(rest_id):
         }
     )
 
-@app.route("/restaurant/registration", methods=['POST'])
+@app.route("/restaurant", methods=['POST'])
 def add_new_restaurant():
     data = request.get_json()
 
