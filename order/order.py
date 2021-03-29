@@ -34,6 +34,8 @@ class Order(db.Model):
     rest_id = db.Column(db.Integer, nullable=False)
     order_type = db.Column(db.String(10), nullable=False)
     comments = db.Column(db.String(10), nullable=False)
+
+    status = db.relationship('OrderStatus', backref='order', uselist=False)
     
     def __init__(self,rest_id,order_type,comments):
         
@@ -46,20 +48,14 @@ class Order(db.Model):
             
             "rest_id": self.rest_id,
             "order_type": self.order_type,
-            "comments": self.comments
-            # "order_status":self.order_status
+            "comments": self.comments,
+            "order_status":self.status.json()
             
         }
 
         order['order_item'] = []
         for item in self.order_item:
             order['order_item'].append(item.json())
-
-        order['order_status'] = []
-        for status in self.order_status:
-            order['order_status'].append(status.json())
-
-        # order["order_status"] = self.order_status
 
         return order
 
@@ -70,10 +66,8 @@ class OrderStatus(db.Model):
     __tablename__ = 'order_status'
 
     order_id = db.Column(db.Integer, db.ForeignKey('order.order_id'), primary_key=True,autoincrement=False)
-    status = db.Column(db.String(10), nullable=False,primary_key=True, autoincrement=False)
+    status = db.Column(db.String(10), nullable=False)
     updated_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
-    order = db.relationship(
-        'Order', primaryjoin='OrderStatus.order_id == Order.order_id', backref='order_status')
    
     def __init__(self,status):
         self.status = status
@@ -135,21 +129,19 @@ def create_order():
     comments = data['comments']
     order_items = data['order_items']
 
-    #print(rest_id,order_type,comments)
-
     db.create_all()
     order = Order(rest_id,order_type,comments)
 
     for item in order_items:
         order.order_item.append(OrderItem(item_id=item['item_id'],qty=item['qty']))
-    
-    status = OrderStatus(ON_RECEIVE_STATUS)
-    order.order_status.append(status)
+
+    order.status = OrderStatus(status=ON_RECEIVE_STATUS)
 
     try:
-
+        
         db.session.add(order)
         db.session.commit()
+
 
     except:
         return jsonify(
@@ -261,5 +253,5 @@ def update_status(order_id):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5002, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
 
