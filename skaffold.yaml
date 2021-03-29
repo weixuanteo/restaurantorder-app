@@ -36,6 +36,14 @@ build:
           dest: "."
     docker:
       dockerfile: Dockerfile
+  - image: weixuantepo/get-restaurants
+    context: get_restaurants
+    sync:
+      manual:
+        - src: "*.py"
+          dest: "."
+    docker:
+      dockerfile: Dockerfile
 deploy:
   kubectl:
     manifests:
@@ -46,3 +54,4 @@ deploy:
     - k8s/restaurant-definition.yaml
     - k8s/order-definition.yaml
     - k8s/create-restaurant-definition.yaml
+    - k8s/get-restaurants-definition.yaml
