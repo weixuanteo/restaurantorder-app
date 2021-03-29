@@ -12,6 +12,30 @@ build:
           dest: "."
     docker:
       dockerfile: Dockerfile
+  - image: weixuantepo/order
+    context: order
+    sync:
+      manual:
+        - src: "*.py"
+          dest: "."
+    docker:
+      dockerfile: Dockerfile
+  - image: weixuantepo/restaurant
+    context: restaurant
+    sync:
+      manual:
+        - src: "*.py"
+          dest: "."
+    docker:
+      dockerfile: Dockerfile
+  - image: weixuantepo/create-restaurant
+    context: create_restaurant
+    sync:
+      manual:
+        - src: "*.py"
+          dest: "."
+    docker:
+      dockerfile: Dockerfile
 deploy:
   kubectl:
     manifests:
@@ -19,3 +43,6 @@ deploy:
     - k8s/mariadb-definition.yaml
     - k8s/mariadb-pv.yaml
     - k8s/owner-definition.yaml
+    - k8s/restaurant-definition.yaml
+    - k8s/order-definition.yaml
+    - k8s/create-restaurant-definition.yaml

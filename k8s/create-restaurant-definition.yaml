@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: create-restaurant
+  name: create-restuarant
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: create-restaurant
+  template:
+    metadata:
+      labels:
+        app: create-restaurant
+    spec:
+      containers:
+      - image: weixuantepo/create-restaurant
+        imagePullPolicy: Never
+        name: create-restaurant
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: create-restaurant-service
+  labels:
+    app: create-restaurant-service
+spec:
+  type: NodePort
+  ports:
+  - port: 5000
+    targetPort: 5000
+    protocol: TCP
+  selector:
+    app: create-restaurant
