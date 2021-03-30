@@ -15,8 +15,8 @@ spec:
         app: create-restaurant
     spec:
       containers:
-      - image: weixuantepo/create-restaurant
-        imagePullPolicy: Never
+      - image: gcr.io/restaurantorder-sg/create-restaurant
+        imagePullPolicy: Always
         name: create-restaurant
 
 ---
