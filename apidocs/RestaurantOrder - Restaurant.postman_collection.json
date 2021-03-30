@@ -1,0 +1,170 @@
+{
+	"variables": [],
+	"info": {
+		"name": "RestaurantOrder - Restaurant",
+		"_postman_id": "71a3c242-05b2-a533-0920-c5d763fd7c79",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost/restaurant",
+			"request": {
+				"url": "localhost/restaurant",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"testjiayu\",\n\t\"is_open\":false,\n\t\"address\":\"somewhere\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost/restaurant/1",
+			"request": {
+				"url": "localhost/restaurant/1",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic bWp5OnBhc3N3b3Jk",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost/restaurant/item",
+			"request": {
+				"url": "localhost/restaurant/item",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost/restaurant/item/1",
+			"request": {
+				"url": "localhost/restaurant/item/1",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost/restaurant/registration",
+			"request": {
+				"url": "localhost/restaurant/itemregistration",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"coconut\",\n\t\"price\":3.5,\n\t\"description\":\"fresh fruit\",\n\t\"category\":\"Fruit\",\n\t\"img_url\":\"lala.jpg\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost/restaurant/itemregistration",
+			"request": {
+				"url": "localhost/restaurant/itemregistration",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"coconut\",\n\t\"price\":3.5,\n\t\"description\":\"fresh fruit\",\n\t\"category\":\"Fruit\",\n\t\"img_url\":\"lala.jpg\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost/restaurant/restaurantitem/registration",
+			"request": {
+				"url": "localhost/restaurant/restaurantitem/registration",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"rest_id\":2,\n\t\"item_id\":1\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost/restaurant/1",
+			"request": {
+				"url": "localhost/restaurant/1",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"changerestName\",\n\t\"is_open\":false,\n\t\"address\":\"changeaddress\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost/restaurant/itemupdate/1",
+			"request": {
+				"url": "localhost/restaurant/itemupdate/1",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"change\",\n\t\"price\":100,\n\t\"img_url\":\"change.jpg\",\n\t\"description\":\"change\"\n\t\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

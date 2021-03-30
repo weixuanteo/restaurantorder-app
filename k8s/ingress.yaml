@@ -23,7 +23,11 @@ spec:
         backend:
           serviceName: order-service
           servicePort: 5000
-      - path: /new_restaurant
+      - path: /create_restaurant
         backend:
           serviceName: create-restaurant-service
+          servicePort: 5000
+      - path: /get_restaurants
+        backend:
+          serviceName: get-restaurants-service
           servicePort: 5000
