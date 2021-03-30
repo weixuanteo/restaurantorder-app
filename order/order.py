@@ -32,16 +32,18 @@ class Order(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     order_time = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     rest_id = db.Column(db.Integer, nullable=False)
+    table_no = db.Column(db.Integer, nullable=False)
     order_type = db.Column(db.String(10), nullable=False)
     comments = db.Column(db.String(10), nullable=False)
 
     status = db.relationship('OrderStatus', backref='order', uselist=False)
     
-    def __init__(self,rest_id,order_type,comments):
+    def __init__(self,rest_id,order_type,comments,table_no):
         
         self.rest_id = rest_id
         self.order_type = order_type
         self.comments = comments
+        self.table_no = table_no
 
     def json(self):
         order =  {
@@ -49,6 +51,7 @@ class Order(db.Model):
             "rest_id": self.rest_id,
             "order_type": self.order_type,
             "comments": self.comments,
+            "table_no":self.table_no,
             "order_status":self.status.json()
             
         }
@@ -81,10 +84,12 @@ class OrderItem(db.Model):
     __tablename__ = 'order_item'
 
     order_id = db.Column(db.Integer, db.ForeignKey('order.order_id'), primary_key=True,autoincrement=False)
-    item_id = db.Column(db.String(10), primary_key=True,autoincrement=False)
+    item_id = db.Column(db.Integer,primary_key=True,autoincrement=False)
     qty = db.Column(db.Integer, nullable=False)
     order = db.relationship(
         'Order', primaryjoin='OrderItem.order_id == Order.order_id', backref='order_item')
+    
+
         
    
     def __init__(self,item_id,qty):
@@ -128,9 +133,10 @@ def create_order():
     order_type = data["order_type"]
     comments = data['comments']
     order_items = data['order_items']
+    table_no = data['table_no']
 
     db.create_all()
-    order = Order(rest_id,order_type,comments)
+    order = Order(rest_id,order_type,comments,table_no)
 
     for item in order_items:
         order.order_item.append(OrderItem(item_id=item['item_id'],qty=item['qty']))
