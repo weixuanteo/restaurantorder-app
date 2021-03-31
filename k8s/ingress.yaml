@@ -30,3 +30,8 @@ spec:
         backend:
           serviceName: get-restaurants-service
           servicePort: 5000
+      - path: /update_order_status
+        backend:
+          serviceName: update-order-status-service
+          servicePort: 5000
+        

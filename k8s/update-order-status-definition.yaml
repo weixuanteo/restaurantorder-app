@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: update-order-status
+  name: update-order-status
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: update-order-status
+  template:
+    metadata:
+      labels:
+        app: update-order-status
+    spec:
+      containers:
+      - image: weixuantepo/update-order-status
+        imagePullPolicy: Never
+        name: update-order-status
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: update-order-status-service
+  labels:
+    app: update-order-status-service
+spec:
+  type: NodePort
+  ports:
+  - port: 5000
+    targetPort: 5000
+    protocol: TCP
+  selector:
+    app: update-order-status
