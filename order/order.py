@@ -3,7 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from os import environ
 import logging
 
-ON_RECEIVE_STATUS = 'Received'
+ON_RECEIVE_STATUS = '1'
+#accept -> 2
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -47,7 +48,7 @@ class Order(db.Model):
 
     def json(self):
         order =  {
-            
+            "order_id":self.order_id,
             "rest_id": self.rest_id,
             "order_type": self.order_type,
             "comments": self.comments,
@@ -58,18 +59,18 @@ class Order(db.Model):
 
         order['order_item'] = []
         for item in self.order_item:
+            
             order['order_item'].append(item.json())
 
         return order
 
 
-# what is the point of this table?
 #Order Status
 class OrderStatus(db.Model):
     __tablename__ = 'order_status'
 
     order_id = db.Column(db.Integer, db.ForeignKey('order.order_id'), primary_key=True,autoincrement=False)
-    status = db.Column(db.String(10), nullable=False)
+    status = db.Column(db.Integer, nullable=False)
     updated_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
    
     def __init__(self,status):
@@ -100,13 +101,14 @@ class OrderItem(db.Model):
 
     def json(self):
         return {
-            "order_id": self.order_id,
+            #"order_id": self.order_id,
             "item_id": self.item_id,
             "qty":self.qty
         }
 
 @app.route("/order/<order_id>", methods=['GET'])
 def get_order(order_id):
+
     order = Order.query.filter_by(order_id=order_id).first()
 
     if order is None:
@@ -163,10 +165,25 @@ def create_order():
             "data": order.json()
         }
     ), 201
-
+   
 @app.route("/order/updateorder/<order_id>", methods=['PUT'])
 def update_order(order_id):
+
     order = Order.query.filter_by(order_id=order_id).first()
+    status = OrderStatus.query.filter_by(order_id=order_id).first()
+
+    print('status:',status.status)
+
+    #status checking   
+  
+    if status.status == 2:  
+        return jsonify(
+            {
+                "status": "Message",
+                "message": "order of id {0} is already accepted".format(order_id)
+            }
+        )
+    print('hello')
     
     if order is None:
         return jsonify(
@@ -185,7 +202,7 @@ def update_order(order_id):
         order.comments = data["comments"]
     if 'order_items' in data:
 
-        order_status = OrderItem.query.filter_by(order_id=order_id).delete()
+        OrderItem.query.filter_by(order_id=order_id).delete()
 
         try:
         #db.session.add(order)
@@ -221,7 +238,8 @@ def update_order(order_id):
         }
     )
 
-
+#restaurant-side
+#interact with notification
 @app.route("/order/updatestatus/<order_id>", methods=['PUT'])
 def update_status(order_id):
     orderStatus = OrderStatus.query.filter_by(order_id=order_id).first()

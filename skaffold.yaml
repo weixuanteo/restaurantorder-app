@@ -20,6 +20,14 @@ build:
           dest: "."
     docker:
       dockerfile: Dockerfile
+  - image: weixuantepo/create-order
+    context: create_order
+    sync:
+      manual:
+        - src: "*.py"
+          dest: "."
+    docker:
+      dockerfile: Dockerfile
   - image: weixuantepo/restaurant
     context: restaurant
     sync:
@@ -59,6 +67,7 @@ deploy:
     - k8s/mariadb-definition.yaml
     - k8s/mariadb-pv.yaml
     - k8s/owner-definition.yaml
+    - k8s/create-order-definition.yaml
     - k8s/restaurant-definition.yaml
     - k8s/order-definition.yaml
     - k8s/create-restaurant-definition.yaml

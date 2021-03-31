@@ -1,114 +1,147 @@
 {
 	"info": {
 		"_postman_id": "8fd45875-5487-42a2-9b10-6d343252dc5e",
-		"name": "Restaurant",
+		"name": "Restaurant - Owner",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Order - Get Specific Order",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:5000/order/3",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"order",
-						"3"
-					]
+			"name": "Direct-Invoke",
+			"item": [
+				{
+					"name": "OrderStatus - Update Order Status",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\":\"Ready\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/order/updatestatus/1",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order",
+								"updatestatus",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Order - Update Order",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"comments\": \"wow\",\n   \"order_items\":[\n       {\"item_id\":1002,\n       \"qty\":0\n       },\n       {\"item_id\":1001,\n       \"qty\":0}\n   ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/order/updateorder/2",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order",
+								"updateorder",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Order - Create Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"rest_id\": 1002,\n   \"order_type\": \"take-away\",\n   \"table_no\":50,\n   \"comments\": \"Hi Bye\",\n   \"order_items\":[\n       {\"item_id\":1002,\n       \"qty\":100\n       },\n       {\"item_id\":1001,\n       \"qty\":40}\n   ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/order/neworder",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order",
+								"neworder"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Order - Get Specific Order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/order/3",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"order",
+								"3"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Order - Create Order",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n   \"rest_id\": 1002,\n   \"order_type\": \"take-away\",\n   \"comments\": \"Hi Bye\",\n   \"order_items\":[\n       {\"item_id\":1002,\n       \"qty\":100\n       },\n       {\"item_id\":1001,\n       \"qty\":40}\n   ]\n}\n",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Complex-Invoke",
+			"item": [
+				{
+					"name": "Order - Create Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"rest_id\": 1002,\n   \"order_type\": \"take-away\",\n   \"table_no\":50,\n   \"comments\": \"Hi Why\",\n   \"order_items\":[\n       {\"item_id\":1002,\n       \"qty\":100\n       },\n       {\"item_id\":1001,\n       \"qty\":40}\n   ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/create_order",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"create_order"
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "localhost:5000/order/neworder",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"order",
-						"neworder"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "Order - Update Order",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n   \"comments\": \"wow\",\n   \"order_items\":[\n       {\"item_id\":1002,\n       \"qty\":100\n       },\n       {\"item_id\":1001,\n       \"qty\":45}\n   ]\n}\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:5000/order/updateorder/4",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"order",
-						"updateorder",
-						"4"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "OrderStatus - Update Order Status",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"status\":\"Ready\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:5000/order/updatestatus/4",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"order",
-						"updatestatus",
-						"4"
-					]
-				}
-			},
-			"response": []
+			]
 		}
 	]
 }
