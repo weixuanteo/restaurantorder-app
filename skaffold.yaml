@@ -68,6 +68,14 @@ build:
           dest: "."
     docker:
       dockerfile: Dockerfile
+  - image: weixuantepo/test-amqp
+    context: test_amqp
+    sync:
+      manual:
+        - src: "*.py"
+          dest: "."
+    docker:
+      dockerfile: Dockerfile
 deploy:
   kubectl:
     manifests:
@@ -82,3 +90,4 @@ deploy:
     - k8s/get-restaurants-definition.yaml
     - k8s/update-order-status-definition.yaml
     - k8s/notification-definition.yaml
+    - k8s/test-amqp-definition.yaml

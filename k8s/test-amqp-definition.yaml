@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: test-amqp
+  name: test-amqp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-amqp
+  template:
+    metadata:
+      labels:
+        app: test-amqp
+    spec:
+      containers:
+      - image: weixuantepo/test-amqp
+        imagePullPolicy: Never
+        name: test-amqp
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-amqp-service
+  labels:
+    app: test-amqp-service
+spec:
+  type: NodePort
+  ports:
+  - port: 5000
+    targetPort: 5000
+    protocol: TCP
+  selector:
+    app: test-amqp
