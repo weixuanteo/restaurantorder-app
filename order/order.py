@@ -65,7 +65,6 @@ class Order(db.Model):
         return order
 
 
-# what is the point of this table?
 #Order Status
 class OrderStatus(db.Model):
     __tablename__ = 'order_status'
