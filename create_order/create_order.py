@@ -11,7 +11,6 @@ app = Flask(__name__)
 #create new order
 @app.route("/create_order", methods=['POST'])
 def create_new_order():
-    print('entered')
     data = request.get_json()
 
     # rest_id = data["rest_id"]
@@ -46,7 +45,6 @@ def create_new_order():
 #create new order
 @app.route("/update_order/<order_id>", methods=['PUT'])
 def update_order(order_id):
-    print('entered')
     data = request.get_json()
 
     response = requests.post("http://order-service:5000/order/updateorder/" + order_id, json=data)
