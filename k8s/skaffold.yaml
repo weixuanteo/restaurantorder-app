@@ -9,3 +9,9 @@ deploy:
     - mariadb-definition.yaml
     - mariadb-pv.yaml
     - owner-definition.yaml
+    - order-definition.yaml
+    - restaurant-definition.yaml
+    - create-order-definition.yaml
+    - create-restaurant-definition.yaml
+    - get-restaurant-definition.yaml
+    
