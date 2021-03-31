@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from os import environ
 import logging
 
-ON_RECEIVE_STATUS = '2'
+ON_RECEIVE_STATUS = '1'
 #accept -> 2
 
 logging.basicConfig(level=logging.DEBUG)
