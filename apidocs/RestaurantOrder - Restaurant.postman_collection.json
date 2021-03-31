@@ -69,7 +69,7 @@
 		{
 			"name": "localhost/restaurant/registration",
 			"request": {
-				"url": "localhost/restaurant/itemregistration",
+				"url": "localhost/restaurant",
 				"method": "POST",
 				"header": [
 					{
@@ -80,7 +80,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"name\":\"coconut\",\n\t\"price\":3.5,\n\t\"description\":\"fresh fruit\",\n\t\"category\":\"Fruit\",\n\t\"img_url\":\"lala.jpg\"\n}"
+					"raw": "{\n\t\"name\":\"apple\",\n\t\"is_open\":false,\n\t\"address\":\"address\"\n}"
 				},
 				"description": ""
 			},
@@ -120,7 +120,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"rest_id\":2,\n\t\"item_id\":1\n}"
+					"raw": "{\n\t\"rest_id\":1,\n\t\"item_id\":1\n}"
 				},
 				"description": ""
 			},
