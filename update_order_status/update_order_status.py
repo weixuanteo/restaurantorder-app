@@ -14,7 +14,7 @@ def update_order_status(order_id):
     print(order_id)
     data = request.get_json()
     response = requests.put("http://order-service:5000/order/updatestatus/" + order_id, json=data)
-    # r = requests.put('http://order-service:5000/order/updatestatus/'+order_id, data ={'key':'value'})
+
     if response.status_code != 200:
         return jsonify(
             {
