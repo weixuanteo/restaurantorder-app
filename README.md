@@ -8,6 +8,7 @@
     + [Deploying NGINX Ingress](#deploying-nginx-ingress)
     + [Port Forward MariaDB](#port-forward-mariadb)
     + [Test Owner Serivce](#test-owner-serivce)
+    + [Deploying RabbitMQ](#deploying-rabbitmq)
   * [Kubernetes Cheatsheet](#kubernetes-cheatsheet)
     + [Some basic commands](#some-basic-commands)
 - [Skaffold Development Setup](#skaffold-development-setup)
@@ -80,6 +81,23 @@ Open up Postman and create a POST request to localhost/owner/registration to cre
 ![postman screenshot](https://previews.dropbox.com/p/thumb/ABGApKGGj_xwhMn2akWdR9TbAGYVXmOkDS2ob_hAhs56DxDU_rlNBXU_TsQkiGlugUupk-KmHmnI7LonuQetMI9ss8t0UNKf_eFu-nlyKPUepzNtuLizaCVtlzWxmUGnneu8DC1KEPyKZ9z4yKgzKlXI8nU0oBNyIOH5KiYhkmiPBNNPBbmVrx1saCUP88wT4_uK-Gy89rsHYzqCyj5VdZXe6xJE5kltgki-6Z6bRQfkEwNN-PEqL2iAMkHeQiZWiGFiWDEResyTZ4d0qsEEgedcqBweTFeZUsDpfNCYkmBvMf6AjfX7ERmsEUWXr-gX8i7DJSE-ZTe9E5-vXpG5Lw1RU5dBinZSvdl1SffhTWXuXJ_lhkLvTn_7yBS25nJRhzs/p.png)
 
 Set a JSON request body in Postman with the the POST request. The request is a success if the a similiar message to the one above appears
+
+#### Deploying RabbitMQ
+```bash
+kubectl apply -f "https://github.com/rabbitmq/cluster-operator/releases/latest/download/cluster-operator.yml"
+```
+
+Check that it created successfully
+```bash
+kubectl get all -n rabbitmq-system
+```
+
+Create a instance of RabbitMQ in Kubernetes
+```bash
+cd k8s
+kubectl apply -f rabbitmq.yaml
+```
+
 
 ### Kubernetes Cheatsheet
 
