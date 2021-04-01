@@ -17,6 +17,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" href="assets/css/Responsive-Client-One.css">
     <link rel="stylesheet" href="assets/css/styles.css">
+
+    <!--Include vue-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>   
+
 </head>
 
 <body>
@@ -27,49 +32,76 @@
                     <ul class="navbar-nav ml-auto" style="/*margin: 0px;*/">
                         <li class="nav-item"></li>
                     </ul>
+
                     <form class="form-inline" id="searchBox" target="_self">
-                        <div class="form-group"><label for="search-field"><i class="fa fa-search"></i></label><input class="form-control search-field" type="search" id="search-field" name="search" placeholder="Search restaurant"></div>
+                        <div class="form-group">
+                            <label for="search-field">
+                                <i class="fa fa-search"></i>
+                            </label>
+                            <input class="form-control search-field" type="search" id="search-field" name="search" placeholder="Search restaurant">
+                        </div>
                     </form>
+
                 </div>
             </div>
         </nav>
+    </header>
+
         <section class="features-clean">
             <div class="container">
                 <div class="intro">
                     <h2 class="text-center">Restaurants Nearby</h2>
                     <p class="text-center"></p>
                 </div>
-                <div class="row features">
-                    <div class="col-sm-6 col-lg-4 col-xl-9 offset-xl-2 item"><i class="fa fa-smile-o icon"></i>
-                        <h3 class="name" style="width: 24em;display: inline-block;">Smiley Restaurant<br></h3><button class="btn btn-primary text-left" data-bss-hover-animate="flash" type="button" style="background: rgb(76,162,255);text-align: left;">Makan!</button>
-                        <p><strong>#B1-69, SMU School of Information Systems</strong></p>
-                        <p class="description">Casual dining, Rice, Chicken, Alcohol, ...</p>
+
+                <div id='app'>
+                    <div v-for="rest in restaurants">
+                        
+                        <div class="row features">
+                            <div class="col-sm-6 col-lg-4 col-xl-9 offset-xl-2 item">
+                                <i class="fa fa-smile-o icon"></i>
+                                <h3 class="name" style="width: 24em;display: inline-block;">{{rest.name}}<br></h3>
+                                <a v-if="rest.is_open" :href="'home.html?rest_id=' + rest.rest_id">
+                                        <button class="btn btn-primary text-left" data-bss-hover-animate="flash" style="background: rgb(76,162,255);text-align: left;">
+                                        Makan!
+                                    </button>
+                                </a>
+                                <button v-else='' class="btn btn-primary text-left" data-bss-hover-animate="flash" style="background: rgb(76,162,255);text-align: left;" disabled>Closed</button>
+                                <p><strong>{{rest.address}}</strong></p>
+                                <!-- <p class="description">Casual dining, Rice, Chicken, Alcohol, ...</p> -->
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-                <div class="row features">
-                    <div class="col-sm-6 col-lg-4 col-xl-9 offset-xl-2 item"><i class="fa fa-coffee icon"></i>
-                        <h3 class="name" style="width: 24em;display: inline-block;">Spabucks<br></h3><button class="btn btn-primary text-left" data-bss-hover-animate="flash" type="button" style="background: rgb(76,162,255);text-align: left;">Makan!</button>
-                        <p><strong>#B1-01, SMU School of Information Systems</strong></p>
-                        <p class="description">Cake, coffee, tea, ...</p>
-                    </div>
-                </div>
-                <div class="row features">
-                    <div class="col-sm-6 col-lg-4 col-xl-9 offset-xl-2 item"><i class="fa fa-leaf icon"></i>
-                        <h3 class="name" style="width: 24em;display: inline-block;">Leafy Nasi Lemak<br></h3><button class="btn btn-primary text-left" data-bss-hover-animate="flash" type="button" style="background: rgb(76,162,255);text-align: left;">Makan!</button>
-                        <p><strong>#01-23, SMU School of Economics and Social Sciences</strong></p>
-                        <p class="description">Sambal chilli, rice, leaf, ...</p>
-                    </div>
-                </div>
-                <div class="row features">
-                    <div class="col-sm-6 col-lg-4 col-xl-9 offset-xl-2 item"><i class="fa fa-adn icon"></i>
-                        <h3 class="name" style="width: 24em;display: inline-block;">Adament Restaurant<br></h3><button class="btn btn-primary text-left" data-bss-hover-animate="flash" type="button" style="background: rgb(76,162,255);text-align: left;">Makan!</button>
-                        <p><strong>#01-01, SMU School of Accountancy</strong></p>
-                        <p class="description">Western food, fries, ...</p>
-                    </div>
-                </div>
+
             </div>
         </section>
-    </header>
+
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                restaurants: [] 
+            },
+            created: function() { 
+                console.log('here')
+                axios.get('http://localhost/restaurant')
+                .then(response => {
+                    all_restaurants = response.data.data.restaurants
+                    for (restaurant of all_restaurants) {
+                        console.log(restaurant)
+                        this.restaurants.push(restaurant)
+                    }
+                })
+                .catch(error => {
+                    this.res = [{ entry: 'There was an error: ' + error.message }]
+                })
+            }
+        })
+    </script>
+
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
