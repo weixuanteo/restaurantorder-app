@@ -2,6 +2,7 @@
   padding: 10px;
   background-color: #000000;
   border-bottom: 1px solid rgb(40,40,40);
+  margin-right: 5em;
 }
 
 .client-heading {
@@ -31,16 +32,10 @@
 
 .client-image {
   display: block;
-  margin-left: auto;
-  margin-right: auto;
+  /*margin-left: auto;*/
+  /*margin-right: auto;*/
   filter: grayscale(0%);
-}
-
-.client-image:hover {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  filter: grayscale(100%) invert(100%) sepia(0%);
+  margin-left: 6em;
 }
 
 .row {

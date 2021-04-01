@@ -94,3 +94,69 @@
   margin: 0 auto;
 }
 
+#mainsTitle {
+  padding-left: 3em;
+}
+
+#mainsSubtitle {
+  padding-left: 6em;
+  color: #7d8285;
+}
+
+.img-fluid.client-image {
+  max-width: 8em;
+  display: inline-block;
+}
+
+.itemName {
+  padding-left: 2em;
+  font-weight: bolder;
+}
+
+.background {
+  margin: 0 50%;
+}
+
+#orderTable {
+  width: 80%;
+  margin: 2em auto 0 auto;
+}
+
+#priceColumn {
+  width: 20%;
+}
+
+#serialColumn {
+  width: 5em;
+}
+
+#paymentDetails {
+  width: 80%;
+  margin: 3em auto 0 auto;
+}
+
+#paymentChannel {
+  width: 12em;
+}
+
+#submitOrder {
+  margin: 0 0 0 8em;
+}
+
+.table thread th, .table td, .table th {
+  border: 0;
+}
+
+.customerPerm {
+  width: 15em;
+}
+
+.itemRow {
+  margin: 1em 0;
+}
+
+#addtoMenu {
+  display: inline-block;
+  margin-left: 8em;
+}
+
