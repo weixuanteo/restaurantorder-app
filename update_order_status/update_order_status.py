@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import requests
 import json
 from os import environ
@@ -7,6 +8,7 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
+CORS(app)
 
 #update order status
 @app.route("/update_order_status/<order_id>", methods=['PUT'])
