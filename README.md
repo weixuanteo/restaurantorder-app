@@ -98,6 +98,15 @@ cd k8s
 kubectl apply -f rabbitmq.yaml
 ```
 
+Access Managment UI
+```bash
+username="$(kubectl get secret esd-rabbitmq-default-user -o jsonpath='{.data.username}' | base64 --decode)"
+echo "username: $username"
+password="$(kubectl get secret esd-rabbitmq-default-user -o jsonpath='{.data.password}' | base64 --decode)"
+echo "password: $password"
+
+kubectl port-forward "service/esd-rabbitmq" 15672
+```
 
 ### Kubernetes Cheatsheet
 
