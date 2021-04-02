@@ -42,4 +42,9 @@ spec:
         backend:
           serviceName: notification-service
           servicePort: 5000
+      - path: /get_restaurant_items
+        backend:
+          serviceName: get-restaurant-items-service
+          servicePort: 5000
+
         

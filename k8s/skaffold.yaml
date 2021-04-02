@@ -14,4 +14,6 @@ deploy:
     - create-order-definition.yaml
     - create-restaurant-definition.yaml
     - get-restaurant-definition.yaml
+    - update-order-status-definition.yaml
+    - get-restaurant-items-definition.yaml
     

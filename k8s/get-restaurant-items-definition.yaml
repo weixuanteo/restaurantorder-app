@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: get-restaurant-items
+  name: get-restaurant-items
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: get-restaurant-items
+  template:
+    metadata:
+      labels:
+        app: get-restaurant-items
+    spec:
+      containers:
+      - image: weixuantepo/get-restaurant-items
+        imagePullPolicy: Never
+        name: get-restaurant-items
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: get-restaurant-items-service
+  labels:
+    app: get-restaurant-items-service
+spec:
+  type: NodePort
+  ports:
+  - port: 5000
+    targetPort: 5000
+    protocol: TCP
+  selector:
+    app: get-restaurant-items
