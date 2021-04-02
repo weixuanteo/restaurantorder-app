@@ -278,6 +278,17 @@ def update_status(order_id):
         }
     )
 
+@app.route("/order/restaurant/<rest_id>", methods=["GET"])
+def get_orders_by_restaurant(rest_id):
+    orders = Order.query.filter_by(rest_id=rest_id).all()
+
+    return jsonify(
+        {
+            "status": "success",
+            "data": [order.json() for order in orders]
+        }
+    ), 200
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
