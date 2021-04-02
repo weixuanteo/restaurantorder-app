@@ -169,6 +169,7 @@ class Item(db.Model):
 
     def json(self):
         return {
+            "item_id": self.item_id,
             "name": self.name,
             "price": self.price,
             "description": self.description,
