@@ -7,6 +7,11 @@ span {
     display: inline-block;
 }
 
+#orderSubmitButton{
+    margin: 2em 0 0 6em;
+    color: white !important;
+}
+
 .minus, .plus{
     width:1.5em;
     height:1.5em;
