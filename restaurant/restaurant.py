@@ -349,6 +349,97 @@ def link_restaurant_item():
     ), 201
 
 
+@app.route("/restaurant/<rest_id>/item", methods=['POST'])
+def add_item_by_restaurant(rest_id):
+    data = request.get_json()
+    
+    name = data['name']
+    price = data['price']
+    description = data['description']
+    category = data['category']
+    img_url = data['img_url']
+
+    db.create_all()
+    item = Item(name,price,description,category,img_url)
+
+    try:
+        db.session.add(item)
+        db.session.commit()
+    except:
+        return jsonify(
+            {
+                "status": "error",
+                "message": "An error occured creating item"
+            }
+        ), 500
+    
+    
+    rest_item = RestaurantItems(rest_id,item.item_id)
+    restaurant = Restaurant.query.filter_by(rest_id=rest_id).first()
+    if restaurant is None:
+        return jsonify(
+            {   
+                "status":"error",
+                "message": "Restaurant does not exists"
+            }
+        ),404
+
+    restaurant.items.append(rest_item)
+
+    try:
+        db.session.add(restaurant)
+        db.session.commit()
+    except:
+        return jsonify(
+            {
+                "status": "error",
+                "message": "An error occured linking restaurant and item"
+            }
+        ), 500
+
+    return jsonify(
+        {
+            "status": "success",
+            "data": restaurant.json()
+        }
+    ), 201
+
+
+@app.route("/restaurant/<rest_id>/items", methods=["GET"])
+def get_items_by_restaurant(rest_id):
+    restaurant = Restaurant.query.filter_by(rest_id=rest_id).first()
+
+    if restaurant is None:
+        return jsonify(
+            {
+                "status": "error",
+                "message": "Restaurant of id {0} does not exists".format(rest_id)
+            }
+        )
+
+    item_ids = restaurant.items;
+    items = {}
+    for id_obj in item_ids:
+        item_id = id_obj.item_id
+        item = Item.query.filter_by(item_id=item_id).first()
+   
+        if item is None:
+            return jsonify(
+                {
+                    "status": "error",
+                    "message": "item of id {0} does not exists".format(item_id)
+                }
+            )
+        
+        items[item_id] = item.json()
+    
+    return jsonify(
+        {
+            "status": "success",
+            "data": items
+        }
+    ), 200
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
