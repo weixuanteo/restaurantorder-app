@@ -6,6 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Lestoran</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bitter:400,700">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400,400i,700">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400">
@@ -17,6 +28,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" href="assets/css/Responsive-Client-One.css">
     <link rel="stylesheet" href="assets/css/styles.css">
+
+    <!--Include vue-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>   
+    <script src="https://unpkg.com/vue-router"></script>
+
 </head>
 
 <body>
@@ -33,72 +50,157 @@
                 </div>
             </div>
         </nav>
-        <section class="features-clean">
-            <div class="container">
-                <div class="intro">
-                    <p class="text-center"></p>
-                </div>
+    </header>
+
+        <div class="container-fluid">
+
+            <!--restaurant details-->
+            <div id='app'>
                 <div class="row features">
-                    <div class="col-sm-6 col-lg-4 col-xl-10 offset-xl-3 item"><i class="fa fa-smile-o icon"></i><i class="fa fa-smile-o icon"></i>
-                        <h2 class="name" style="width: 24em;display: inline-block;">Smiley Restaurant<br></h2><button class="btn btn-primary text-left" data-bss-hover-animate="flash" type="button" style="background: rgb(76,162,255);text-align: left;">Order Now!</button>
+                    <div class="col-sm-6 col-lg-12 col-xl-12 offset-xl-3 item">
+                        <h2 class="name" style="width: 24em;display: inline-block;">Smiley Restaurant</h2> 
+                        <!-- <button class="btn btn-primary text-left" data-bss-hover-animate="flash" type="button" style="background: rgb(76,162,255);text-align: left;">Order Now!</button> -->
                         <p><strong>#B1-69, SMU School of Information Systems</strong></p>
-                        <p class="description"><i class="fa fa-tag icon" id="tagIcon" style="text-align: left;font-size: 21px;"></i><i class="fa fa-tag icon" id="tagIcon-1" style="text-align: left;font-size: 21px;"></i><i class="fa fa-tag icon" id="tagIcon" style="text-align: left;font-size: 21px;"></i>Casual dining, Rice, Chicken, Alcohol, ...</p>
-                        <div id="openingStatus"><i class="fa fa-clock-o icon" id="tagIcon-2" style="text-align: left;font-size: 21px;"></i>
-                            <p class="text-left" id="openClose"><strong>Open now</strong></p>
-                            <div class="dropdown" style="display: inline-block;margin-left: 2.5em;"><button class="btn btn-primary btn-sm dropdown-toggle text-left" aria-expanded="false" data-toggle="dropdown" id="operatingHours" type="button" style="background-color: rgba(255,0,0,0);color: #7d8285;">11.00AM - 10.30PM&nbsp;</button>
-                                <div class="dropdown-menu"><a class="dropdown-item" href="#">First Item</a><a class="dropdown-item" href="#">Second Item</a><a class="dropdown-item" href="#">Third Item</a></div>
+                        <p class="text-left" id="openClose"><strong>Open now</strong></p>
+                        <a href="payment.html">
+                            <button type="button" class="btn btn-primary btn-lg">Proceed to Payment</button>
+                        </a>
+                        </div>
+                </div>
+
+                <!--retaurant categories-->
+                
+                <div class="card text-center">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Active</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="#">Disabled</a>
+                        </li>
+                        </ul>
+                    </div>
+                    <div class='container-fluid'>
+                    
+                        <div v-for="item in items">
+                        <!--restaurant items-->
+                    
+                        <div class="col-sm-4">
+                            <div class="card">
+                                <div class="card-body">
+                                <h5 class="card-title">{{item.name}}</h5>
+                                <p class="card-text">{{item.description}}</p>
+                                <p class="card-text">$ {{item.price}}</p>
+                                <h5 class="card-title">{{item.id}}</h5>
+        
+                                <div class='row'>
+                                        
+                                    <div class="input-group-prepend">
+                                    <button class="btn btn-outline-secondary" type="button" v-on:click='add(item.id,item.qty)'> 
+                                        <span class='glyphicon glyphicon-plus'></span>
+                                    </button>
+                                    </div>
+                                
+                                    <input :value='item.qty'>
+                                    
+                                    <div class='input-group-append'>
+                                        <button class="btn btn-outline-secondary" type="button" @click='minus(item.id,item.qty)'>
+                                            <span class='glyphicon glyphicon-minus'></span>
+                                        </button>
+                                    </div> 
+        
+                                </div>
+        
                             </div>
                         </div>
-                        <div>
-                            <p class="text-uppercase" style="margin-top: 1em;"><strong>Popular choices</strong></p>
-                            <section id="horizontalMenu">
-                                <h1 class="text-center" style="margin-top: 45px;font-family: Lato, sans-serif;font-weight: 100;"></h1>
-                                <div class="client-section">
-                                    <div class="container d-flex justify-content-center client-container">
-                                        <div class="row d-flex justify-content-center client-row">
-                                            <div class="col-6 col-sm-4 col-md-2 col-lg-2 col-xl-2 d-flex justify-content-center align-items-start no-pad">
-                                                <div><a href="#"><img class="img-fluid client-image" src="assets/img/Slice%204.jpg">
-                                                        <h3 class="text-center client-heading"><strong>a7. Plain rice</strong></h3>
-                                                    </a></div>
-                                            </div>
-                                            <div class="col-6 col-sm-4 col-md-2 col-lg-2 col-xl-2 d-flex justify-content-center align-items-start no-pad">
-                                                <div><a href="#"></a><img class="img-fluid client-image" src="assets/img/Slice%2012.jpg">
-                                                    <h3 class="text-center client-heading">a9. upon noodles</h3>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 col-sm-4 col-md-2 col-lg-2 col-xl-2 d-flex justify-content-center align-items-start no-pad">
-                                                <div><a href="#"></a><img class="img-fluid client-image" src="assets/img/Slice%205.jpg">
-                                                    <h3 class="text-center client-heading">b1. chicken rice</h3>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 col-sm-4 col-md-2 col-lg-2 col-xl-2 d-flex justify-content-center align-items-start no-pad">
-                                                <div><a href="#"></a><img class="img-fluid client-image" src="assets/img/Slice%2015.jpg">
-                                                    <h3 class="text-center client-heading">b3. CHICKEN NOODLES</h3>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 col-sm-4 col-md-2 col-lg-2 col-xl-2 d-flex justify-content-center align-items-start no-pad">
-                                                <div><a href="#"></a><img class="img-fluid client-image" src="assets/img/Slice%201.jpg">
-                                                    <h3 class="text-center client-heading">B4. DUCK RICE</h3>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 col-sm-4 col-md-2 col-lg-2 col-xl-2 d-flex justify-content-center align-items-start no-pad">
-                                                <div><a href="#"></a><img class="img-fluid client-image" src="assets/img/Slice%2010.jpg">
-                                                    <h3 class="text-center client-heading">B5. DUCK PORRIDGE</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-                        </div>
                     </div>
-                </div>
+                </div>  
             </div>
-        </section>
-    </header>
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/bs-init.js"></script>
+        </div> 
+    </div>
+
+
+        <script>
+
+            
+
+            var router = new VueRouter({
+                mode:'history',
+                routes: []
+            });
+
+            new Vue({
+                router,
+                el: '#app',
+                data:{
+                    items:[],
+                },
+                methods:{
+                    add:function(id,qty){
+                        console.log(id)
+                        for (item of this.items){
+                            if (item.id == id){
+                                console.log('check->',item)
+                                item.qty += 1
+                            }  
+                        }  
+                    
+                        var obj = JSON.stringify(this.items)
+                        var orderlist = localStorage.setItem('orderlist',obj); 
+                    
+                    },
+                    minus:function(id,qty){
+                        for (item of this.items){
+                            if (item.id == id){
+                                console.log('check->',item)
+                                if (item.qty != 0){
+                                item.qty -= 1
+                                }
+                            }  
+                        }
+                        var obj = JSON.stringify(this.items)
+                        var orderlist = localStorage.setItem('orderlist',obj);   
+                    },
+                    
+                },
+                created: function() { 
+                    rest_id = this.$route.query.rest_id
+                    axios.get('http://localhost/restaurant/'+rest_id+'/items')
+                    .then(response => {
+                        restaurant_items = response.data.data
+                        console.log(restaurant_items)
+
+
+                        for (item_obj in restaurant_items) {
+                            new_item_obj = restaurant_items[item_obj]
+                            new_item_obj['rest_id'] = rest_id
+                            new_item_obj['qty'] = 0
+                            new_item_obj['id'] = item_obj
+                            this.items.push(restaurant_items[item_obj])
+                        }
+           
+                        console.log('->items',this.items)
+                        
+                        
+                    })
+                    .catch(error => {
+                        this.res = [{ entry: 'There was an error: ' + error.message }]
+                    })
+            }
+                
+            })
+        </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>

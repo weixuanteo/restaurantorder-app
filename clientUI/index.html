@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="assets/css/Responsive-Client-One.css">
     <link rel="stylesheet" href="assets/css/styles.css">
 
+    
+
     <!--Include vue-->
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.js"></script>   
@@ -33,14 +35,23 @@
                         <li class="nav-item"></li>
                     </ul>
 
-                    <form class="form-inline" id="searchBox" target="_self">
-                        <div class="form-group">
-                            <label for="search-field">
-                                <i class="fa fa-search"></i>
-                            </label>
-                            <input class="form-control search-field" type="search" id="search-field" name="search" placeholder="Search restaurant">
-                        </div>
-                    </form>
+                    <div id='search'>
+
+                        <form class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" v-model='search_term' v-on:keyup="queryDB">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" >Search</button>
+                          </form>
+<!-- 
+                        <form class="form-inline" id="searchBox" target="_self">
+                            <div class="form-group">
+                                
+                                    <input type="text" placeholder="Search.." name="search">
+                                    <button type="submit"><i class="fa fa-search"></i></button>
+                              
+                                <input color='black' class="form-control search-field" id="search-field" name="search" placeholder="Search restaurant" v-model='search_term' v-on:keyup="queryDB">
+                            </div>
+                        </form> -->
+                    </div>
 
                 </div>
             </div>
@@ -63,7 +74,7 @@
                                 <h3 class="name" style="width: 24em;display: inline-block;">{{rest.name}}<br></h3>
                                 <a v-if="rest.is_open" :href="'home.html?rest_id=' + rest.rest_id">
                                         <button class="btn btn-primary text-left" data-bss-hover-animate="flash" style="background: rgb(76,162,255);text-align: left;">
-                                        Makan!
+                                    <a href="home.html">Makan!</a>
                                     </button>
                                 </a>
                                 <button v-else class="btn btn-primary text-left" data-bss-hover-animate="flash" style="background: rgb(76,162,255);text-align: left;" disabled>Closed</button>
@@ -83,7 +94,7 @@
         new Vue({
             el: '#app',
             data: {
-                restaurants: [] 
+                restaurants: []
             },
             created: function() { 
                 console.log('here')
@@ -100,11 +111,38 @@
                 })
             }
         })
+
+        new Vue({
+            el: '#search',
+            data: {
+                search_term: ""
+            },
+            methods: {
+                queryDB : function(event){
+                console.log('detected entered key',event.key)
+                
+                // get the restaurant list
+                // filter loop list to get entered 
+
+                // axios.get('http://localhost/restaurant')
+                // .then(response => {
+                //     all_restaurants = response.data.data.restaurants
+                //     for (restaurant of all_restaurants) {
+                //         console.log(restaurant)
+                //         this.restaurants.push(restaurant)
+                //     }
+                // })
+                // .catch(error => {
+                //     this.res = [{ entry: 'There was an error: ' + error.message }]
+                // })
+            }
+            }
+        })
     </script>
 
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/bs-init.js"></script>
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/js/bs-init.js"></script>
 </body>
 
 </html>
