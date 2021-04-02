@@ -14,10 +14,10 @@ const formEvent = form.addEventListener('submit', event => {
     event.preventDefault();
 
     const name = document.querySelector('#resName').value;
-    const is_open = document.querySelector('#isopen').value;
+    const is_open = Boolean(document.querySelector('#isopen').value);
     const address = document.querySelector('#resAddress').value;
 
-    const resInfo = { name, is_open , address};
+    const resInfo = {name, is_open , address};
     createRes(resInfo);
     console.log(resInfo)
 });
