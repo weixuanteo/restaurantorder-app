@@ -23,8 +23,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/css/swiper.min.css">
     <link rel="stylesheet" href="assets/css/Simple-Slider-1.css">
     <link rel="stylesheet" href="assets/css/Simple-Slider.css">
+    <link rel="stylesheet" href="assets/css/UploadRes_IsOpen.css"
     <!--Script-->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
 </head>
 
 <body id="page-top">
@@ -128,17 +131,10 @@
                         <!--Upload Res Start-->
                         <h3 class="text-dark mb-1" style="text-align: center;font-family: Timmana, sans-serif;">Upload New Restaurant</h3>
                         <form>
-                            <div class="form-group"><input class="form-control" type="text" id="resName" name="name" placeholder="Name of Restaurant"></div>
-                            <!-- <div class="form-group">Is Open<input type="text" id="isopen" class="form-control" value="false" /></div> -->
-                            <!-- <div class="form-group"><label class="switch"><input type="checkbox" id="isopen" value="false"><span style="margin-left: 15px;" class="slider">Is Open</span></label></div>
-                             -->
-                            <label class="switch">
-                                <input type="checkbox" id="isopen" value="false" name="Is Open">  Is Open
-                                <div class="slider round"></div>
-                                </label>
-
+                            <div class="form-group">Name <br><input class="form-control" type="text" id="resName" name="name" placeholder="Enter the restaurant name here"></div>
+                            <div class="form-group">Is Restaurant Open<label style="margin-left: 20px;" class="switch"><input type="checkbox" id="isopen" value="false" name="Is Open"><div class="slider round"></div></label></div>
                             <div class="form-group"><label>Restaurant Image</label><input class="form-control-file" type="file"></div>
-                            <div class="form-group"><textarea class="form-control" id="resAddress" name="address" placeholder="Address" rows="14"></textarea></div>
+                            <div class="form-group">Address <br><textarea class="form-control" id="resAddress" name="address" placeholder="Enter restaurant Address" rows="14"></textarea></div>
                             <div class="form-group"><button class="btn btn-primary" type="submit" style="background: rgb(6,51,184);">Upload</button></div>
                         </form>
                         <!--Upload Res End-->
