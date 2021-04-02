@@ -19,6 +19,11 @@
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 
+<!--Include vue-->
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.js"></script>   
+<script src="https://unpkg.com/vue-router"></script>
+
 <body>
     <header class="header-dark">
         <nav class="navbar navbar-dark navbar-expand-lg navigation-clean-search">
@@ -32,32 +37,30 @@
         </nav>
         <h3 class="name" style="display: inline-block;margin-left: 5em;"><strong>Order summary</strong><br></h3>
     </header>
+    <div id='app'>
     <div id="orderTable">
         <div class="table-responsive">
+            
             <table class="table">
                 <thead>
-                    <tr>
-                        <th id="serialColumn">S/N</th>
-                        <th>ITEM</th>
-                        <th id="priceColumn">PRICE</th>
-                    </tr>
+                <tr>
+                    <th id="serialColumn">S/N</th>
+                    <th>ITEM</th>
+                    <th id="priceColumn">QUANTITY</th>
+                    <th id="priceColumn">PRICE</th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>M1</td>
-                        <td>Grilled Chicken Chop</td>
-                        <td>13.00</td>
+                    <tr v-for="order in orderlist">
+                        <td>{{count++}}</td>
+                        <td>{{order.name}}</td>
+                        <td>{{order.qty}}</td>
+                        <td>{{order.price}}</td>
                     </tr>
-                    <tr>
-                        <td>M3</td>
-                        <td>Fish &amp; Chips</td>
-                        <td>13.00</td>
-                    </tr>
-                    <tr></tr>
                 </tbody>
-            </table>
-        </div>
-    </div>
+                </table>
+            </div>
+            </div>
     <div id="paymentDetails">
         <div class="table-responsive" id="summaryTable">
             <table class="table">
@@ -69,19 +72,60 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td></td>
-                        <td id="paymentChannel">Google pay</td>
-                    </tr>
-                    <tr>
                         <td><strong>Total</strong></td>
-                        <td><strong>SGD 13.00</strong></td>
+                        <td><strong>{{totalcost}}</strong></td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-    <a class="btn btn-primary" id="submitOrder" href="viewOrder.html" role="button">Place order</a>
 
+    <div id="buttonHolder"><button class="btn btn-primary" id="submitOrder" type="button">Place order</button></div>
+    </div>
+    <script>
+
+
+        new Vue({
+            el: '#app',
+            data: {
+                orderlist: [],
+                count:1,
+                totalcost:0
+            },
+            created: function() { 
+                allorderlist = JSON.parse(localStorage.getItem('orderlist'));
+                console.log(allorderlist);
+                for (order of allorderlist){
+                    if (order.qty > 0){
+                       this.orderlist.push(order)
+                       this.totalcost += order.qty * order.price
+                    }
+                }
+            },
+            methods:{
+                placeorder:function(){
+                console.log('->placing order')
+                axios.post('http://order-service:5000/order/neworder')
+                .then(response => {
+                    payload = this.oderlist
+                    all_restaurants = response.data.data.restaurants
+                    for (restaurant of all_restaurants) {
+                        console.log(restaurant)
+                        this.restaurants.push(restaurant)
+                    }
+                })
+                .catch(error => {
+                    this.res = [{ entry: 'There was an error: ' + error.message }]
+                })
+            }
+        }})
+
+
+//notification -> order status
+
+
+
+    </script>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
