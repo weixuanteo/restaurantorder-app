@@ -238,7 +238,15 @@ def add_restaurant_by_owner():
             }
         ), 200
 
+@app.route("/owner/account/<rest_id>", methods=["GET"])
+def get_stripe_account_by_restaurant(rest_id):
+    ownerRestaurant = OwnerRestaurant.query.filter_by(rest_id=rest_id).first()
+    owner = Owner.query.filter_by(owner_id=ownerRestaurant.owner_id).first()
 
+    return jsonify({
+        "status": "success",
+        "data": owner.json()
+    })
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
