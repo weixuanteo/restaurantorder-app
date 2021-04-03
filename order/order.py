@@ -3,6 +3,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from os import environ
 import logging
+import amqp_setup
+import pika
+import json
 
 ON_RECEIVE_STATUS = '1'
 #accept -> 2
@@ -165,6 +168,28 @@ def create_order():
                 "message": "An error occured creating order"
             }
         ), 500
+
+    order_id = order.order_id
+    order_status = order.status.status
+
+    queue_name = "order" + str(order_id)
+    routing_key = str(order_id) + ".order.status"
+    message_data = json.dumps({"order_id": order_id, "status": order_status})
+
+    try:
+        amqp_setup.channel.queue_declare(queue=queue_name, durable=True)
+        amqp_setup.channel.queue_bind(exchange=amqp_setup.exchangename, queue=queue_name, routing_key=routing_key)
+        amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key=routing_key, body=message_data, properties=pika.BasicProperties(delivery_mode=2))
+        print("\nOrder notification published to the RabbitMQ Exchange:", message_data)
+
+    except Exception as e:
+        print(e)
+        return jsonify(
+            {
+                "status": "error",
+                "message": "error in publishing message to rabbitmq"
+            }
+        ), 500
     
     return jsonify(
         {
@@ -274,6 +299,26 @@ def update_status(order_id):
             }
         ), 500
 
+    order_status = data['status']
+
+    queue_name = "order" + str(order_id)
+    routing_key = str(order_id) + ".order.status"
+    message_data = json.dumps({"order_id": order_id, "status": order_status})
+
+    try:
+        amqp_setup.channel.queue_declare(queue=queue_name, durable=True)
+        amqp_setup.channel.queue_bind(exchange=amqp_setup.exchangename, queue=queue_name, routing_key=routing_key)
+        amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key=routing_key, body=message_data, properties=pika.BasicProperties(delivery_mode=2))
+        print("\nOrder notification published to the RabbitMQ Exchange:", message_data)
+
+    except Exception as e:
+        print(e)
+        return jsonify(
+            {
+                "status": "error",
+                "message": "error in publishing message to rabbitmq"
+            }
+        )
 
     return jsonify(
         {
