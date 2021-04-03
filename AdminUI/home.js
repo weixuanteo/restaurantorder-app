@@ -1,4 +1,5 @@
 // rmb to change the variable OID
+
 axios.get('http://localhost/get_restaurants/1').then(responseAllRes => {
        //console.log(responseAllRes.data);
        var allRes = responseAllRes.data.data;
@@ -13,6 +14,9 @@ axios.get('http://localhost/get_restaurants/1').then(responseAllRes => {
            var status = "";
            rest = allRes[res]
            console.log(rest.name)
+           var selectedRestId = rest.rest_id;
+           sessionStorage.setItem("selectedRestId", selectedRestId);
+
            if (rest.is_open == true){
                status = "Open";
            }else{
@@ -24,7 +28,8 @@ axios.get('http://localhost/get_restaurants/1').then(responseAllRes => {
                 <div class="card"><img class="card-img-top w-100 d-block" src="assets/img/res5.jpg">
                         <h4 class="card-title" style="font-family: Bangers, cursive;color: rgb(0,0,0);">${rest.name}</h4>
                         <h6 class="text-muted card-subtitle mb-2" style="color: rgb(0,0,0);">${rest.address}</h6>
-                        <p class="card-text" style="color: rgb(0,0,0);">Hours: ${status}</p><button class="btn btn-primary" type="button" style="background: rgb(6,51,184);">Select</button>
+                        <p class="card-text" style="color: rgb(0,0,0);">Hours: ${status}</p>
+                        <button class="btn btn-primary" type="button" onClick="window.location='http://127.0.0.1:5500/AdminUI/IndividualRes.html'" style="background: rgb(6,51,184);">Select</button>
                     </div>
                 </div>
             </div>
