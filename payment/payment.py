@@ -12,6 +12,51 @@ CORS(app)
 
 stripe.api_key = environ.get('STRIPE_API_KEY')
 
+@app.route("/payment", methods=["POST"])
+def new_payment():
+    data = request.get_json()
+
+    account_id = data["account_id"]
+    order = data["order"]
+    # order_items = data["order_items"]
+
+    # line_items = []
+    # for order_item in order_items:
+    #     item = {}
+    #     item["name"] = order_item["name"]
+    #     item["amount"] = order_item["qty"]
+    #     item["currency"] = "sgd"
+    #     item["amount"] = order_item["price"]
+    #     line_items.append(item)
+
+    # print(line_items)
+    # return
+
+    session = stripe.checkout.Session.create(
+        payment_method_types=['card'],
+        line_items=[{
+            'name': 'Lestoran Meal',
+            'amount': order["price"] * 100,
+            'currency': 'sgd',
+            'quantity': 1
+        }],
+        payment_intent_data={
+            'application_fee_amount': 1,
+            'transfer_data': {
+                'destination': account_id,
+            },
+        },
+        success_url="http://localhost:5500/bootClientUI/orderStatus.html",
+        cancel_url="http://localhost:5500/bootClientUI/home.html"
+    )
+
+    return jsonify({
+        "status": "success",
+        "data": {
+            "id": session.id
+        }
+    })
+
 @app.route("/payment/account/url", methods=["GET"])
 def create_express_account():
 
@@ -61,6 +106,7 @@ def delete_express_account(id):
             "message": "Account ID of {0} successfully deleted".format(id)
         }
     )
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
