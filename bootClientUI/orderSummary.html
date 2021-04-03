@@ -24,6 +24,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
 </head>
 
 <body id="page-top">
@@ -161,7 +162,7 @@
             orderlist: [],
             count:1,
             totalcost:0,
-            table_no:0
+            table_no:0,
         },
         created: function() { 
             this.table_no = this.$route.query.table_no
@@ -210,6 +211,12 @@
 
                     localStorage.setItem('orderIds', JSON.stringify(orderIds)); 
                     this.toastmsg("Your Order Has Been Send" , "green")
+
+                    const session_id = response.data.data.session_id;
+                    const stripe = Stripe("pk_test_51IbUJEJU9CXYTy2gVO1HIHua9mawozB27FuynLOkxNirbvPsCUbHbeTNDBjAlLk5Qn6UiZnC5AZgtcUKUuo5ZAu000rjeD7no9");
+                    await stripe.redirectToCheckout({
+                        sessionId: session_id
+                    })
 
                 } catch (error) {
                     console.log(error)
