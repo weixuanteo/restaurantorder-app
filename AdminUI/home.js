@@ -1,4 +1,4 @@
-axios.get('http://localhost/get_restaurants/1').then(responseAllRes => {
+axios.get('http://localhost/owner/restaurant').then(responseAllRes => {
        //console.log(responseAllRes.data);
        var allRes = responseAllRes.data.data;
        console.log(allRes);
@@ -13,7 +13,7 @@ axios.get('http://localhost/get_restaurants/1').then(responseAllRes => {
            html_dis +=` 
                 <div class="col-md-4">
                 <div class="card">
-                    <div class="card-body" style="box-shadow: 0px 0px 15px 3px var(--indigo);">
+                <div class="card-body" style="border-right-width: 10px;border-right-color: var(--blue);box-shadow: 0px 0px 15px 3px var(--indigo);">
                         <h4 class="card-title" style="font-family: Bangers, cursive;color: rgb(0,0,0);">${rest.name}</h4>
                         <h6 class="text-muted card-subtitle mb-2" style="color: rgb(0,0,0);">${rest.address}</h6>
                         <div class="simple-slider">
