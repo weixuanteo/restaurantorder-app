@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Dashboard - Brand</title>
+    <script src="assets/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Acme">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Akaya+Kanadaka">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alata">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alatsi">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bangers">
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
+    <link rel="stylesheet" href="assets/css/Contact-Form-Clean.css">
+    <link rel="stylesheet" href="assets/css/Navigation-Clean.css">
+
+    <!--Include vue-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>   
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content" style="background: url(&quot;assets/img/photo-1590846406792-0adc7f938f1d.jpg&quot;) top / cover no-repeat;">
+                <div id='app'>
+                    <!-- Modal -->
+                    <div class="modal fade" id="tablemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Enter Your Table No</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                                <label for="recipient-name" class="col-form-label" >Table No:</label>
+                                <input type="text" class="form-control" id="recipient-name" v-model="table_no">
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Start Ordering</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
+                    <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
+                        <div class="container-fluid">
+                            <button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button">
+                                <i class="fas fa-bars"></i></button><i class="fa fa-star" style="color: rgb(4,23,169);"></i>
+                                <label style="font-family: Bangers, cursive;font-size: 40px;color: rgb(4,23,169);">Lestoran</label>
+                            <form class="form-inline d-none mr-auto ml-md-3 my-2 my-md-0  navbar-search">
+                                <div class="input-group">
+                                    <div class="input-group-append"></div>
+                                </div>
+                            </form>
+                            <ul class="navbar-nav flex-nowrap ml-auto">
+                                <li class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#"><i class="fas fa-search"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-right p-3 animated--grow-in" aria-labelledby="searchDropdown">
+                                        <form class="form-inline mr-auto navbar-search w-100">
+                                            <div class="input-group">
+                                                <input class="bg-light form-control border-0 small" type="text" v-model="searchterm" v-on:keyup='queryDB' placeholder="Search for ...">
+                                                <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
+                                                <a v-if='searchresults.length >=1' v-for="rest in searchresults" class="dropdown-item" :href="'confirmOrder.html?rest_id='+rest.rest_id+'&table_no=' + table_no">
+                                                    {{rest.name}}
+                                                </a>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown no-arrow mx-1">
+                                    <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#"><span class="badge badge-danger badge-counter">3+</span><i class="fas fa-bell fa-fw"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right dropdown-list animated--grow-in">
+                                            <h6 class="dropdown-header">alerts center</h6>
+                                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                                <div class="mr-3">
+                                                    <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
+                                                </div>
+                                                <div><span class="small text-gray-500">December 12, 2019</span>
+                                                    <p>A new monthly report is ready to download!</p>
+                                                </div>
+                                            </a>
+                                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                                <div class="mr-3">
+                                                    <div class="bg-warning icon-circle"><i class="fas fa-exclamation-triangle text-white"></i></div>
+                                                </div>
+                                                <div><span class="small text-gray-500">December 2, 2019</span>
+                                                    <p>Spending Alert: We've noticed unusually high spending for your account.</p>
+                                                </div>
+                                            </a><a class="dropdown-item text-center small text-gray-500" :href="'orderStatus.html?table_no='+table_no">View All Order Status</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <div class="d-none d-sm-block topbar-divider"></div>
+                                <label style="text-align: center;font-size: 40px;color: rgb(4,23,169);">Table No: {{table_no}}</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+
+                    
+                        <div class="container-fluid">
+                            <h1 style="color: rgb(255,255,255);font-family: Acme, sans-serif;margin-bottom: 20px;text-align: center;">All Restaurants</h1>
+                            <div class="row">
+                                <div class="col">
+
+                                    <div v-for="rest in restaurants">
+                                        <div class="card" style="margin-bottom: 60px;margin-left: 60px;margin-right: 60px;">
+                                            <div class="card-body">
+                                                <img>
+                                                <a v-if="rest.is_open" :href="'confirmOrder.html?rest_id='+rest.rest_id+'&table_no=' + table_no">
+                                                    <button class="btn btn-primary" type="button" style="float: right;margin-top: 50px;background: rgb(27,69,193);">Makan!</button>
+                                                </a>
+                                                <button v-else class="btn btn-primary" type="button" style="float: right;margin-top: 50px;background: rgb(27,69,193);" disabled>Closed</button>
+                                                <h4 class="card-title" style="color: rgb(0,0,0);">{{rest.name}}</h4>
+                                                <h6 class="text-muted card-subtitle mb-2"></h6>
+                                                <p class="card-text">{{rest.address}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+
+            </div>
+            <footer class="bg-white sticky-footer">
+                <div class="container my-auto">
+                    <div class="text-center my-auto copyright"><span>Copyright © Brand 2021</span></div>
+                </div>
+            </footer>
+        </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+    </div>
+
+    <script>
+
+        $(document).ready(function(){
+            $('#tablemodal').modal('show');
+        });
+
+        new Vue({
+            el: '#app',
+            data: {
+                restaurants: [],
+                searchterm: "",
+                searchresults:[],
+                table_no:""
+            },
+            created: function() { 
+                axios.get('http://localhost/restaurant')
+                .then(response => {
+                    all_restaurants = response.data.data.restaurants
+                    for (restaurant of all_restaurants) {
+                        console.log(restaurant)
+                        this.restaurants.push(restaurant)
+                    }
+                })
+                .catch(error => {
+                    this.res = [{ entry: 'There was an error: ' + error.message }]
+                })
+            },
+            methods:{
+                queryDB : function(event){
+                    
+                    this.searchresults=[]
+                    if (this.searchterm.length>=1){
+                        
+                        search = this.searchterm.toLowerCase()
+                        for (rest of this.restaurants){
+                            if (rest.name.toLowerCase().startsWith(search) & !(this.searchresults.includes(rest.name))){
+                                this.searchresults.push(rest)
+                            }
+                        }
+                    }
+                    else{
+                        this.searchresults=[]
+                    }
+            }
+            }
+        })
+
+    </script>
+
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+    <script src="assets/js/theme.js"></script>
+</body>
+
+</html>
