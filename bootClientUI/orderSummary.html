@@ -17,12 +17,19 @@
     <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
     <link rel="stylesheet" href="assets/css/Contact-Form-Clean.css">
     <link rel="stylesheet" href="assets/css/Navigation-Clean.css">
+    <!--Include vue-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>   
+    <script src="https://unpkg.com/vue-router"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 </head>
 
 <body id="page-top">
     <div id="wrapper">
         <div class="d-flex flex-column" id="content-wrapper">
-            <div id="content">
+            <div id="app">
                 <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
                     <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button><i class="fa fa-star" style="color: rgb(4,23,169);"></i><label style="font-family: Bangers, cursive;font-size: 40px;color: rgb(4,23,169);">Lestoran</label>
                         <form class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
@@ -68,54 +75,11 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="nav-item dropdown no-arrow mx-1">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#"><span class="badge badge-danger badge-counter">7</span><i class="fas fa-envelope fa-fw"></i></a>
-                                    <div class="dropdown-menu dropdown-menu-right dropdown-list animated--grow-in">
-                                        <h6 class="dropdown-header">alerts center</h6><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image mr-3"><img class="rounded-circle" src="assets/img/avatars/avatar4.jpeg">
-                                                <div class="bg-success status-indicator"></div>
-                                            </div>
-                                            <div class="font-weight-bold">
-                                                <div class="text-truncate"><span>Hi there! I am wondering if you can help me with a problem I've been having.</span></div>
-                                                <p class="small text-gray-500 mb-0">Emily Fowler - 58m</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image mr-3"><img class="rounded-circle" src="assets/img/avatars/avatar2.jpeg">
-                                                <div class="status-indicator"></div>
-                                            </div>
-                                            <div class="font-weight-bold">
-                                                <div class="text-truncate"><span>I have the photos that you ordered last month!</span></div>
-                                                <p class="small text-gray-500 mb-0">Jae Chun - 1d</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image mr-3"><img class="rounded-circle" src="assets/img/avatars/avatar3.jpeg">
-                                                <div class="bg-warning status-indicator"></div>
-                                            </div>
-                                            <div class="font-weight-bold">
-                                                <div class="text-truncate"><span>Last month's report looks great, I am very happy with the progress so far, keep up the good work!</span></div>
-                                                <p class="small text-gray-500 mb-0">Morgan Alvarez - 2d</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image mr-3"><img class="rounded-circle" src="assets/img/avatars/avatar5.jpeg">
-                                                <div class="bg-success status-indicator"></div>
-                                            </div>
-                                            <div class="font-weight-bold">
-                                                <div class="text-truncate"><span>Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</span></div>
-                                                <p class="small text-gray-500 mb-0">Chicken the Dog · 2w</p>
-                                            </div>
-                                        </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                                    </div>
-                                </div>
-                                <div class="shadow dropdown-list dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown"></div>
-                            </li>
-                            <div class="d-none d-sm-block topbar-divider"></div>
-                            <li class="nav-item dropdown no-arrow">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small">Valerie Luna</span><img class="border rounded-circle img-profile" src="assets/img/avatars/avatar1.jpeg"></a>
-                                    <div class="dropdown-menu shadow dropdown-menu-right animated--grow-in"><a class="dropdown-item" href="#"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" href="#"><i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Settings</a><a class="dropdown-item" href="#"><i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Activity log</a>
-                                        <div class="dropdown-divider"></div><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Logout</a>
-                                    </div>
-                                </div>
-                            </li>
+                        </li>
+                        <div class="d-none d-sm-block topbar-divider"></div>
+                        <label style="text-align: center;font-size: 40px;color: rgb(4,23,169);">Table No: {{table_no}}</label>
+                        </li>
+                        
                         </ul>
                     </div>
                 </nav>
@@ -138,19 +102,13 @@
                                         </tr>
                                     </thead>
                                     <tbody style="color: rgb(0,0,0);">
-                                        <tr style="color: rgb(0,0,0);">
-                                            <td style="color: rgb(0,0,0);">Cell 1</td>
-                                            <td style="color: rgb(0,0,0);">Cell 2</td>
-                                            <td style="color: rgb(0,0,0);">Text</td>
-                                            <td style="color: rgb(0,0,0);">Text</td>
+                                        <tr v-for="order in orderlist">
+                                            <td>{{count}}</td>
+                                            <td>{{order.name}}</td>
+                                            <td>{{order.qty}}</td>
+                                            <td>{{order.price}}</td>
                                         </tr>
-                                        <tr style="color: rgb(0,0,0);"></tr>
-                                        <tr style="color: rgb(0,0,0);">
-                                            <td style="color: rgb(0,0,0);">Cell 3</td>
-                                            <td style="color: rgb(0,0,0);">Cell 4</td>
-                                            <td style="color: rgb(0,0,0);">Text</td>
-                                            <td style="color: rgb(0,0,0);">Text</td>
-                                        </tr>
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -168,12 +126,12 @@
                                     <tbody>
                                         <tr style="color: rgb(0,0,0);">
                                             <td style="color: rgb(0,0,0);">Total</td>
-                                            <td style="color: rgb(0,0,0);">0</td>
+                                            <td style="color: rgb(0,0,0);">{{totalcost}}</td>
                                         </tr>
                                         <tr></tr>
                                     </tbody>
                                 </table>
-                            </div><button class="btn btn-primary" type="button" style="float: right;background: rgb(27,69,193);">Place Order</button>
+                            </div><button class="btn btn-primary" type="button" style="float: right;background: rgb(27,69,193);" @click="placeorder">Place Order</button>
                         </div>
                     </div>
                 </div>
@@ -181,6 +139,84 @@
             <footer class="bg-white sticky-footer"></footer>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
+    <script>
+        var router = new VueRouter({
+            mode:'history',
+            routes: []
+        });
+
+        new Vue({
+            router,
+            el: '#app',
+            data: {
+                orderlist: [],
+                count:1,
+                totalcost:0,
+                table_no:0
+            },
+            created: function() { 
+                this.table_no = this.$route.query.table_no
+                allorderlist = JSON.parse(localStorage.getItem('orderlist'));
+                console.log(allorderlist);
+                for (order of allorderlist){
+                    if (order.qty > 0){
+                       this.orderlist.push(order)
+                       this.totalcost += order.qty * order.price
+                    }
+                }
+            },
+            methods:{
+                placeorder:function(){
+                localStorage.clear()
+                payload = {}
+                rest_id = 0
+                order_items = []
+                for (val of this.orderlist){
+                    order_items.push({"item_id":val.id,"qty":val.qty})
+                    rest_id = val.rest_id
+                }
+
+                payload = {
+                    "rest_id":rest_id,
+                    "table_no":this.table_no,
+                    "order_items":order_items,
+                    "price":this.totalcost
+                }
+
+                console.log('checking order payload->',payload)
+                axios.post('http://localhost/order-service:5000/order/neworder',payload)
+                .then(response => {
+
+                    result = response.data.data
+                    for (val in result) {
+                       orderids.push(val.order_id)
+                    }
+
+                    localStorage.setItem('orderIds',JSON.stringify(orderids)); 
+                    this.toastmsg("Your Order Has Been Send","green")
+                })
+                .catch(error => {
+                    this.res = [{ entry: 'There was an error: ' + error.message }]
+                    this.toastmsg("Error In Sending Order","red")
+                })
+            },
+            toastmsg:function(msg,color){
+                Toastify({
+                    text: msg,
+                    duration: 1500,
+                    close: true,
+                    backgroundColor: color,
+
+                }).showToast();
+            }
+        }})
+
+
+//notification -> order status
+
+
+
+    </script>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
