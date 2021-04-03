@@ -34,6 +34,7 @@ class Owner(db.Model):
     email = db.Column(db.String(64), nullable=False)
     password = db.Column(db.String(128), nullable=False)
     restaurants = db.relationship('OwnerRestaurant', backref='owner', lazy=True)
+    stripe_account = db.Column(db.String(128), nullable=True)
     
     def __init__(self, name, email, password):
         self.name = name
@@ -46,7 +47,8 @@ class Owner(db.Model):
             "name": self.name,
             "email": self.email,
             "password": self.password,
-            "restaurants": [restaurant.json() for restaurant in self.restaurants]
+            "restaurants": [restaurant.json() for restaurant in self.restaurants],
+            "stripe_account": self.stripe_account
         }
 
 class OwnerRestaurant(db.Model):
@@ -145,6 +147,8 @@ def update_owner(oid):
         owner.name = data["name"]
     if "email" in data:
         owner.email = data["email"]
+    if "stripe" in data:
+        owner.stripe_account = data["stripe"]
 
     try:
         db.session.add(owner)
