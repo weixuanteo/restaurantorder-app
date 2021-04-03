@@ -131,7 +131,7 @@
                                         <tr></tr>
                                     </tbody>
                                 </table>
-                            </div><button class="btn btn-primary" type="button" style="float: right;background: rgb(27,69,193);" @click="placeorder">Place Order</button>
+                            </div><button class="btn btn-primary" type="button" style="float: right;background: rgb(27,69,193);" @click="placeOrder">Place Order</button>
                         </div>
                     </div>
                 </div>
@@ -139,84 +139,7 @@
             <footer class="bg-white sticky-footer"></footer>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
-    <script>
-        var router = new VueRouter({
-            mode:'history',
-            routes: []
-        });
 
-        new Vue({
-            router,
-            el: '#app',
-            data: {
-                orderlist: [],
-                count:1,
-                totalcost:0,
-                table_no:0
-            },
-            created: function() { 
-                this.table_no = this.$route.query.table_no
-                allorderlist = JSON.parse(localStorage.getItem('orderlist'));
-                console.log(allorderlist);
-                for (order of allorderlist){
-                    if (order.qty > 0){
-                       this.orderlist.push(order)
-                       this.totalcost += order.qty * order.price
-                    }
-                }
-            },
-            methods:{
-                placeorder:function(){
-                localStorage.clear()
-                payload = {}
-                rest_id = 0
-                order_items = []
-                for (val of this.orderlist){
-                    order_items.push({"item_id":val.id,"qty":val.qty})
-                    rest_id = val.rest_id
-                }
-
-                payload = {
-                    "rest_id":rest_id,
-                    "table_no":this.table_no,
-                    "order_items":order_items,
-                    "price":this.totalcost
-                }
-
-                console.log('checking order payload->',payload)
-                axios.post('http://localhost/order-service:5000/order/neworder',payload)
-                .then(response => {
-
-                    result = response.data.data
-                    for (val in result) {
-                       orderids.push(val.order_id)
-                    }
-
-                    localStorage.setItem('orderIds',JSON.stringify(orderids)); 
-                    this.toastmsg("Your Order Has Been Send","green")
-                })
-                .catch(error => {
-                    this.res = [{ entry: 'There was an error: ' + error.message }]
-                    this.toastmsg("Error In Sending Order","red")
-                })
-            },
-            toastmsg:function(msg,color){
-                Toastify({
-                    text: msg,
-                    duration: 1500,
-                    close: true,
-                    backgroundColor: color,
-
-                }).showToast();
-            }
-        }})
-
-
-//notification -> order status
-
-
-
-    </script>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
@@ -224,3 +147,106 @@
 </body>
 
 </html>
+
+<script>
+    var router = new VueRouter({
+        mode:'history',
+        routes: []
+    });
+
+    new Vue({
+        router,
+        el: '#app',
+        data: {
+            orderlist: [],
+            count:1,
+            totalcost:0,
+            table_no:0
+        },
+        created: function() { 
+            this.table_no = this.$route.query.table_no
+            allorderlist = JSON.parse(localStorage.getItem('orderlist'));
+            console.log(allorderlist);
+            for (order of allorderlist){
+                if (order.qty > 0){
+                   this.orderlist.push(order)
+                   this.totalcost += order.qty * order.price
+                }
+            }
+        },
+        methods: {
+            placeOrder: async function() {
+                // localStorage.clear()
+                payload = {}
+                rest_id = 0
+                order_items = []
+                for (val of this.orderlist) {
+                    order_items.push({"item_id" : val.id, "qty" : val.qty})
+                    rest_id = val.rest_id
+                }
+
+                payload = {
+                    "rest_id" : parseInt(rest_id),
+                    "table_no" : parseInt(this.table_no),
+                    "order_items" : order_items,
+                    "price" : this.totalcost
+                }
+
+                console.log('checking order payload->',payload)
+                try {
+                    const response = await axios.post('http://localhost/create_order', payload)
+
+                    console.log(response.data)
+                    const order_id = response.data.data.order.order_id;
+
+                    if (localStorage.getItem("orderIds") == null) {
+                        const ids = [];
+                        localStorage.setItem("orderIds", JSON.stringify(ids));
+                    }
+
+                    const orderIds = JSON.parse(localStorage.getItem("orderIds"));
+                    orderIds.push(order_id);
+                    console.log(orderIds)
+
+                    localStorage.setItem('orderIds', JSON.stringify(orderIds)); 
+                    this.toastmsg("Your Order Has Been Send" , "green")
+
+                } catch (error) {
+                    console.log(error)
+                    this.res = [{ entry: 'There was an error: ' + error.message }]
+                    this.toastmsg("Error In Sending Order","red")
+
+                }
+            // axios.post('http://localhost/create_order',payload)
+            //     .then(response => {
+
+            //         result = response.data.data.order
+            //         for (val in result) {
+            //         orderids.push(val.order_id)
+            //         }
+
+            //         localStorage.setItem('orderIds',JSON.stringify(orderids)); 
+            //         this.toastmsg("Your Order Has Been Send","green")
+            //     })
+            //     .catch(error => {
+            //         this.res = [{ entry: 'There was an error: ' + error.message }]
+            //         this.toastmsg("Error In Sending Order","red")
+            //     })
+        },
+        toastmsg: function(msg,color) {
+            Toastify({
+                text: msg,
+                duration: 1500,
+                close: true,
+                backgroundColor: color,
+
+            }).showToast();
+        }
+    }})
+
+
+//notification -> order status
+
+
+
+</script>
