@@ -17,115 +17,83 @@
     <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
     <link rel="stylesheet" href="assets/css/Contact-Form-Clean.css">
     <link rel="stylesheet" href="assets/css/Navigation-Clean.css">
+
+    <!--Include vue-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>   
+    <script src="https://unpkg.com/vue-router"></script>
 </head>
 
 <body id="page-top">
     <div id="wrapper">
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content" style="background: #ffffff;">
-                <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
-                    <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button><i class="fa fa-star" style="color: rgb(4,23,169);"></i><label style="font-family: Bangers, cursive;font-size: 40px;color: rgb(4,23,169);">Lestoran</label>
-                        <form class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                            <div class="input-group">
-                                <div class="input-group-append"></div>
-                            </div>
-                        </form>
-                        <ul class="navbar-nav flex-nowrap ml-auto">
-                            <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#"><i class="fas fa-search"></i></a>
-                                <div class="dropdown-menu dropdown-menu-right p-3 animated--grow-in" aria-labelledby="searchDropdown">
-                                    <form class="form-inline mr-auto navbar-search w-100">
-                                        <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ...">
-                                            <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
+                
+                <div id='app'>
+                    <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
+                        <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button><i class="fa fa-star" style="color: rgb(4,23,169);"></i><label style="font-family: Bangers, cursive;font-size: 40px;color: rgb(4,23,169);">Lestoran</label>
+                            <form class="form-inline d-none mr-auto ml-md-3 my-2 my-md-0  navbar-search">
+                                <div class="input-group">
+                                    <div class="input-group-append"></div>
+                                </div>
+                            </form>
+                            <ul class="navbar-nav flex-nowrap ml-auto">
+                                <li class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#"><i class="fas fa-search"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-right p-3 animated--grow-in" aria-labelledby="searchDropdown">
+                                        <form class="form-inline mr-auto navbar-search w-100">
+                                            <div class="input-group">
+                                                <input class="bg-light form-control border-0 small" type="text" v-model="searchterm" v-on:keyup='queryDB' placeholder="Search for ...">
+                                                <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
+                                                <a v-if='searchresults.length >=1' v-for="rest in searchresults" class="dropdown-item" :href="'confirmOrder.html?rest_id=' + rest.rest_id">
+                                                    {{rest.name}}
+                                                </a>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown no-arrow mx-1">
+                                    <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#"><span class="badge badge-danger badge-counter">3+</span><i class="fas fa-bell fa-fw"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right dropdown-list animated--grow-in">
+                                            <h6 class="dropdown-header">alerts center</h6>
+                                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                                <div class="mr-3">
+                                                    <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
+                                                </div>
+                                                <div><span class="small text-gray-500">December 12, 2019</span>
+                                                    <p>A new monthly report is ready to download!</p>
+                                                </div>
+                                            </a>
+                                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                                <div class="mr-3">
+                                                    <div class="bg-warning icon-circle"><i class="fas fa-exclamation-triangle text-white"></i></div>
+                                                </div>
+                                                <div><span class="small text-gray-500">December 2, 2019</span>
+                                                    <p>Spending Alert: We've noticed unusually high spending for your account.</p>
+                                                </div>
+                                            </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Notifications</a>
                                         </div>
-                                    </form>
-                                </div>
-                            </li>
-                            <li class="nav-item dropdown no-arrow mx-1">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#"><span class="badge badge-danger badge-counter">3+</span><i class="fas fa-bell fa-fw"></i></a>
-                                    <div class="dropdown-menu dropdown-menu-right dropdown-list animated--grow-in">
-                                        <h6 class="dropdown-header">alerts center</h6><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="mr-3">
-                                                <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 12, 2019</span>
-                                                <p>A new monthly report is ready to download!</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="mr-3">
-                                                <div class="bg-success icon-circle"><i class="fas fa-donate text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 7, 2019</span>
-                                                <p>$290.29 has been deposited into your account!</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="mr-3">
-                                                <div class="bg-warning icon-circle"><i class="fas fa-exclamation-triangle text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 2, 2019</span>
-                                                <p>Spending Alert: We've noticed unusually high spending for your account.</p>
-                                            </div>
-                                        </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
                                     </div>
-                                </div>
+                                </li>
                             </li>
-                            <li class="nav-item dropdown no-arrow mx-1">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#"><span class="badge badge-danger badge-counter">7</span><i class="fas fa-envelope fa-fw"></i></a>
-                                    <div class="dropdown-menu dropdown-menu-right dropdown-list animated--grow-in">
-                                        <h6 class="dropdown-header">alerts center</h6><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image mr-3"><img class="rounded-circle" src="assets/img/avatars/avatar4.jpeg">
-                                                <div class="bg-success status-indicator"></div>
-                                            </div>
-                                            <div class="font-weight-bold">
-                                                <div class="text-truncate"><span>Hi there! I am wondering if you can help me with a problem I've been having.</span></div>
-                                                <p class="small text-gray-500 mb-0">Emily Fowler - 58m</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image mr-3"><img class="rounded-circle" src="assets/img/avatars/avatar2.jpeg">
-                                                <div class="status-indicator"></div>
-                                            </div>
-                                            <div class="font-weight-bold">
-                                                <div class="text-truncate"><span>I have the photos that you ordered last month!</span></div>
-                                                <p class="small text-gray-500 mb-0">Jae Chun - 1d</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image mr-3"><img class="rounded-circle" src="assets/img/avatars/avatar3.jpeg">
-                                                <div class="bg-warning status-indicator"></div>
-                                            </div>
-                                            <div class="font-weight-bold">
-                                                <div class="text-truncate"><span>Last month's report looks great, I am very happy with the progress so far, keep up the good work!</span></div>
-                                                <p class="small text-gray-500 mb-0">Morgan Alvarez - 2d</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image mr-3"><img class="rounded-circle" src="assets/img/avatars/avatar5.jpeg">
-                                                <div class="bg-success status-indicator"></div>
-                                            </div>
-                                            <div class="font-weight-bold">
-                                                <div class="text-truncate"><span>Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</span></div>
-                                                <p class="small text-gray-500 mb-0">Chicken the Dog · 2w</p>
-                                            </div>
-                                        </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                                    </div>
-                                </div>
-                                <div class="shadow dropdown-list dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown"></div>
+                                <div class="d-none d-sm-block topbar-divider"></div>
+                                <label style="text-align: center;font-size: 40px;color: rgb(4,23,169);">Table No: {{table_no}}</label>
                             </li>
-                            <div class="d-none d-sm-block topbar-divider"></div>
-                            <li class="nav-item dropdown no-arrow">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small">Valerie Luna</span><img class="border rounded-circle img-profile" src="assets/img/avatars/avatar1.jpeg"></a>
-                                    <div class="dropdown-menu shadow dropdown-menu-right animated--grow-in"><a class="dropdown-item" href="#"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" href="#"><i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Settings</a><a class="dropdown-item" href="#"><i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Activity log</a>
-                                        <div class="dropdown-divider"></div><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Logout</a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
+                            </ul>
+                        </div>
+                    </nav>
+
                 <div class="container" style="margin-bottom: 20px;">
                     <div class="row">
                         <div class="col">
-                            <h1 style="color: rgb(0,0,0);font-family: Acme, sans-serif;">ResName</h1>
-                            <p style="color: rgb(0,0,0);font-size: 20px;font-family: Acme, sans-serif;">Address</p>
-                            <p style="color: rgb(0,0,0);font-size: 20px;font-family: Acme, sans-serif;">ResStatus</p><button class="btn btn-primary" type="button" style="float: right;background: rgb(27,69,193);">Make Payment</button>
-                        </div>
+                            <h1 style="color: rgb(0,0,0);font-family: Acme, sans-serif;">{{thisrest.name}}</h1>
+                            <p style="color: rgb(0,0,0);font-size: 20px;font-family: Acme, sans-serif;">{{thisrest.address}}</p>
+                            <p v-if='thisrest.is_open' style="color: green;font-size: 20px;font-family: Acme, sans-serif;">Now open</p>
+                            <p v-else style="color: red;font-size: 20px;font-family: Acme, sans-serif;">Closed</p>
+                            <a :href="'orderSummary.html?table_no='+table_no">
+                                <button v-if="precheck != 0" class="btn btn-primary" type="button" style="float: right;background: rgb(27,69,193);">Make Payment</button>
+                                <button v-else class="btn btn-primary" type="button" style="float: right;background: rgb(27,69,193);" disabled>Make Payment</button>
+                            </a>
+                            </div>
                     </div>
                 </div>
                 <div class="container-fluid">
@@ -141,40 +109,151 @@
                         </div>
                     </nav>
                     <div class="row">
-                        <div class="col" style="margin-bottom: 60px;">
-                            <div class="card-group">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 style="color: rgb(0,0,0);text-align: center;font-family: Acme, sans-serif;">ItemName</h5>
-                                        <p style="color: rgb(0,0,0);text-align: center;font-family: Acme, sans-serif;font-size: 20px;">Description</p>
-                                        <p style="color: rgb(0,0,0);text-align: center;font-family: Acme, sans-serif;font-size: 20px;">Price</p>
-                                        <div class="btn-group" role="group" style="text-align: center;"></div>
-                                        <div class="row" style="text-align: center;">
-                                            <div class="col" style="text-align: center;"><button class="btn btn-primary" type="button" style="height: 35px;text-align: center;background: rgb(27,69,193);"><i class="fa fa-plus" style="text-align: center;"></i></button><input type="url" style="width: 50px;margin-left: 10px;margin-right: 10px;height: 35px;text-align: center;"><button class="btn btn-primary" type="button" style="height: 35px;text-align: center;background: rgb(27,69,193);"><i class="fa fa-minus"></i></button></div>
+                        <div v-for="item in items" class="col-sm-4">
+                            <div  class="card">
+                                <div class="card-body">
+                                    <h5 style="color: rgb(0,0,0);text-align: center;font-family: Acme, sans-serif;">{{item.name}}</h5>
+                                    <p style="color: rgb(0,0,0);text-align: center;font-family: Acme, sans-serif;font-size: 20px;">{{item.description}}</p>
+                                    <p style="color: rgb(0,0,0);text-align: center;font-family: Acme, sans-serif;font-size: 20px;">$ {{item.price}}</p>
+                                    <div class="btn-group" role="group" style="text-align: center;"></div>
+                                    <div class="row" style="text-align: center;">
+                                        <div class="col" style="text-align: center;">
+                                            <button class="btn btn-primary" type="button" style="height: 35px;text-align: center;background: rgb(27,69,193);" v-on:click='add(item.id,item.qty)'>
+                                                <i class="fa fa-plus" style="text-align: center;"></i>
+                                            </button>
+                                            <input type="url" style="width: 50px;margin-left: 10px;margin-right: 10px;height: 35px;text-align: center;" :value='item.qty'>
+                                            <button class="btn btn-primary" type="button" style="height: 35px;text-align: center;background: rgb(27,69,193);" @click='minus(item.id,item.qty)'>
+                                                <i class="fa fa-minus"></i>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Title</h4><button class="btn btn-primary" type="button">Button</button>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Title</h4><button class="btn btn-primary" type="button">Button</button>
-                                    </div>
-                                </div>
                             </div>
-                        </div>
+                            </div>       
                     </div>
-                </div>
-                <div class="card-group">
-                    <div class="card"></div>
-                </div>
+                </div>>
+            </div>
             </div>
             <footer class="bg-white sticky-footer"></footer>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
+
+    <script>
+
+    var router = new VueRouter({
+        mode:'history',
+        routes: []
+    });
+
+    new Vue({
+        router,
+        el: '#app',
+        data:{
+            items:[],
+            searchterm: "",
+            searchresults:[],
+            restaurants: [],
+            thisrest:{},
+            table_no:0,
+            checker:0
+        },
+        computed:{
+            precheck:function(){
+                for (item of this.items){
+                    if (item.qty > 0){
+                        this.checker = 1
+                    }
+                }
+                return this.checker
+            },
+        },
+        methods:{
+            add:function(id,qty){
+                console.log(id)
+                for (item of this.items){
+                    if (item.id == id){
+                        console.log('check->',item)
+                        item.qty += 1
+                    }  
+                }  
+                localStorage.setItem('orderlist',JSON.stringify(this.items)); 
+                this.precheck
+                
+            },
+            minus:function(id,qty){
+                for (item of this.items){
+                    if (item.id == id){
+                        console.log('check->',item)
+                        if (item.qty != 0){
+                        item.qty -= 1
+                        }
+                    }  
+                }
+                localStorage.setItem('orderlist',JSON.stringify(this.items));
+                this.checker = 0  
+                this.precheck 
+            },
+            queryDB : function(event){
+            this.searchresults=[]
+            if (this.searchterm.length>=1){
+                
+                search = this.searchterm.toLowerCase()
+
+                for (rest of this.restaurants){
+                    if (rest.name.toLowerCase().startsWith(search) & !(this.searchresults.includes(rest.name))){
+                        this.searchresults.push(rest)
+                    }
+                }
+            }
+            else{
+                this.searchresults=[]
+            }
+            }
+            
+        },
+        created: function() { 
+            rest_id = this.$route.query.rest_id
+            this.table_no = this.$route.query.table_no
+            console.log(this.table_no)
+        
+            
+            axios.get('http://localhost/restaurant')
+            .then(response => {
+                all_restaurants = response.data.data.restaurants
+                for (restaurant of all_restaurants) {
+                    this.restaurants.push(restaurant)
+                    if (rest_id == restaurant.rest_id){
+                        this.thisrest = restaurant
+                    }
+                }
+            })
+            .catch(error => {
+                this.res = [{ entry: 'There was an error: ' + error.message }]
+            })
+
+            
+            axios.get('http://localhost/restaurant/'+rest_id+'/items')
+            .then(response => {
+                restaurant_items = response.data.data
+                for (item_obj in restaurant_items) {
+                    new_item_obj = restaurant_items[item_obj]
+                    new_item_obj['rest_id'] = rest_id
+                    new_item_obj['qty'] = 0
+                    new_item_obj['id'] = item_obj
+                    this.items.push(restaurant_items[item_obj])
+                }
+                
+            })
+            .catch(error => {
+                this.res = [{ entry: 'There was an error: ' + error.message }]
+            })
+
+            
+    }        
+    })
+
+    </script>
+    
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
