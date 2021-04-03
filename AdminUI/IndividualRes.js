@@ -1,3 +1,6 @@
+var selectedRestId = sessionStorage.getItem("selectedRestId");
+console.log(selectedRestId);
+
 axios.get('http://localhost/restaurant/1/items').then(responseAllResItems => {
         var html_dis = ``;
         var allRestItems = responseAllResItems.data.data;
@@ -6,7 +9,7 @@ axios.get('http://localhost/restaurant/1/items').then(responseAllResItems => {
             // console.log(restItem)
             console.log(allRestItems[restItem])
             item_detail = allRestItems[restItem]
-            console.log(item_detail.img_url)
+
             html_dis +=`
             <div class="card"><img class="card-img-top w-100 d-block" src="${item_detail.img_url}">
                 <div class="card-body">
