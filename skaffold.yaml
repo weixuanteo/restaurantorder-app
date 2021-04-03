@@ -68,14 +68,15 @@ build:
           dest: "."
     docker:
       dockerfile: Dockerfile
-  - image: weixuantepo/get-restaurant-items
-    context: get_restaurant_items
+  - image: weixuantepo/payment
+    context: payment
     sync:
       manual:
         - src: "*.py"
           dest: "."
     docker:
       dockerfile: Dockerfile
+
 deploy:
   kubectl:
     manifests:
@@ -90,4 +91,4 @@ deploy:
     - k8s/get-restaurants-definition.yaml
     - k8s/update-order-status-definition.yaml
     - k8s/notification-definition.yaml
-    - k8s/get-restaurant-items-definition.yaml
+    - k8s/payment-definition.yaml
