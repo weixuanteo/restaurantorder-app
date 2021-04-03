@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Blank Page - Brand</title>
+    <script src="assets/js/jquery.min.js"></script>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Acme">
@@ -17,7 +18,6 @@
     <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
     <link rel="stylesheet" href="assets/css/Contact-Form-Clean.css">
     <link rel="stylesheet" href="assets/css/Navigation-Clean.css">
-
     <!--Include vue-->
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.js"></script>   
@@ -30,8 +30,34 @@
             <div id="content" style="background: #ffffff;">
                 
                 <div id='app'>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="tablemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Enter Your Table No</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                                <label for="recipient-name" class="col-form-label" >Table No:</label>
+                                <input type="text" class="form-control" id="recipient-name" v-model="table_no">
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Start Ordering</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
                     <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
-                        <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button><i class="fa fa-star" style="color: rgb(4,23,169);"></i><label style="font-family: Bangers, cursive;font-size: 40px;color: rgb(4,23,169);">Lestoran</label>
+                        <div class="container-fluid">
+                            <button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button">
+                                <i class="fas fa-bars"></i></button><i class="fa fa-star" style="color: rgb(4,23,169);"></i>
+                                <label style="font-family: Bangers, cursive;font-size: 40px;color: rgb(4,23,169);">Lestoran</label>
                             <form class="form-inline d-none mr-auto ml-md-3 my-2 my-md-0  navbar-search">
                                 <div class="input-group">
                                     <div class="input-group-append"></div>
@@ -44,7 +70,7 @@
                                             <div class="input-group">
                                                 <input class="bg-light form-control border-0 small" type="text" v-model="searchterm" v-on:keyup='queryDB' placeholder="Search for ...">
                                                 <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
-                                                <a v-if='searchresults.length >=1' v-for="rest in searchresults" class="dropdown-item" :href="'confirmOrder.html?rest_id=' + rest.rest_id">
+                                                <a v-if='searchresults.length >=1' v-for="rest in searchresults" class="dropdown-item" :href="'confirmOrder.html?rest_id='+rest.rest_id+'&table_no=' + table_no">
                                                     {{rest.name}}
                                                 </a>
                                             </div>
@@ -70,14 +96,13 @@
                                                 <div><span class="small text-gray-500">December 2, 2019</span>
                                                     <p>Spending Alert: We've noticed unusually high spending for your account.</p>
                                                 </div>
-                                            </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Notifications</a>
+                                            </a><a class="dropdown-item text-center small text-gray-500" :href="'orderStatus.html?table_no='+table_no">View All Order Status</a>
                                         </div>
                                     </div>
                                 </li>
-                            </li>
                                 <div class="d-none d-sm-block topbar-divider"></div>
                                 <label style="text-align: center;font-size: 40px;color: rgb(4,23,169);">Table No: {{table_no}}</label>
-                            </li>
+                                </li>
                             </ul>
                         </div>
                     </nav>
@@ -139,6 +164,9 @@
     </div>
 
     <script>
+    $(document).ready(function(){
+    $('#tablemodal').modal('show');
+    });
 
     var router = new VueRouter({
         mode:'history',
