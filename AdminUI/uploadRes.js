@@ -34,3 +34,5 @@ const formEvent = form.addEventListener('submit', event => {
     createRes(resInfo);
     console.log(resInfo)
 });
+
+
