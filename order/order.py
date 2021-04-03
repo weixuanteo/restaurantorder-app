@@ -37,24 +37,27 @@ class Order(db.Model):
     order_time = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     rest_id = db.Column(db.Integer, nullable=False)
     table_no = db.Column(db.Integer, nullable=False)
-    order_type = db.Column(db.String(10), nullable=False)
-    comments = db.Column(db.String(10), nullable=False)
+    price = db.Column(db.Float,nullable=False)
+    # order_type = db.Column(db.String(10), nullable=False)
+    # comments = db.Column(db.String(10), nullable=False)
 
     status = db.relationship('OrderStatus', backref='order', uselist=False)
     
-    def __init__(self,rest_id,order_type,comments,table_no):
+    def __init__(self,rest_id,table_no,price):
         
         self.rest_id = rest_id
-        self.order_type = order_type
-        self.comments = comments
+        # self.order_type = order_type
+        # self.comments = comments
         self.table_no = table_no
+        self.price = price
 
     def json(self):
         order =  {
             "order_id":self.order_id,
             "rest_id": self.rest_id,
-            "order_type": self.order_type,
-            "comments": self.comments,
+            # "order_type": self.order_type,
+            # "comments": self.comments,
+            "price":self.price,
             "table_no":self.table_no,
             "order_status":self.status.json()
             
@@ -135,13 +138,14 @@ def create_order():
     data = request.get_json()
 
     rest_id = data["rest_id"]
-    order_type = data["order_type"]
-    comments = data['comments']
+    # order_type = data["order_type"]
+    # comments = data['comments']
     order_items = data['order_items']
     table_no = data['table_no']
+    price = data['price']
 
     db.create_all()
-    order = Order(rest_id,order_type,comments,table_no)
+    order = Order(rest_id,table_no,price)
 
     for item in order_items:
         order.order_item.append(OrderItem(item_id=item['item_id'],qty=item['qty']))
@@ -288,6 +292,8 @@ def get_orders_by_restaurant(rest_id):
             "data": [order.json() for order in orders]
         }
     ), 200
+
+
 
 
 if __name__ == '__main__':
