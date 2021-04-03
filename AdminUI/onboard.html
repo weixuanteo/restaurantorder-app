@@ -95,7 +95,10 @@
                 const url = response.data.data.url;
                 const account_id = response.data.data.id;
 
-                localStorage.setItem("stripe_id", account_id)
+                localStorage.setItem("stripe_id", account_id);
+
+                const owner = JSON.parse(localStorage.getItem("owner"));
+                const updateResponse = await axios.put("http://localhost/owner/" + owner.owner_id, {"stripe": account_id});
 
                 window.location.href = url;
             } catch (err) {
