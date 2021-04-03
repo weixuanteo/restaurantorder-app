@@ -1,6 +1,7 @@
-//Upload Res
+//Upload Restaurant 
 const createRes = (resInfo) => {
-    axios.post('http://localhost/restaurant', resInfo)
+    // RMB to change the oid variable 
+    axios.post('http://localhost/create_restaurant/1', resInfo)
         .then(response => {
             const addedRes = response.data;
             console.log(`POST: Restaurant is added`, addedRes);
