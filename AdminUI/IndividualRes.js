@@ -56,6 +56,14 @@ new Vue({
                 document.getElementById("listOfItemsbyRes").innerHTML = html_dis;
         })
     },
+    methods: {
+        addNewItem: function() {
+            window.location.href = "UploadMenu.html?id=" + this.rest_id;
+        },
+        viewOrders: function() {
+            window.location.href = "OrderList.html?id=" + this.rest_id;
+        }
+    }
 
 
 
