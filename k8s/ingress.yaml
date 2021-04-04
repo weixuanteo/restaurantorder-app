@@ -46,3 +46,7 @@ spec:
         backend:
           serviceName: payment-service
           servicePort: 5000
+      - path: /get_orders
+        backend:
+          serviceName: get-orders-service
+          servicePort: 5000

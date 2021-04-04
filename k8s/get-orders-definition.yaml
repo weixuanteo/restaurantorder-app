@@ -2,31 +2,31 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: get-restaurants
-  name: get-restaurants
+    app: get-orders
+  name: get-orders
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: get-restaurants
+      app: get-orders
   template:
     metadata:
       labels:
-        app: get-restaurants
+        app: get-orders
     spec:
       containers:
-      - image: weixuantepo/get-restaurants
+      - image: weixuantepo/get-orders
         imagePullPolicy: Never
-        name: get-restaurants
+        name: get-orders
 
 ---
 
 apiVersion: v1
 kind: Service
 metadata:
-  name: get-restaurants-service
+  name: get-orders-service
   labels:
-    app: get-restaurants-service
+    app: get-orders-service
 spec:
   type: NodePort
   ports:
@@ -34,4 +34,4 @@ spec:
     targetPort: 5000
     protocol: TCP
   selector:
-    app: get-restaurants
+    app: get-orders

@@ -36,7 +36,7 @@ def new_payment():
         payment_method_types=['card'],
         line_items=[{
             'name': 'Lestoran Meal',
-            'amount': order["price"] * 100,
+            'amount': int(order["price"] * 100),
             'currency': 'sgd',
             'quantity': 1
         }],
