@@ -33,8 +33,10 @@
                         <div class="container-fluid">
                             <button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button">
                                 <i class="fas fa-bars"></i></button><i class="fa fa-star" style="color: rgb(4,23,169);"></i>
+                                <a href="index.html">
                                 <label style="font-family: Bangers, cursive;font-size: 40px;color: rgb(4,23,169);">Lestoran</label>
-                            <form class="form-inline d-none mr-auto ml-md-3 my-2 my-md-0  navbar-search">
+                                </a>
+                                <form class="form-inline d-none mr-auto ml-md-3 my-2 my-md-0  navbar-search">
                                 <div class="input-group">
                                     <div class="input-group-append"></div>
                                 </div>
@@ -46,7 +48,7 @@
                                             <div class="input-group">
                                                 <input class="bg-light form-control border-0 small" type="text" v-model="searchterm" v-on:keyup='queryDB' placeholder="Search for ...">
                                                 <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
-                                                <a v-if='searchresults.length >=1' v-for="rest in searchresults" class="dropdown-item" :href="'confirmOrder.html?rest_id='+rest.rest_id+'&table_no=' + table_no">
+                                                <a v-if='searchresults.length >=1' v-for="rest in searchresults" class="dropdown-item" :href="'confirmOrder.html?rest_id='+rest.rest_id">
                                                     {{rest.name}}
                                                 </a>
                                             </div>
@@ -72,13 +74,11 @@
                                                 <div><span class="small text-gray-500">December 2, 2019</span>
                                                     <p>Spending Alert: We've noticed unusually high spending for your account.</p>
                                                 </div>
-                                            </a><a class="dropdown-item text-center small text-gray-500" :href="'orderStatus.html?table_no='+table_no">View All Order Status</a>
+                                            </a><a class="dropdown-item text-center small text-gray-500" href="orderStatus.html">View All Order Status</a>
                                         </div>
                                     </div>
                                 </li>
-                                <div class="d-none d-sm-block topbar-divider"></div>
-                                <label style="text-align: center;font-size: 40px;color: rgb(4,23,169);">Table No: {{table_no}}</label>
-                                </li>
+                        
                             </ul>
                         </div>
                     </nav>
@@ -118,6 +118,8 @@
     </div>
 
     <script>
+        localStorage.clear()
+
         new Vue({
             el: '#app',
             data: {
