@@ -28,13 +28,22 @@ def get_order_notifications(order_id):
     ))
 
     channel = connection.channel()
-    method_frame, header_frame, body = channel.basic_get(queue=queue_name)
-    if method_frame is None:
-        connection.close()
+    try:
+        method_frame, header_frame, body = channel.basic_get(queue=queue_name)
+        if method_frame is None:
+            connection.close()
+            return jsonify({
+                "status": "fail",
+                "message": "No message available"
+            })
+
+    except pika.exceptions.ChannelClosedByBroker as e:
         return jsonify({
-            "status": "fail",
-            "message": "No message available"
+            "status" : "fail",
+            "message": str(e)
         })
+
+
     channel.basic_ack(delivery_tag=method_frame.delivery_tag)
 
     message = body.decode('unicode_escape')
