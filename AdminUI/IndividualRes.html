@@ -59,8 +59,12 @@
                 </nav>
                 <div class="container-fluid" id ="app">
                     <div class="d-sm-flex justify-content-between align-items-center mb-4" style="font-family: Bangers, cursive;color: rgb(0,0,0);">
-                        <h3 id="restaurant_name"  class="text-dark mb-0" style="color: rgb(4,4,4);font-size: 30px;">Restaurant A</h3>
-                        <button class="btn btn-primary" type="button" style="float: right;background: rgb(6,51,184);font-family: Nunito, sans-serif;" @click="viewOrders">View Orders</button>
+                        <h3 id="restaurant_name"  class="text-dark mb-0" style="color: rgb(4,4,4);font-size: 30px;"></h3>
+                        <div style="float: right;">
+                            <button class="btn btn-primary" type="button" style="background: rgb(72,92,201);font-family: Nunito, sans-serif;" @click="viewStripeDashboard">Check Balance on Stripe</button>
+                            <button class="btn btn-primary" type="button" style="background: rgb(6,51,184);font-family: Nunito, sans-serif;" @click="viewOrders">View Orders</button>
+                        </div>
+                    
                     </div>
                     <div class="row">
                         <div class="col-md-6 col-xl-3 mb-4">

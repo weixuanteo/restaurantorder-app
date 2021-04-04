@@ -62,6 +62,13 @@ new Vue({
         },
         viewOrders: function() {
             window.location.href = "OrderList.html?id=" + this.rest_id;
+        },
+        viewStripeDashboard: function() {
+            const ownerObj = getOwner();
+            axios.get('http://localhost/payment/dashboard/' + ownerObj.stripe_account).then(response => {
+                const dashboard_url = response.data.data.url;
+                window.location.href = dashboard_url;
+            })
         }
     }
 
