@@ -28,11 +28,14 @@
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="app">
                 
+                
                 <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
                     <div class="container-fluid">
                         <button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button">
                             <i class="fas fa-bars"></i></button><i class="fa fa-star" style="color: rgb(4,23,169);"></i>
-                            <label style="font-family: Bangers, cursive;font-size: 40px;color: rgb(4,23,169);">Lestoran</label>
+                            <a href="index.html">
+                                <label style="font-family: Bangers, cursive;font-size: 40px;color: rgb(4,23,169);">Lestoran</label>
+                                </a>
                         <form class="form-inline d-none mr-auto ml-md-3 my-2 my-md-0  navbar-search">
                             <div class="input-group">
                                 <div class="input-group-append"></div>
@@ -58,7 +61,7 @@
                                             <div><span class="small text-gray-500">December 2, 2019</span>
                                                 <p>Spending Alert: We've noticed unusually high spending for your account.</p>
                                             </div>
-                                        </a><a class="dropdown-item text-center small text-gray-500" :href="'orderStatus.html?table_no='+table_no">View All Order Status</a>
+                                        </a><a class="dropdown-item text-center small text-gray-500" href="orderStatus.html">View All Order Status</a>
                                     </div>
                                 </div>
                             </li>
@@ -116,7 +119,7 @@
             },
             mounted: function() { 
 
-                this.table_no = this.$route.query.table_no
+                this.table_no = JSON.parse(localStorage.getItem("table_no"));
                 orderlist = JSON.parse(localStorage.getItem('orderIds'));
                 window.setInterval(() => {
                 this.status_result =[]
