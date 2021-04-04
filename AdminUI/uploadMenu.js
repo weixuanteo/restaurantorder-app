@@ -1,9 +1,13 @@
-//Upload Res
+const url_string = window.location.href;
+const url = new URL(url_string)
+const rest_id = url.searchParams.get("id");
+
 const createMenu = (menuInfo) => {
-    axios.post('http://localhost/restaurant/1/item', menuInfo)
+    axios.post('http://localhost/restaurant/' + rest_id + '/item', menuInfo)
         .then(response => {
             const addedMenu = response.data;
             console.log(`POST: Menu is added`, addedMenu);
+            window.location.href = "IndividualRes.html?id=" + rest_id;
         })
         .catch(error => console.error(error));
 };
