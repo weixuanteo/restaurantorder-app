@@ -303,7 +303,7 @@ def update_status(order_id):
 
     queue_name = "order" + str(order_id)
     routing_key = str(order_id) + ".order.status"
-    message_data = json.dumps({"order_id": order_id, "status": order_status})
+    message_data = json.dumps({"order_id": int(order_id), "status": order_status})
 
     try:
         amqp_setup.channel.queue_declare(queue=queue_name, durable=True)
@@ -318,7 +318,7 @@ def update_status(order_id):
                 "status": "error",
                 "message": "error in publishing message to rabbitmq"
             }
-        )
+        ), 500
 
     return jsonify(
         {
