@@ -52,14 +52,6 @@ build:
           dest: "."
     docker:
       dockerfile: Dockerfile
-  - image: weixuantepo/update-order-status
-    context: update_order_status
-    sync:
-      manual:
-        - src: "*.py"
-          dest: "."
-    docker:
-      dockerfile: Dockerfile
   - image: weixuantepo/notification
     context: notification
     sync:
@@ -70,6 +62,14 @@ build:
       dockerfile: Dockerfile
   - image: weixuantepo/payment
     context: payment
+    sync:
+      manual:
+        - src: "*.py"
+          dest: "."
+    docker:
+      dockerfile: Dockerfile
+  - image: weixuantepo/get-orders
+    context: get_orders
     sync:
       manual:
         - src: "*.py"
@@ -89,6 +89,6 @@ deploy:
     - k8s/order-definition.yaml
     - k8s/create-restaurant-definition.yaml
     - k8s/get-restaurants-definition.yaml
-    - k8s/update-order-status-definition.yaml
     - k8s/notification-definition.yaml
     - k8s/payment-definition.yaml
+    - k8s/get-orders-definition.yaml
