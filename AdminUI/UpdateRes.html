@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Blank Page - Brand</title>
+    <title>Update Restaurant Details</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Aguafina+Script">
@@ -62,13 +62,14 @@
                 <div class="container-fluid" id = "restDetails">
                     <section class="contact-clean">
                         <!--Update Res Start-->
-                        <h3 class="text-dark mb-1" style="text-align: center;font-family: Timmana, sans-serif;">Upload Restaurant Details Here</h3>
+                        <h3 class="text-dark mb-1" style="text-align: center;font-family: Timmana, sans-serif;">Update Restaurant Details Here</h3>
                         <form >
                             <div class="form-group">Name <br><input class="form-control" type="text" id="resName" name="name" placeholder="Enter the restaurant name here"></div>
                             <div class="form-group">Is Restaurant Open<label style="margin-left: 20px;" class="switch"><input type="checkbox" id="isopen" value="false" name="Is Open"><div class="slider round"></div></label></div>
                             <div class="form-group"><label>Restaurant Image</label><input class="form-control-file" type="file"></div>
                             <div class="form-group">Address <br><textarea class="form-control" id="resAddress" name="address" placeholder="Enter restaurant Address" rows="14"></textarea></div>
-                            <div class="form-group"><button class="btn btn-primary" type="submit" style="background: rgb(6,51,184);">Update</button></div>
+                            <div class="form-group"><button onclick="location.href='Home.html'" class="btn btn-primary" id="backBtn" style="background: rgb(6,51,184);">Back</button>
+                            <button class="btn btn-primary" type="submit" style="background: rgb(6,51,184); float:right;">Update</button></div>
                         </form>
                         <!--Update Res End-->
                     </section>
