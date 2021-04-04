@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: get-restaurants
-  name: get-restuarants
+  name: get-restaurants
 spec:
   replicas: 1
   selector:
