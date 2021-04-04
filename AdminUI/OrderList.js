@@ -1,4 +1,12 @@
-// rmb to change the variable restid
+window.onload = function() {
+    const owner = getOwner();
+    const owner_name = owner.name;
+    document.getElementById("ownerName").innerHTML = owner_name;
+
+    attachSignOut();
+}
+
+
 axios.get('http://localhost/get_orders/1').then(responseAllOrders => {
     //console.log(responseAllRes.data);
     var allOrder = responseAllOrders.data.data;
