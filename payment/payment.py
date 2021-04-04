@@ -98,7 +98,7 @@ def delete_express_account(id):
                 "status": "error",
                 "message": "An error occured attempting to delete the account"
             }
-        )
+        ), 500
 
     return jsonify(
         {
@@ -106,6 +106,26 @@ def delete_express_account(id):
             "message": "Account ID of {0} successfully deleted".format(id)
         }
     )
+
+@app.route("/payment/dashboard/<id>", methods=["GET"])
+def get_account_dashboard_link(id):
+    login = None
+    try:
+        login = stripe.Account.create_login_link(
+            id,
+        )
+    except:
+        return jsonify(
+            {
+                "status": "error",
+                "message": "An error occured attempting to create login link"
+            }
+        ), 500
+
+    return jsonify({
+        "status": "success",
+        "data": login
+    }), 200
 
 
 if __name__ == '__main__':
