@@ -1,3 +1,12 @@
+window.onload = function() {
+    const owner = getOwner();
+    const owner_name = owner.name;
+    document.getElementById("ownerName").innerHTML = owner_name;
+
+    attachSignOut();
+}
+
+
 var router = new VueRouter({
     mode:'history',
     routes: []
