@@ -72,7 +72,14 @@
                                     <h4 class="card-title" style="font-family: Bangers, cursive;color: rgb(0,0,0);">{{restaurant.name}}</h4>
                                     <h6 class="text-muted card-subtitle mb-2" style="color: rgb(0,0,0);">{{restaurant.address}}</h6>
                                     <p class="card-text" style="color: rgb(0,0,0);">{{restaurant.status}}</p>
-                                    <button class="btn btn-primary" type="button" @click="selectRestaurant(restaurant.rest_id)" style="background: rgb(6,51,184);">Select</button>
+                                    <div class="row">
+                                        <div class="col">
+                                            <button class="btn btn-primary btn-block" type="button" style="background: rgb(6,51,184);" onclick="location.href='UpdateRes.html'">Edit</button>
+                                        </div>
+                                        <div class="col">
+                                            <button class="btn btn-primary btn-block" type="button" @click="selectRestaurant(restaurant.rest_id)" style="background: rgb(6,51,184);">Select</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
