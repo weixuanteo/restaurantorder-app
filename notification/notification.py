@@ -40,7 +40,7 @@ def get_order_notifications(order_id):
     message = body.decode('unicode_escape')
     message_json = json.loads(message)
 
-    if message_json["status"] == "Completed":
+    if message_json["status"] == 3:
         channel.queue_delete(queue_name)
     
     connection.close()

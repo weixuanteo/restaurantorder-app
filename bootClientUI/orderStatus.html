@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Blank Page - Brand</title>
+    <title>Lestoran - Order Status</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Acme">
@@ -43,26 +43,10 @@
                         </form>
                         <ul class="navbar-nav flex-nowrap ml-auto">
                             <li class="nav-item dropdown no-arrow mx-1">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#"><span class="badge badge-danger badge-counter">3+</span><i class="fas fa-bell fa-fw"></i></a>
-                                    <div class="dropdown-menu dropdown-menu-right dropdown-list animated--grow-in">
-                                        <h6 class="dropdown-header">alerts center</h6>
-                                        <a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="mr-3">
-                                                <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 12, 2019</span>
-                                                <p>A new monthly report is ready to download!</p>
-                                            </div>
-                                        </a>
-                                        <a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="mr-3">
-                                                <div class="bg-warning icon-circle"><i class="fas fa-exclamation-triangle text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 2, 2019</span>
-                                                <p>Spending Alert: We've noticed unusually high spending for your account.</p>
-                                            </div>
-                                        </a><a class="dropdown-item text-center small text-gray-500" href="orderStatus.html">View All Order Status</a>
-                                    </div>
+                                <div class="nav-item dropdown no-arrow">
+                                    <a class="dropdown-toggle nav-link" aria-expanded="false"  href="orderStatus.html">
+                                        <i class="fas fa-bell fa-fw"></i>
+                                    </a>
                                 </div>
                             </li>
                             <div class="d-none d-sm-block topbar-divider"></div>
@@ -90,9 +74,9 @@
                                         </tr>
                                     </thead>
                                     <tbody style="color: rgb(0,0,0);">
-                                        <tr v-for="order in status_result">
-                                            <td>{{order.order_id}}</td>
-                                            <td :style="[order.status == 'Order Received' ? {'color': 'Blue'} : {'color': 'Green'}]">{{order.status}}</td>
+                                        <tr v-for="(status, id) of status_result">
+                                            <td>{{id}}</td>
+                                            <td :style="[status == 'Order Received' ? {'color': 'Blue'} : {'color': 'Green'}]">{{status}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -114,43 +98,89 @@
             router,
             el: '#app',
             data: {
-                status_result:[],
+                status_result: {},
                 table_no:''
             },
             mounted: function() { 
 
                 this.table_no = JSON.parse(localStorage.getItem("table_no"));
-                orderlist = JSON.parse(localStorage.getItem('orderIds'));
+
+                this.populateOrders();
+
                 window.setInterval(() => {
-                this.status_result =[]
-                console.log(orderlist)
+                    this.checkOrderStatus();
+                },5000)
+            },
+            methods: {
+                populateOrders: function() {
+                    const orderlist = JSON.parse(localStorage.getItem('orderIds'));
+                    this.status_result = {}
+                    console.log(orderlist)
 
-                for (id of orderlist){
-                    axios.get('http://localhost/order/'+id)
-                    .then(response => {
-                        
-                        order = response.data.data
-                        console.log(order)
-                        if (order.order_status.status == 1){
-                            status = 'Order Received'
-                        }
-                        else if (order.order_status.status == 2){
-                            status = "Preparing Order"
-                        }
-                        else{
-                            status = "Order Completed"
-                        }
-                        this.status_result.push({'order_id':order.order_id,"status":status})
-                        console.log(this.status_result)
-                        
-                    })
-                    .catch(error => {
-                        this.res = [{ entry: 'There was an error: ' + error.message }]
-                    })
+                    for (id of orderlist){
+                        axios.get('http://localhost/notification/' + id)
+                        .then(response => {
+                            
+                            const order = response.data.data
 
+                            if (response.data.status != "fail") {
+                                if (order.status == 1){
+                                    status = 'Order Received'
+                                }
+                                else if (order.status == 2){
+                                    status = "Preparing Order"
+                                }
+                                else{
+                                    status = "Order Completed"
+                                }
+                                Vue.set(this.status_result, id, status)
+
+                                console.log(this.status_result)
+                                }
+                            
+                        })
+                        .catch(error => {
+                            this.res = [{ entry: 'There was an error: ' + error.message }]
+                        })
+
+                    }
+                },
+                checkOrderStatus: function() {
+
+                    const orderList = JSON.parse(localStorage.getItem('orderIds'));
+                    for (let id of orderList) {
+                        axios.get('http://localhost/notification/'+id).then(response => {
+                            if (response.data.status != "fail") {
+                                let status = "";
+                                let status_response = response.data.data.status;
+
+                                if (status_response == 1) {
+                                    status = 'Order Received'
+                                }
+                                else if (status_response == 2) {
+                                    status = "Preparing Order"
+                                }
+                                else {
+                                    status = "Order Completed"
+                                    let i = 0
+                                    for (let oid of orderList) {
+                                        if (oid == id) {
+                                            orderList.splice(i, 1);
+                                        }
+                                    }
+                                    localStorage.setItem("orderIds", JSON.stringify(orderList))
+                                }
+                                Vue.set(this.status_result, id, status)
+                            }
+                        
+                        }).catch(error => {
+                            console.log(error)
+                        })
+
+                    }
                 }
-            },2000)
-        }})
+            }
+        })
 
 
 //notification -> order status
