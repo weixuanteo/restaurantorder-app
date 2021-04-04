@@ -1,4 +1,9 @@
-axios.get('http://localhost/restaurant/1').then(responseRestDetails => {
+const url_string = window.location.href;
+const url = new URL(url_string)
+const rest_id = url.searchParams.get("id");
+
+
+axios.get('http://localhost/restaurant/' + rest_id).then(responseRestDetails => {
         var html_dis = ``;
         var RestDetails = responseRestDetails.data.data;
         console.log(RestDetails);
