@@ -1,7 +1,17 @@
-var selectedRestId = sessionStorage.getItem("selectedRestId");
-console.log(selectedRestId);
+window.onload = function() {
+    const owner = getOwner();
+    const owner_name = owner.name;
+    document.getElementById("ownerName").innerHTML = owner_name;
 
-axios.get('http://localhost/restaurant/1/items').then(responseAllResItems => {
+    attachSignOut();
+}
+
+const url_string = window.location.href;
+const url = new URL(url_string)
+const rest_id = url.searchParams.get("id");
+
+
+axios.get('http://localhost/restaurant/' + rest_id  + '/items').then(responseAllResItems => {
         var html_dis = ``;
         var allRestItems = responseAllResItems.data.data;
         console.log(allRestItems);
