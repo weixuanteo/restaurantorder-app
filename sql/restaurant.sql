@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 DROP TABLE IF EXISTS `restaurant`;
 CREATE TABLE IF NOT EXISTS `restaurant` (
   `rest_id` int NOT NULL AUTO_INCREMENT,
@@ -46,20 +45,3 @@ INSERT INTO `restaurant_items` (`rest_id`, `item_id`) VALUES
 select*from `restaurant`;
 select*from `item`;
 select*from `restaurant_items`;
-=======
-use `restaurant`;
-DROP TABLE IF EXISTS `restaurant`;
-CREATE TABLE IF NOT EXISTS `restaurant` (
-  `rest_id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(128) NOT NULL,
-  `is_open` boolean NOT NULL,
-  `address` varchar(128) NOT NULL,
-  PRIMARY KEY (`rest_id`)
-);
-
-INSERT INTO `restaurant` (`name`, `is_open`,`address`) VALUES
-('rest 1', 1,"sengkang"),
-('rest 2', 0,"hougang"),
-('rest 3', 0,"punggol"),
-('rest 4', 1,"orchard");
->>>>>>> Stashed changes
