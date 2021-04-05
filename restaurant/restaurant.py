@@ -288,7 +288,39 @@ def update_item(item_id):
             "data": item.json()
         }
     )
+  
+@app.route("/restaurant/item/<item_id>", methods=['DELETE'])
+def delete_item(item_id):
+    item = Item.query.filter_by(item_id=item_id).first()
+    print("hello")
+    if item is None:
+        return jsonify(
+            {
+                "status": "error",
+                "message": "Item of id {0} does not exists".format(item_id)
+            }
+        )
 
+    deleteItem = Item.query.get(item_id)
+    print(deleteItem)
+        
+    try:
+        db.session.delete(deleteItem)
+        db.session.commit()
+    except:
+        return jsonify(
+            {
+                "status": "error",
+                "message": "An error occured deleting the item"
+            }
+        ), 500
+
+    return jsonify(
+        {
+            "status": "success",
+            "message": "Successfully deleted"
+        }
+    )
 ###################################
 ########  RestaurantItems  ########
 ###################################
