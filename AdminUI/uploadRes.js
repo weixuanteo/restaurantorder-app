@@ -40,18 +40,25 @@ new Vue({
             }
         });
         console.log(switchStatus)
-        const form = document.querySelectorAll('form')[1];
+        const form = document.getElementById('uploadForm');
 
         const formEvent = form.addEventListener('submit', event => {
             event.preventDefault();
+        });
+
+        const submitBtn = document.getElementById("submitBtn");
+        submitBtn.addEventListener('click', function() {
             const name = document.querySelector('#resName').value;
             const is_open = switchStatus
             const address = document.querySelector('#resAddress').value;
             console.log(is_open)
 
-            const resInfo = {name, is_open , address};
+            const resInfo = {name: name, is_open: is_open , address: address};
             createRes(resInfo);
             console.log(resInfo)
+            setTimeout(function() {
+                window.location.href = "home.html";
+            }, 2000)
         });
 
 
