@@ -2,6 +2,12 @@ const url_string = window.location.href;
 const url = new URL(url_string)
 const rest_id = url.searchParams.get("id");
 
+
+const backBtn = `
+<button onclick="location.href='IndividualRes.html?id=${rest_id}'" class="btn btn-primary" id="backBtn" style="background: rgb(6,51,184);">Back</button>`;
+document.getElementById("cancel").innerHTML =backBtn;
+
+
 const createMenu = (menuInfo) => {
     axios.post('http://localhost/restaurant/' + rest_id + '/item', menuInfo)
         .then(response => {
