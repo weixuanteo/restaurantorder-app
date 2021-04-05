@@ -33,7 +33,9 @@
             <div id="content">
                 <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
                     <div class="container-fluid"><i class="fa fa-star"></i>
+                        <a href="IndividualRes.html">
                         <h2 style="color: rgb(0,0,0);font-family: Akronim, cursive;">Admin</h2>
+                        </a>
                         <ul class="navbar-nav flex-nowrap ml-auto">
                             <div class="d-none d-sm-block topbar-divider"></div>
                             <li class="nav-item dropdown no-arrow">
@@ -58,7 +60,25 @@
                             <div class="form-group">Description<br><textarea class="form-control" name="description" id= "description" placeholder="Enter the description" rows="14"></textarea></div>
                             <div class="form-group">
                                 <button onclick="location.href='IndividualRes.html'" class="btn btn-primary" id="backBtn" style="background: rgb(6,51,184);">Back</button>
-                                <button class="btn btn-primary" type="submit" style="background: rgb(6,51,184); float:right;" id="uploadBtn">Upload</button>
+                                <button class="btn btn-primary" type="submit" style="background: rgb(6,51,184); float:right;" id="uploadBtn" data-toggle="modal" data-target="#myModal">Upload</button>
+                                 <!-- Modal -->
+                                 <div class="modal fade" id="myModal" role="dialog">
+                                    <div class="modal-dialog">
+                                    
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                            <img src="/AdminUI/assets/img/checked.png" alt="Trulli" width="25%" height="25%" style="display: block; margin-left: auto; margin-right: auto; margin-top: 30px;">
+                                            <h1 style="text-align: center; color: black;">Menu Created! </h1>
+                                            </div>
+                                            <!--<button type="button" class="btn btn-success btn-sm" data-dismiss="modal" onclick="location.href='Home.html'" style="margin: 0px 80px 30px 80px;">Close</button>-->
+                                        </div>
+                                        
+                                    </div>
+                                    </div>
+                                    
+                                </div>
+                            <!---->
                             </div>
                         </form>
                         <!--END FORM-->
