@@ -71,7 +71,12 @@
                                     <img class="card-img-top w-100 d-block" style="width:50px; height:250px" src="assets/img/res5.jpg">
                                     <h4 class="card-title" style="font-family: Bangers, cursive;color: rgb(0,0,0);">{{restaurant.name}}</h4>
                                     <h6 class="text-muted card-subtitle mb-2" style="color: rgb(0,0,0);">{{restaurant.address}}</h6>
-                                    <p class="card-text" style="color: rgb(0,0,0);">{{restaurant.status}}</p>
+                                    <div v-if="restaurant.is_open ==true" >
+                                        <p class="card-text" style="color: rgb(0,0,0);">Hours: Open</p>
+                                    </div>
+                                    <div v-else>
+                                        <p class="card-text" style="color: rgb(0,0,0);">Hours: Closed</p>
+                                    </div>
                                     <div class="row">
                                         <div class="col">
                                             <button class="btn btn-primary btn-block" type="button" style="background: rgb(6,51,184);" @click="editRestaurant(restaurant.rest_id)">Edit</button>
