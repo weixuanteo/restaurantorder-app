@@ -45,7 +45,7 @@ new Vue({
                 item_detail = allRestItems[restItem]
 
                 html_dis +=`
-                <div class="card"><img class="card-img-top w-100 d-block" src="${item_detail.img_url}">
+                <div class="card">
                     <div class="card-body">
                         <h4 class="card-title" style="color: rgb(0,0,0);">${item_detail.name}</h4>
                         <p class="card-text" style="color: rgb(0,0,0);">Description: ${item_detail.description}</p>
@@ -71,9 +71,6 @@ new Vue({
             })
         }
     }
-
-
-
 })
 
 
