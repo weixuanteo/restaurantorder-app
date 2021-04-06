@@ -17,7 +17,7 @@ def create_new_order():
 
     #TODO: Data Validation
 
-    response = requests.post("http://order-service:5000/order/neworder", json=data)
+    response = requests.post("http://order-service:5000/order", json=data)
     if response.status_code != 201:
         return jsonify(
             {
@@ -48,7 +48,7 @@ def create_new_order():
 
     paymentResponse = requests.post("http://payment-service:5000/payment", json=paymentData)
     #TODO: Validation
-
+    
     print(paymentResponse.json())
     print(response.json())
 

@@ -138,7 +138,7 @@ def get_order(order_id):
         }
     )
 
-@app.route("/order/neworder", methods=['POST'])
+@app.route("/order", methods=['POST'])
 def create_order():
 
     data = request.get_json()
@@ -201,7 +201,7 @@ def create_order():
         }
     ), 201
    
-@app.route("/order/updateorder/<order_id>", methods=['PUT'])
+@app.route("/order/<order_id>", methods=['PUT'])
 def update_order(order_id):
 
     order = Order.query.filter_by(order_id=order_id).first()
@@ -275,7 +275,7 @@ def update_order(order_id):
 
 #restaurant-side
 #interact with notification
-@app.route("/order/updatestatus/<order_id>", methods=['PUT'])
+@app.route("/order/status/<order_id>", methods=['PUT'])
 def update_status(order_id):
     orderStatus = OrderStatus.query.filter_by(order_id=order_id).first()
    

@@ -45,7 +45,7 @@ new Vue({
         },
         updateStatus: function(order_id, status) {
             data = {"status": status}
-            axios.put("http://localhost/order/updatestatus/" + order_id, json=data).then((response) => {
+            axios.put("http://localhost/order/status/" + order_id, json=data).then((response) => {
                 if (response.data.status == "success") {
                     axios.get("http://localhost/get_orders/" + rest_id).then(response => {
                         this.orders = response.data.data;
