@@ -219,40 +219,40 @@ def get_item(item_id):
         }
     )
 
-@app.route("/restaurant/itemregistration", methods=['POST'])
-def add_new_item():
-    data = request.get_json()
+# @app.route("/restaurant/item", methods=['POST'])
+# def add_new_item():
+#     data = request.get_json()
 
-    name = data['name']
-    price = data['price']
-    description = data['description']
-    category = data['category']
-    img_url = data['img_url']
+#     name = data['name']
+#     price = data['price']
+#     description = data['description']
+#     category = data['category']
+#     img_url = data['img_url']
 
-    print(name,price,description,category,img_url)
+#     print(name,price,description,category,img_url)
 
-    db.create_all()
-    item = Item(name,price,description,category,img_url)
+#     db.create_all()
+#     item = Item(name,price,description,category,img_url)
 
-    try:
-        db.session.add(item)
-        db.session.commit()
-    except:
-        return jsonify(
-            {
-                "status": "error",
-                "message": "An error occured creating item"
-            }
-        ), 500
+#     try:
+#         db.session.add(item)
+#         db.session.commit()
+#     except:
+#         return jsonify(
+#             {
+#                 "status": "error",
+#                 "message": "An error occured creating item"
+#             }
+#         ), 500
 
-    return jsonify(
-        {
-            "status": "success",
-            "data": item.json()
-        }
-    ), 201
+#     return jsonify(
+#         {
+#             "status": "success",
+#             "data": item.json()
+#         }
+#     ), 201
 
-@app.route("/restaurant/itemupdate/<item_id>", methods=['PUT'])
+@app.route("/restaurant/item/<item_id>", methods=['PUT'])
 def update_item(item_id):
     item = Item.query.filter_by(item_id=item_id).first()
    
@@ -346,42 +346,42 @@ class RestaurantItems(db.Model):
             "item_id": self.item_id
         }
 
-@app.route("/restaurant/restaurantitem/registration", methods=['POST'])
-def link_restaurant_item():
-    data = request.get_json()
+# @app.route("/restaurant/restaurantitem/registration", methods=['POST'])
+# def link_restaurant_item():
+#     data = request.get_json()
 
-    rest_id = data['rest_id']
-    item_id = data['item_id']
+#     rest_id = data['rest_id']
+#     item_id = data['item_id']
 
-    rest_item = RestaurantItems(rest_id,item_id)
-    restaurant = Restaurant.query.filter_by(rest_id=rest_id).first()
-    if restaurant is None:
-        return jsonify(
-            {   
-                "status":"error",
-                "message": "Restaurant does not exists"
-            }
-        ),404
+#     rest_item = RestaurantItems(rest_id,item_id)
+#     restaurant = Restaurant.query.filter_by(rest_id=rest_id).first()
+#     if restaurant is None:
+#         return jsonify(
+#             {   
+#                 "status":"error",
+#                 "message": "Restaurant does not exists"
+#             }
+#         ),404
 
-    restaurant.items.append(rest_item)
+#     restaurant.items.append(rest_item)
 
-    try:
-        db.session.add(restaurant)
-        db.session.commit()
-    except:
-        return jsonify(
-            {
-                "status": "error",
-                "message": "An error occured linking restaurant and item"
-            }
-        ), 500
+#     try:
+#         db.session.add(restaurant)
+#         db.session.commit()
+#     except:
+#         return jsonify(
+#             {
+#                 "status": "error",
+#                 "message": "An error occured linking restaurant and item"
+#             }
+#         ), 500
 
-    return jsonify(
-        {
-            "status": "success",
-            "data": restaurant.json()
-        }
-    ), 201
+#     return jsonify(
+#         {
+#             "status": "success",
+#             "data": restaurant.json()
+#         }
+#     ), 201
 
 
 @app.route("/restaurant/<rest_id>/item", methods=['POST'])

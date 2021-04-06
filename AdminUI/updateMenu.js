@@ -51,7 +51,7 @@ axios.get('http://localhost/restaurant/item/' + item_id).then(response => {
         const resInfo = {"name": name, "price": price, "category": category,"description":description};
         
         console.log(item_id);
-        axios.put('http://localhost/restaurant/itemupdate/' + item_id, json=resInfo)
+        axios.put('http://localhost/restaurant/item/' + item_id, json=resInfo)
         .then(response => {
             const updatedRes = response.data;
             console.log(`PUT: Item is changed`, updatedRes);
