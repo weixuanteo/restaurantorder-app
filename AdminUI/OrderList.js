@@ -10,6 +10,10 @@ const url_string = window.location.href;
 const url = new URL(url_string)
 const rest_id = url.searchParams.get("id");
 
+document.getElementById("logoHome").addEventListener("click", function() {
+    window.location.href = "IndividualRes.html?id=" + rest_id;
+})
+
 new Vue({
     el: "#app",
     data: {
