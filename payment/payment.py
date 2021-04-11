@@ -46,8 +46,8 @@ def new_payment():
                 'destination': account_id,
             },
         },
-        success_url="http://localhost:5500/bootClientUI/orderStatus.html",
-        cancel_url="http://localhost:5500/bootClientUI/home.html"
+        success_url="http://localhost:5500/orderStatus.html",
+        cancel_url="http://localhost:5500/index.html"
     )
 
     return jsonify({
@@ -68,8 +68,8 @@ def create_express_account():
 
     account_links = stripe.AccountLink.create(
         account=account.id,
-        refresh_url='http://localhost:5500/AdminUI/login.html',
-        return_url='http://localhost:5500/AdminUI/home.html',
+        refresh_url='http://localhost:5501/login.html',
+        return_url='http://localhost:5501/index.html',
         type='account_onboarding'
     )
 
