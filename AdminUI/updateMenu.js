@@ -55,7 +55,7 @@ axios.get('http://localhost/restaurant/item/' + item_id).then(response => {
         .then(response => {
             const updatedRes = response.data;
             console.log(`PUT: Item is changed`, updatedRes);
-            window.location.href = "individualRes.html?id="+rest_id;
+            window.location.href = "IndividualRes.html?id="+rest_id;
         })
         .catch(error => console.error(error));
 

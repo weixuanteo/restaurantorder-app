@@ -57,7 +57,7 @@ new Vue({
             createRes(resInfo);
             console.log(resInfo)
             setTimeout(function() {
-                window.location.href = "home.html";
+                window.location.href = "index.html";
             }, 2000)
         });
 

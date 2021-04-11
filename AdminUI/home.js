@@ -24,10 +24,10 @@ new Vue({
             this.restaurants = response.data.data;
         },
         selectRestaurant: function(rest_id) {
-            window.location.href = "http://localhost:5500/AdminUI/IndividualRes.html?id=" + rest_id;
+            window.location.href = "http://localhost:5501/IndividualRes.html?id=" + rest_id;
         },
         editRestaurant: function(rest_id) {
-            window.location.href = "http://localhost:5500/AdminUI/UpdateRes.html?id=" + rest_id;
+            window.location.href = "http://localhost:5501/UpdateRes.html?id=" + rest_id;
         }
         
     }
