@@ -139,7 +139,7 @@ def update_restaurant(rest_id):
         return jsonify(
             {
                 "status": "error",
-                "message": "An error occured updating restaurant"
+                "message": "An error occurred updating restaurant"
             }
         ), 500
     return jsonify(
@@ -160,7 +160,7 @@ class Item(db.Model):
     price = db.Column(db.Float, nullable=False)
     description = db.Column(db.String(300), nullable=False)
     category = db.Column(db.String(128), nullable=False)
-    img_url = db.Column(db.String(200), nullable=False)
+    img_url = db.Column(db.String(200))
     
     def __init__(self, name, price, description,category,img_url):
 
@@ -249,7 +249,7 @@ def update_item(item_id):
         return jsonify(
             {
                 "status": "error",
-                "message": "An error occured updating item"
+                "message": "An error occurred updating item"
             }
         ), 500
     return jsonify(
@@ -380,7 +380,7 @@ def get_items_by_restaurant(rest_id):
                 "status": "error",
                 "message": "Restaurant of id {0} does not exists".format(rest_id)
             }
-        )
+        ),404
 
     item_ids = restaurant.items;
     items = {}
