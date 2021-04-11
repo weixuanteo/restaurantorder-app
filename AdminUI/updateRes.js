@@ -32,7 +32,7 @@ axios.get('http://localhost/restaurant/' + rest_id).then(responseRestDetails => 
             <div class="form-group">Address <br>
             <input class="form-control" id="resAddress" name="address" placeholder="${RestDetails.address}" rows="14" value = "${RestDetails.address}"></div>
             <div class="container">
-            <div class="form-group"><button onclick="location.href='Home.html'" class="btn btn-primary" id="backBtn" style="background: rgb(6,51,184);">Back</button>
+            <div class="form-group"><button onclick="location.href='index.html'" class="btn btn-primary" id="backBtn" style="background: rgb(6,51,184);">Back</button>
             <button class="btn btn-primary" style="background: rgb(6,51,184);display:inline-block; float:right;" id="updateBtn" >Update</button>
             </div>
         </form>
@@ -70,7 +70,7 @@ axios.get('http://localhost/restaurant/' + rest_id).then(responseRestDetails => 
             .then(response => {
                 const updatedRes = response.data;
                 console.log(`PUT: Restaurant is changed`, updatedRes);
-                window.location.href = "home.html";
+                window.location.href = "index.html";
             })
             .catch(error => console.error(error));
 
