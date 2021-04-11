@@ -97,15 +97,15 @@ Password: root
 
 ## Run AdminUI and ClientUI docker containers
 
-docker run --name clientui -p 5500:80 -d weixuantepo/clientui:1.0
-docker run --name adminui -p 5501:80 -d weixuantepo/adminui:1.0
+docker run --name clientui -p 5500:80 -d weixuantepo/clientui
+docker run --name adminui -p 5501:80 -d weixuantepo/adminui
 
 ClientUI: localhost:5500/index.html
 AdminUI: localhost:5501/index.html
 
 
 
-## Login Credentials and Details
+## Login Credentials and Additional Details
 
 [Restaurant Owner Login Credentials]
 Username: john@esd.sg
@@ -116,6 +116,14 @@ localhost:5500/index.html
 
 [Restaurant UI]
 localhost:5501/index.html
+
+[Card Payments]
+The Stripe API is configured to be in a test environment so as to stimulate an "actual order payment"
+For any order payments, use the following card details to pay.
+
+Card: 4242 4242 4242 4242
+Expiry: 11/21
+CVC: 111
 
 
 
