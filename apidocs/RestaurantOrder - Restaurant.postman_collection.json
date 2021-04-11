@@ -8,9 +8,9 @@
 	},
 	"item": [
 		{
-			"name": "localhost/restaurant",
+			"name": "Get all restaurants by owner id",
 			"request": {
-				"url": "localhost/restaurant",
+				"url": "localhost/get_restaurants/1",
 				"method": "GET",
 				"header": [
 					{
@@ -21,31 +21,14 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"name\":\"testjiayu\",\n\t\"is_open\":false,\n\t\"address\":\"somewhere\"\n}"
+					"raw": "{\n\t\"name\":\"Niku Katsumata\",\n\t\"is_open\":true,\n\t\"address\":\"Duxton, Tanjong Pagar\"\n}\n"
 				},
 				"description": ""
 			},
 			"response": []
 		},
 		{
-			"name": "localhost/restaurant/1",
-			"request": {
-				"url": "localhost/restaurant/1",
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Basic bWp5OnBhc3N3b3Jk",
-						"description": ""
-					}
-				],
-				"body": {},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "localhost/restaurant/item",
+			"name": "Get all items in the restaurant",
 			"request": {
 				"url": "localhost/restaurant/item",
 				"method": "GET",
@@ -56,20 +39,9 @@
 			"response": []
 		},
 		{
-			"name": "localhost/restaurant/item/1",
+			"name": "Create new restaurant by owner",
 			"request": {
-				"url": "localhost/restaurant/item/1",
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "localhost/restaurant/registration",
-			"request": {
-				"url": "localhost/restaurant",
+				"url": "localhost/create_restaurant/1",
 				"method": "POST",
 				"header": [
 					{
@@ -87,7 +59,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost/restaurant/itemregistration",
+			"name": "Create new item under specific rest_id",
 			"request": {
 				"url": "localhost/restaurant/itemregistration",
 				"method": "POST",
@@ -107,27 +79,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost/restaurant/restaurantitem/registration",
-			"request": {
-				"url": "localhost/restaurant/restaurantitem/registration",
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"rest_id\":1,\n\t\"item_id\":1\n}"
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "localhost/restaurant/1",
+			"name": "Update restaurant information",
 			"request": {
 				"url": "localhost/restaurant/1",
 				"method": "PUT",
@@ -147,7 +99,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost/restaurant/itemupdate/1",
+			"name": "Update item information",
 			"request": {
 				"url": "localhost/restaurant/itemupdate/1",
 				"method": "PUT",
