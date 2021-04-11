@@ -38,6 +38,6 @@ uploadBtn.addEventListener('click', function() {
     console.log(menuInfo)
 
     setTimeout(function() {
-        window.location.href = "IndividualRes.html?id" + rest_id
+        window.location.href = "IndividualRes.html?id=" + rest_id
     }, 1000)
 });
