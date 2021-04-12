@@ -18,37 +18,30 @@ def new_payment():
 
     account_id = data["account_id"]
     order = data["order"]
-    # order_items = data["order_items"]
 
-    # line_items = []
-    # for order_item in order_items:
-    #     item = {}
-    #     item["name"] = order_item["name"]
-    #     item["amount"] = order_item["qty"]
-    #     item["currency"] = "sgd"
-    #     item["amount"] = order_item["price"]
-    #     line_items.append(item)
-
-    # print(line_items)
-    # return
-
-    session = stripe.checkout.Session.create(
-        payment_method_types=['card'],
-        line_items=[{
-            'name': 'Lestoran Meal',
-            'amount': int(order["price"] * 100),
-            'currency': 'sgd',
-            'quantity': 1
-        }],
-        payment_intent_data={
-            'application_fee_amount': 1,
-            'transfer_data': {
-                'destination': account_id,
+    try:
+        session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=[{
+                'name': 'Lestoran Meal',
+                'amount': int(order["price"] * 100),
+                'currency': 'sgd',
+                'quantity': 1
+            }],
+            payment_intent_data={
+                'application_fee_amount': 1,
+                'transfer_data': {
+                    'destination': account_id,
+                },
             },
-        },
-        success_url="http://localhost:5500/orderStatus.html",
-        cancel_url="http://localhost:5500/index.html"
-    )
+            success_url="http://localhost:5500/orderStatus.html",
+            cancel_url="http://localhost:5500/index.html"
+        )
+    except stripe.error.InvalidRequestError as e:
+        return jsonify({
+            "status": "error",
+            "message:": str(e)
+        }), 500
 
     return jsonify({
         "status": "success",
