@@ -15,8 +15,6 @@ CORS(app)
 def create_new_order():
     data = request.get_json()
 
-    #TODO: Data Validation
-
     response = requests.post("http://order-service:5000/order", json=data)
     if response.status_code != 201:
         return jsonify(
@@ -28,16 +26,7 @@ def create_new_order():
 
     ownerResponse = requests.get("http://owner-service:5000/owner/account/" + str(data["rest_id"]))
 
-    # if response.status_code != 200:
-    #     return jsonify(
-    #         {
-    #             "status": "error",
-    #             "message": "error in calling owner service"
-    #         }
-    #     ), 500
-
     account_id = ownerResponse.json()["data"]["stripe_account"]
-    print(account_id, file=sys.stderr)
 
     paymentData = {
         "account_id": account_id,
@@ -47,10 +36,6 @@ def create_new_order():
     }
 
     paymentResponse = requests.post("http://payment-service:5000/payment", json=paymentData)
-    #TODO: Validation
-    
-    print(paymentResponse.json())
-    print(response.json())
 
     return jsonify(
         {
@@ -60,7 +45,7 @@ def create_new_order():
                 "order": response.json()["data"]
             }
         }
-    )
+    ), 200
 
 
 if __name__ == '__main__':
