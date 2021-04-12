@@ -23,16 +23,7 @@ CORS(app)
 
 db = SQLAlchemy(app)
 
-# query = """
-#     CREATE SCHEMA
-#     IF NOT EXISTS `{db}`
-# """.format(db="order")
 
-# engine = db.create_engine('mysql+mysqlconnector://root:root@mariadb:3306',{})
-# engine.execute(query)
-# db.create_engine('mysql+mysqlconnector://root:root@mariadb:3306/order',{})
-
-#Order
 class Order(db.Model):
     __tablename__ = 'order'
 
@@ -42,16 +33,12 @@ class Order(db.Model):
     rest_id = db.Column(db.Integer, nullable=False)
     table_no = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Float,nullable=False)
-    # order_type = db.Column(db.String(10), nullable=False)
-    # comments = db.Column(db.String(10), nullable=False)
 
     status = db.relationship('OrderStatus', backref='order', uselist=False)
     
     def __init__(self,rest_id,table_no,price):
         
         self.rest_id = rest_id
-        # self.order_type = order_type
-        # self.comments = comments
         self.table_no = table_no
         self.price = price
 
@@ -59,8 +46,6 @@ class Order(db.Model):
         order =  {
             "order_id":self.order_id,
             "rest_id": self.rest_id,
-            # "order_type": self.order_type,
-            # "comments": self.comments,
             "price":self.price,
             "table_no":self.table_no,
             "order_status":self.status.json()
@@ -75,7 +60,7 @@ class Order(db.Model):
         return order
 
 
-#Order Status
+
 class OrderStatus(db.Model):
     __tablename__ = 'order_status'
 
@@ -89,8 +74,7 @@ class OrderStatus(db.Model):
     def json(self):
         return {"status": self.status}
             
-#Order Item
-## remember to add in item as foreign key
+
 class OrderItem(db.Model):
     __tablename__ = 'order_item'
 
@@ -104,14 +88,12 @@ class OrderItem(db.Model):
         
    
     def __init__(self,item_id,qty):
-        
-        # self.order_id = order_id
+
         self.item_id = item_id
         self.qty = qty
 
     def json(self):
         return {
-            #"order_id": self.order_id,
             "item_id": self.item_id,
             "qty":self.qty
         }
@@ -127,14 +109,14 @@ def get_order(order_id):
                 "status": "error",
                 "message": "Order of id {0} does not exists".format(order_id)
             }
-        )
+        ), 404
 
     return jsonify(
         {
             "status": "success",
             "data": order.json()
         }
-    )
+    ), 200
 
 @app.route("/order", methods=['POST'])
 def create_order():
@@ -142,8 +124,6 @@ def create_order():
     data = request.get_json()
 
     rest_id = data["rest_id"]
-    # order_type = data["order_type"]
-    # comments = data['comments']
     order_items = data['order_items']
     table_no = data['table_no']
     price = data['price']
@@ -206,9 +186,7 @@ def update_order(order_id):
     status = OrderStatus.query.filter_by(order_id=order_id).first()
 
     print('status:',status.status)
-
-    #status checking   
-  
+ 
     if status.status == 2:  
         return jsonify(
             {
@@ -234,11 +212,9 @@ def update_order(order_id):
     if 'comments' in data:
         order.comments = data["comments"]
     if 'order_items' in data:
-
         OrderItem.query.filter_by(order_id=order_id).delete()
 
         try:
-        #db.session.add(order)
             db.session.commit()
         except:
             return jsonify(
@@ -253,7 +229,6 @@ def update_order(order_id):
             order.order_item.append(OrderItem(item_id=item['item_id'],qty=item['qty']))
     
     try:
-        #db.session.add(order)
         db.session.commit()
     except:
         return jsonify(
@@ -271,8 +246,7 @@ def update_order(order_id):
         }
     )
 
-#restaurant-side
-#interact with notification
+
 @app.route("/order/status/<order_id>", methods=['PUT'])
 def update_status(order_id):
     orderStatus = OrderStatus.query.filter_by(order_id=order_id).first()
@@ -283,14 +257,13 @@ def update_status(order_id):
                 "status": "error",
                 "message": "orderStatus of id {0} does not exists".format(order_id)
             }
-        )
+        ), 404
 
     data = request.get_json()
     if data['status']:
         orderStatus.status = data["status"]
     
     try:
-        # db.session.add(order)
         db.session.commit()
     except:
         return jsonify(
