@@ -73,7 +73,7 @@ def get_restaurant(rest_id):
                 "status": "error",
                 "message": "Restaurant of id {0} does not exists".format(rest_id)
             }
-        )
+        ), 404
 
     return jsonify(
         {
@@ -123,7 +123,7 @@ def update_restaurant(rest_id):
                 "status": "error",
                 "message": "restaurant of id {0} does not exists".format(rest_id)
             }
-        )
+        ), 404
 
     data = request.get_json()
     if 'name' in data:
@@ -210,7 +210,7 @@ def get_item(item_id):
                 "status": "error",
                 "message": "Item of id {0} does not exists".format(item_id)
             }
-        )
+        ), 404
 
     return jsonify(
         {
@@ -229,7 +229,7 @@ def update_item(item_id):
                 "status": "error",
                 "message": "item of id {0} does not exists".format(item_id)
             }
-        )
+        ), 404
 
     data = request.get_json()
     if 'name' in data:
@@ -347,7 +347,7 @@ def add_item_by_restaurant(rest_id):
                 "status":"error",
                 "message": "Restaurant does not exists"
             }
-        ),404
+        ), 404
 
     restaurant.items.append(rest_item)
 
@@ -380,7 +380,7 @@ def get_items_by_restaurant(rest_id):
                 "status": "error",
                 "message": "Restaurant of id {0} does not exists".format(rest_id)
             }
-        ),404
+        ), 404
 
     item_ids = restaurant.items;
     items = {}
@@ -394,7 +394,7 @@ def get_items_by_restaurant(rest_id):
                     "status": "error",
                     "message": "item of id {0} does not exists".format(item_id)
                 }
-            )
+            ), 404
         
         items[item_id] = item.json()
     
