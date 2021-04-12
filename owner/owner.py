@@ -78,14 +78,14 @@ def get_owner(oid):
                 "status": "error",
                 "message": "Owner of id {0} does not exists".format(oid)
             }
-        )
+        ), 404
 
     return jsonify(
         {
             "status": "success",
             "data": owner.json()
         }
-    )
+    ), 200
 
 @app.route("/owner/registration", methods=['POST'])
 def add_new_owner():
