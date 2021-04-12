@@ -1,0 +1,2581 @@
+{
+	"info": {
+		"_postman_id": "b74c97ae-b895-412e-ac98-922351944b68",
+		"name": "ESD Team B - Restaurant Ordering System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Owner",
+			"item": [
+				{
+					"name": "Owner - Get Owner by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/owner/1",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"owner",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/owner/1",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"owner",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 05:53:37 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "307"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"email\": \"john@esd.sg\",\n        \"name\": \"John\",\n        \"owner_id\": 1,\n        \"password\": \"$2b$12$kToHkhlFLDbEG07of63nm.Yga.4H3jIWcw/NoYGXVXl0MTlhVA7P2\",\n        \"restaurants\": [\n            {\n                \"rest_id\": 1\n            }\n        ],\n        \"stripe_account\": \"acct_1IeuXVR0jjPVKtjA\"\n    },\n    \"status\": \"success\"\n}"
+						},
+						{
+							"name": "404",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/owner/100",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"owner",
+										"100"
+									]
+								}
+							},
+							"status": "NOT FOUND",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 05:54:54 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "73"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Owner of id 100 does not exists\",\n    \"status\": \"error\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Owner - Register a new Owner",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"John\",\r\n    \"email\": \"test1@smu.sg\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/owner/registration",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"owner",
+								"registration"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"John\",\r\n    \"email\": \"test1@smu.sg\",\r\n    \"password\": \"password\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost/owner/registration",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"owner",
+										"registration"
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 06:01:48 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "247"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"email\": \"test1@smu.sg\",\n        \"name\": \"John\",\n        \"owner_id\": 2,\n        \"password\": \"$2b$12$qGzgRexrSARfIYb9g/RBaOpJ8Qx2elm6LhM8vSRGxnWcYr6KMhV8W\",\n        \"restaurants\": [],\n        \"stripe_account\": null\n    },\n    \"status\": \"success\"\n}"
+						},
+						{
+							"name": "409",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"John\",\r\n    \"email\": \"test1@smu.sg\",\r\n    \"password\": \"password\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost/owner/registration",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"owner",
+										"registration"
+									]
+								}
+							},
+							"status": "CONFLICT",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 06:02:16 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "84"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Owner of email test1@smu.sg already exists\",\n    \"status\": \"error\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Owner - Update Owner Details",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Doe\",\r\n    \"email\": \"doe@weixuan.dev\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/owner/2",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"owner",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "404",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Doe\",\r\n    \"email\": \"doe@weixuan.dev\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost/owner/3",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"owner",
+										"3"
+									]
+								}
+							},
+							"status": "NOT FOUND",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 06:05:05 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "71"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Owner of id 3 does not exists\",\n    \"status\": \"error\"\n}"
+						},
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Doe\",\r\n    \"email\": \"doe@weixuan.dev\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost/owner/2",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"owner",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 06:04:21 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "249"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"email\": \"doe@weixuan.dev\",\n        \"name\": \"Doe\",\n        \"owner_id\": 2,\n        \"password\": \"$2b$12$qGzgRexrSARfIYb9g/RBaOpJ8Qx2elm6LhM8vSRGxnWcYr6KMhV8W\",\n        \"restaurants\": [],\n        \"stripe_account\": null\n    },\n    \"status\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Owner - Authenticate Owner",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"john@esd.sg\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/owner/auth",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"owner",
+								"auth"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"john@esd.sg\",\r\n    \"password\": \"password\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost/owner/auth",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"owner",
+										"auth"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 06:06:40 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "307"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"email\": \"john@esd.sg\",\n        \"name\": \"John\",\n        \"owner_id\": 1,\n        \"password\": \"$2b$12$kToHkhlFLDbEG07of63nm.Yga.4H3jIWcw/NoYGXVXl0MTlhVA7P2\",\n        \"restaurants\": [\n            {\n                \"rest_id\": 1\n            }\n        ],\n        \"stripe_account\": \"acct_1IeuXVR0jjPVKtjA\"\n    },\n    \"status\": \"success\"\n}"
+						},
+						{
+							"name": "401",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"john@esd.sg\",\r\n    \"password\": \"password!\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost/owner/auth",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"owner",
+										"auth"
+									]
+								}
+							},
+							"status": "UNAUTHORIZED",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 06:07:04 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "53"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Auth failed\",\n    \"status\": \"error\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Owner - Register Restaurant to Owner",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"owner_id\": 1,\r\n    \"rest_id\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/owner/restaurant",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"owner",
+								"restaurant"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "500",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"owner_id\": 1,\r\n    \"rest_id\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost/owner/restaurant",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"owner",
+										"restaurant"
+									]
+								}
+							},
+							"status": "INTERNAL SERVER ERROR",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 06:11:52 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "85"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"An error occured adding restaurant to owner\",\n    \"status\": \"error\"\n}"
+						},
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"owner_id\": 1,\r\n    \"rest_id\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost/owner/restaurant",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"owner",
+										"restaurant"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 06:10:24 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "346"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"email\": \"john@esd.sg\",\n        \"name\": \"John\",\n        \"owner_id\": 1,\n        \"password\": \"$2b$12$kToHkhlFLDbEG07of63nm.Yga.4H3jIWcw/NoYGXVXl0MTlhVA7P2\",\n        \"restaurants\": [\n            {\n                \"rest_id\": 1\n            },\n            {\n                \"rest_id\": 2\n            }\n        ],\n        \"stripe_account\": \"acct_1IeuXVR0jjPVKtjA\"\n    },\n    \"status\": \"success\"\n}"
+						},
+						{
+							"name": "404",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"owner_id\": 100,\r\n    \"rest_id\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost/owner/restaurant",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"owner",
+										"restaurant"
+									]
+								}
+							},
+							"status": "NOT FOUND",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 06:11:38 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "63"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Owner does not exists\",\n    \"status\": \"error\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Owner - Get owner details by Restaurant ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/owner/account/1",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"owner",
+								"account",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/owner/account/1",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"owner",
+										"account",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 06:20:21 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "346"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"email\": \"john@esd.sg\",\n        \"name\": \"John\",\n        \"owner_id\": 1,\n        \"password\": \"$2b$12$kToHkhlFLDbEG07of63nm.Yga.4H3jIWcw/NoYGXVXl0MTlhVA7P2\",\n        \"restaurants\": [\n            {\n                \"rest_id\": 1\n            },\n            {\n                \"rest_id\": 2\n            }\n        ],\n        \"stripe_account\": \"acct_1IeuXVR0jjPVKtjA\"\n    },\n    \"status\": \"success\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Restaurant",
+			"item": [
+				{
+					"name": "Restaurant - Get All Restaurants",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/restaurant",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"restaurant"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/restaurant",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"restaurant"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 07:03:47 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "388"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"restaurants\": [\n            {\n                \"address\": \"Duxton, Tanjong Pagar\",\n                \"is_open\": true,\n                \"items\": [\n                    {\n                        \"item_id\": 1\n                    },\n                    {\n                        \"item_id\": 2\n                    },\n                    {\n                        \"item_id\": 3\n                    }\n                ],\n                \"name\": \"Niku Katsumata\",\n                \"rest_id\": 1\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Restaurant - Get Restaurant By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/restaurant/1",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"restaurant",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/restaurant/1",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"restaurant",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 07:05:00 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "293"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"address\": \"Duxton, Tanjong Pagar\",\n        \"is_open\": true,\n        \"items\": [\n            {\n                \"item_id\": 1\n            },\n            {\n                \"item_id\": 2\n            },\n            {\n                \"item_id\": 3\n            }\n        ],\n        \"name\": \"Niku Katsumata\",\n        \"rest_id\": 1\n    },\n    \"status\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Restaurant - Create new Restaurant",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"SMU Foods\",\r\n    \"is_open\": true,\r\n    \"address\": \"SMU Street 9\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/restaurant",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"restaurant"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"SMU Foods\",\r\n    \"is_open\": true,\r\n    \"address\": \"SMU Street 10\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost/restaurant",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"restaurant"
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 07:18:48 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "160"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"address\": \"SMU Street 10\",\n        \"is_open\": true,\n        \"items\": [],\n        \"name\": \"SMU Foods\",\n        \"rest_id\": 2\n    },\n    \"status\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Restaurant - Update Restaurant",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"SMU Foods\",\r\n    \"is_open\": true,\r\n    \"address\": \"SMU Street 9\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/restaurant/1",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"restaurant",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"SMU Foods\",\r\n    \"is_open\": true,\r\n    \"address\": \"SMU Street 9\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost/restaurant/1",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"restaurant",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 07:25:04 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "279"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"address\": \"SMU Street 9\",\n        \"is_open\": true,\n        \"items\": [\n            {\n                \"item_id\": 1\n            },\n            {\n                \"item_id\": 2\n            },\n            {\n                \"item_id\": 3\n            }\n        ],\n        \"name\": \"SMU Foods\",\n        \"rest_id\": 1\n    },\n    \"status\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Restaurant - Add new item by restaurant",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Iced Lemon Tea\",\r\n    \"price\": 1.5,\r\n    \"description\": \"Refreshing drink made from premium sourced leaves\",\r\n    \"category\": \"Drinks\",\r\n    \"img_url\": \"fake\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/restaurant/1/item",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"restaurant",
+								"1",
+								"item"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Iced Lemon Tea\",\r\n    \"price\": 1.5,\r\n    \"description\": \"Refreshing drink made from premium sourced leaves\",\r\n    \"category\": \"Drinks\",\r\n    \"img_url\": \"fake\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost/restaurant/1/item",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"restaurant",
+										"1",
+										"item"
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 07:31:39 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "318"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"address\": \"SMU Street 9\",\n        \"is_open\": true,\n        \"items\": [\n            {\n                \"item_id\": 1\n            },\n            {\n                \"item_id\": 2\n            },\n            {\n                \"item_id\": 3\n            },\n            {\n                \"item_id\": 4\n            }\n        ],\n        \"name\": \"SMU Foods\",\n        \"rest_id\": 1\n    },\n    \"status\": \"success\"\n}"
+						},
+						{
+							"name": "404",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Iced Lemon Tea\",\r\n    \"price\": 1.5,\r\n    \"description\": \"Refreshing drink made from premium sourced leaves\",\r\n    \"category\": \"Drinks\",\r\n    \"img_url\": \"fake\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost/restaurant/3/item",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"restaurant",
+										"3",
+										"item"
+									]
+								}
+							},
+							"status": "NOT FOUND",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 07:32:33 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "68"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Restaurant does not exists\",\n    \"status\": \"error\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Restaurant - Get all items by restaurant id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/restaurant/1/items",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"restaurant",
+								"1",
+								"items"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "404",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/restaurant/3/items",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"restaurant",
+										"3",
+										"items"
+									]
+								}
+							},
+							"status": "NOT FOUND",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 07:34:18 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "76"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Restaurant of id 3 does not exists\",\n    \"status\": \"error\"\n}"
+						},
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/restaurant/1/items",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"restaurant",
+										"1",
+										"items"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 07:33:12 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1333"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"1\": {\n            \"category\": \"noodel\",\n            \"description\": \"Looking for a little kick of spices? This dish features tender teriyaki chicken alongside a flavoured egg, mushrooms, onions, vegetables and hot sauce with tomato paste served on the side for you to add to your liking!\",\n            \"img_url\": \"assets/img/food2.jpg\",\n            \"item_id\": 1,\n            \"name\": \"Ajitama Teriyaki Chicken Spicy Soba\",\n            \"price\": 17.8\n        },\n        \"2\": {\n            \"category\": \"beef\",\n            \"description\": \"This signature dish is a crowd-favourite as it delivers unique flavours and tantalises your palate with its freshness.\",\n            \"img_url\": \"assets/img/food2.jpg\",\n            \"item_id\": 2,\n            \"name\": \"Wagyu Tartare\",\n            \"price\": 22\n        },\n        \"3\": {\n            \"category\": \"beef\",\n            \"description\": \"This donburi is not just any meat on rice - it consists of thin slices of perfectly-seared wagyu full of juiciness and flavour.\",\n            \"img_url\": \"assets/img/food2.jpg\",\n            \"item_id\": 3,\n            \"name\": \"A4 Wagyu Donburi with Bonito Broth\",\n            \"price\": 25\n        },\n        \"4\": {\n            \"category\": \"Drinks\",\n            \"description\": \"Refreshing drink made from premium sourced leaves\",\n            \"img_url\": \"fake\",\n            \"item_id\": 4,\n            \"name\": \"Iced Lemon Tea\",\n            \"price\": 1.5\n        }\n    },\n    \"status\": \"success\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "Order - Get Order By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/order/1",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/order/1",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"order",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 07:44:46 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "253"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"order_id\": 1,\n        \"order_item\": [\n            {\n                \"item_id\": 2,\n                \"qty\": 1\n            }\n        ],\n        \"order_status\": {\n            \"status\": 3\n        },\n        \"price\": 22,\n        \"rest_id\": 1,\n        \"table_no\": 5\n    },\n    \"status\": \"success\"\n}"
+						},
+						{
+							"name": "404",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/order/100",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"order",
+										"100"
+									]
+								}
+							},
+							"status": "NOT FOUND",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 07:45:56 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "73"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Order of id 100 does not exists\",\n    \"status\": \"error\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Order  - Create Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rest_id\": 1,\r\n    \"order_items\": [\r\n        {\r\n            \"item_id\": 1,\r\n            \"qty\": 1\r\n        }\r\n    ],\r\n    \"table_no\": 1,\r\n    \"price\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/order",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"rest_id\": 1,\r\n    \"order_items\": [\r\n        {\r\n            \"item_id\": 1,\r\n            \"qty\": 1\r\n        }\r\n    ],\r\n    \"table_no\": 1,\r\n    \"price\": 10\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost/order",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"order"
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 07:49:36 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "253"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"order_id\": 2,\n        \"order_item\": [\n            {\n                \"item_id\": 1,\n                \"qty\": 1\n            }\n        ],\n        \"order_status\": {\n            \"status\": 1\n        },\n        \"price\": 10,\n        \"rest_id\": 1,\n        \"table_no\": 1\n    },\n    \"status\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Order Status by Order ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/order/status/2",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order",
+								"status",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"status\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost/order/status/2",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"order",
+										"status",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 07:52:16 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"status\": 2\n    },\n    \"status\": \"success\"\n}"
+						},
+						{
+							"name": "404",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"status\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost/order/status/10",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"order",
+										"status",
+										"10"
+									]
+								}
+							},
+							"status": "NOT FOUND",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 07:53:04 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "78"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"orderStatus of id 10 does not exists\",\n    \"status\": \"error\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get orders by Restaurant ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/order/restaurant/1",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"order",
+								"restaurant",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/order/restaurant/1",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"order",
+										"restaurant",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 07:56:03 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "540"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"order_id\": 1,\n            \"order_item\": [\n                {\n                    \"item_id\": 2,\n                    \"qty\": 1\n                }\n            ],\n            \"order_status\": {\n                \"status\": 3\n            },\n            \"price\": 22,\n            \"rest_id\": 1,\n            \"table_no\": 5\n        },\n        {\n            \"order_id\": 2,\n            \"order_item\": [\n                {\n                    \"item_id\": 1,\n                    \"qty\": 1\n                }\n            ],\n            \"order_status\": {\n                \"status\": 2\n            },\n            \"price\": 10,\n            \"rest_id\": 1,\n            \"table_no\": 1\n        }\n    ],\n    \"status\": \"success\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Place an Order (Create Order)",
+			"item": [
+				{
+					"name": "Place an Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rest_id\": 1,\r\n    \"table_no\": 10,\r\n    \"order_items\": [{\r\n        \"item_id\": 1,\r\n        \"qty\": 1\r\n    }],\r\n    \"price\": 17.8\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/create_order",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"create_order"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"rest_id\": 1,\r\n    \"table_no\": 10,\r\n    \"order_items\": [{\r\n        \"item_id\": 1,\r\n        \"qty\": 1\r\n    }],\r\n    \"price\": 17.8\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost/create_order",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"create_order"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 08:10:46 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "390"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"order\": {\n            \"order_id\": 8,\n            \"order_item\": [\n                {\n                    \"item_id\": 1,\n                    \"qty\": 1\n                }\n            ],\n            \"order_status\": {\n                \"status\": 1\n            },\n            \"price\": 17.8,\n            \"rest_id\": 1,\n            \"table_no\": 10\n        },\n        \"session_id\": \"cs_test_a1qRxaxEL2Nv2Yr0PCq0ROaznA2MMwIvtyxUHzdrte3WcJ9zKOjyx6at9t\"\n    },\n    \"status\": \"success\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Create Restaurant",
+			"item": [
+				{
+					"name": "Create new restaurant as owner",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"SMU Chill n Eats\",\r\n    \"is_open\": true,\r\n    \"address\": \"SMU Sreet 10\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/create_restaurant/1",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"create_restaurant",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"SMU Chill n Eats\",\r\n    \"is_open\": true,\r\n    \"address\": \"SMU Sreet 10\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost/create_restaurant/1",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"create_restaurant",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 08:17:05 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "73"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Restaurant successfully added\",\n    \"status\": \"success\"\n}"
+						},
+						{
+							"name": "500 (Invalid Owner)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"SMU Chill n Eats\",\r\n    \"is_open\": true,\r\n    \"address\": \"SMU Sreet 10\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost/create_restaurant/10",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"create_restaurant",
+										"10"
+									]
+								}
+							},
+							"status": "INTERNAL SERVER ERROR",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 08:20:35 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "65"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"error in checking owner\",\n    \"status\": \"error\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Get Orders",
+			"item": [
+				{
+					"name": "Get all orders with item details by restaurant id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/get_orders/1",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"get_orders",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/get_orders/1",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"get_orders",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 08:22:14 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "3330"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"order_id\": 1,\n            \"order_item\": [\n                {\n                    \"item_id\": 2,\n                    \"name\": \"Wagyu Tartare\",\n                    \"price\": 22,\n                    \"qty\": 1\n                }\n            ],\n            \"order_status\": {\n                \"status\": 3\n            },\n            \"price\": 22,\n            \"rest_id\": 1,\n            \"table_no\": 5\n        },\n        {\n            \"order_id\": 2,\n            \"order_item\": [\n                {\n                    \"item_id\": 1,\n                    \"name\": \"Ajitama Teriyaki Chicken Spicy Soba\",\n                    \"price\": 17.8,\n                    \"qty\": 1\n                }\n            ],\n            \"order_status\": {\n                \"status\": 2\n            },\n            \"price\": 10,\n            \"rest_id\": 1,\n            \"table_no\": 1\n        },\n        {\n            \"order_id\": 3,\n            \"order_item\": [\n                {\n                    \"item_id\": 1,\n                    \"name\": \"Ajitama Teriyaki Chicken Spicy Soba\",\n                    \"price\": 17.8,\n                    \"qty\": 1\n                },\n                {\n                    \"item_id\": 4,\n                    \"name\": \"Iced Lemon Tea\",\n                    \"price\": 1.5,\n                    \"qty\": 1\n                }\n            ],\n            \"order_status\": {\n                \"status\": 1\n            },\n            \"price\": 19.3,\n            \"rest_id\": 1,\n            \"table_no\": 10\n        },\n        {\n            \"order_id\": 4,\n            \"order_item\": [\n                {\n                    \"item_id\": 1,\n                    \"name\": \"Ajitama Teriyaki Chicken Spicy Soba\",\n                    \"price\": 17.8,\n                    \"qty\": 1\n                },\n                {\n                    \"item_id\": 4,\n                    \"name\": \"Iced Lemon Tea\",\n                    \"price\": 1.5,\n                    \"qty\": 1\n                }\n            ],\n            \"order_status\": {\n                \"status\": 1\n            },\n            \"price\": 19.3,\n            \"rest_id\": 1,\n            \"table_no\": 10\n        },\n        {\n            \"order_id\": 5,\n            \"order_item\": [\n                {\n                    \"item_id\": 1,\n                    \"name\": \"Ajitama Teriyaki Chicken Spicy Soba\",\n                    \"price\": 17.8,\n                    \"qty\": 1\n                },\n                {\n                    \"item_id\": 4,\n                    \"name\": \"Iced Lemon Tea\",\n                    \"price\": 1.5,\n                    \"qty\": 1\n                }\n            ],\n            \"order_status\": {\n                \"status\": 1\n            },\n            \"price\": 19.3,\n            \"rest_id\": 1,\n            \"table_no\": 10\n        },\n        {\n            \"order_id\": 6,\n            \"order_item\": [\n                {\n                    \"item_id\": 1,\n                    \"name\": \"Ajitama Teriyaki Chicken Spicy Soba\",\n                    \"price\": 17.8,\n                    \"qty\": 1\n                },\n                {\n                    \"item_id\": 4,\n                    \"name\": \"Iced Lemon Tea\",\n                    \"price\": 1.5,\n                    \"qty\": 1\n                }\n            ],\n            \"order_status\": {\n                \"status\": 1\n            },\n            \"price\": 19.3,\n            \"rest_id\": 1,\n            \"table_no\": 10\n        },\n        {\n            \"order_id\": 7,\n            \"order_item\": [\n                {\n                    \"item_id\": 1,\n                    \"name\": \"Ajitama Teriyaki Chicken Spicy Soba\",\n                    \"price\": 17.8,\n                    \"qty\": 1\n                },\n                {\n                    \"item_id\": 4,\n                    \"name\": \"Iced Lemon Tea\",\n                    \"price\": 1.5,\n                    \"qty\": 1\n                }\n            ],\n            \"order_status\": {\n                \"status\": 3\n            },\n            \"price\": 19.3,\n            \"rest_id\": 1,\n            \"table_no\": 10\n        },\n        {\n            \"order_id\": 8,\n            \"order_item\": [\n                {\n                    \"item_id\": 1,\n                    \"name\": \"Ajitama Teriyaki Chicken Spicy Soba\",\n                    \"price\": 17.8,\n                    \"qty\": 1\n                }\n            ],\n            \"order_status\": {\n                \"status\": 1\n            },\n            \"price\": 17.8,\n            \"rest_id\": 1,\n            \"table_no\": 10\n        }\n    ],\n    \"status\": \"success\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Get Restaurants",
+			"item": [
+				{
+					"name": "Get all restaurants by owner id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/get_restaurants/1",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"get_restaurants",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/get_restaurants/1",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"get_restaurants",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 08:24:36 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "652"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"address\": \"SMU Street 9\",\n            \"is_open\": true,\n            \"items\": [\n                {\n                    \"item_id\": 1\n                },\n                {\n                    \"item_id\": 2\n                },\n                {\n                    \"item_id\": 3\n                },\n                {\n                    \"item_id\": 4\n                }\n            ],\n            \"name\": \"SMU Foods\",\n            \"rest_id\": 1\n        },\n        {\n            \"address\": \"SMU Street 10\",\n            \"is_open\": true,\n            \"items\": [],\n            \"name\": \"SMU Foods\",\n            \"rest_id\": 2\n        },\n        {\n            \"address\": \"SMU Sreet 10\",\n            \"is_open\": true,\n            \"items\": [],\n            \"name\": \"SMU Chill n Eats\",\n            \"rest_id\": 3\n        }\n    ],\n    \"status\": \"success\"\n}"
+						},
+						{
+							"name": "500",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/get_restaurants/10",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"get_restaurants",
+										"10"
+									]
+								}
+							},
+							"status": "INTERNAL SERVER ERROR",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 08:25:21 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "65"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"error in checking owner\",\n    \"status\": \"error\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Notification",
+			"item": [
+				{
+					"name": "Get order status message by order id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/notification/6",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"notification",
+								"6"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 (No message on queue)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/notification/6",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"notification",
+										"6"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 08:26:49 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "61"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"No message available\",\n    \"status\": \"fail\"\n}"
+						},
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/notification/6",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"notification",
+										"6"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 08:26:17 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "80"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"order_id\": 6,\n        \"status\": 1\n    },\n    \"status\": \"success\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Payment",
+			"item": [
+				{
+					"name": "Payment - Create new payment session",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"account_id\": \"acct_1IeuXVR0jjPVKtjA\",\r\n    \"order\": {\r\n        \"price\": 10.0\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/payment",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"payment"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"account_id\": \"acct_1IeuXVR0jjPVKtjA\",\r\n    \"order\": {\r\n        \"price\": 10.0\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost/payment",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"payment"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 08:32:02 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "123"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"id\": \"cs_test_a14I3qP3YXH2Dlb5tXRLOJDuXkOXTPXFCaQwTzPCgUNbarzNKJszh5FSVX\"\n    },\n    \"status\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Payment - Get stripe account onboard url",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/payment/account/url",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"payment",
+								"account",
+								"url"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/payment/account/url",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"payment",
+										"account",
+										"url"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 08:33:03 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "152"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"id\": \"acct_1IfLD3R2Mprq9j1i\",\n        \"url\": \"https://connect.stripe.com/express/onboarding/NfHyNJFDEMx1\"\n    },\n    \"status\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Payment - Get Stripe payout dashboard url",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/payment/dashboard/acct_1IeuXVR0jjPVKtjA",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"payment",
+								"dashboard",
+								"acct_1IeuXVR0jjPVKtjA"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost/payment/dashboard/acct_1IeuXVR0jjPVKtjA",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"payment",
+										"dashboard",
+										"acct_1IeuXVR0jjPVKtjA"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 12 Apr 2021 08:38:33 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "162"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"created\": 1618216741,\n        \"object\": \"login_link\",\n        \"url\": \"https://connect.stripe.com/express/6vxGVKaMW6ee\"\n    },\n    \"status\": \"success\"\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}
