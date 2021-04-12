@@ -24,7 +24,9 @@ At project root folder,
 cd k8s
 kubectl apply -f rabbitmq.yaml
 
--- Create "serviceuser" in RabbitMQ Management Console (serviceuser is used by order and notifications service to publish and retrieve messages on queue)
+-- Create "serviceuser" in RabbitMQ Management Console (serviceuser is used by order and notification service to publish and retrieve messages on queue)
+Credentials retrieved from Kubernetes needs to be decoded to base64. 
+
 [MACOS]
 username="$(kubectl get secret esd-rabbitmq-default-user -o jsonpath='{.data.username}' | base64 --decode)"
 echo "username: $username"
@@ -44,7 +46,7 @@ kubectl port-forward "service/esd-rabbitmq" 15672
 -- Create serviceuser
 1. Access the RabbitMQ at localhost:15672 and login with the username and password from the output generated from `kubectl get secret`
 2. Once login, go to Admin tab. 
-3. Under Add a User, set the username as serviceuser and password as serviceuser. Set the Tab as Admin and select "Add user"
+3. Under Add a User, set the username as serviceuser and password as serviceuser. Set the Tags as Admin and select "Add user"
 4. Once created, click on the created serviceuser.
 5. Set the default permission for Permissions (Virtual Host: /, Configure regexp: .*, Write regexp: .*, Read regexp: .*)
 6. Set the default permission for Topic permissions (Virtual Host: /, Exchange: (AMQP Default), Write regexp: ,*, Read regexp: .*)
@@ -68,8 +70,9 @@ sudo install skaffold /usr/local/bin/
 
 
 ## Deploying microservices to Kubernetes Cluster
-1. Go to the project root folder
-2. Open Terminal or CMD, type in and enter: skaffold run
+1. Open Terminal or CMD
+2. Go to the project root folder
+3. Type in and enter: skaffold run
 
 -- Alternative
 skaffold dev
