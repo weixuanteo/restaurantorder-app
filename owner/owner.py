@@ -16,16 +16,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 CORS(app)
 
-
 db = SQLAlchemy(app)
-# query = """
-#     CREATE SCHEMA
-#     IF NOT EXISTS `{db}`
-# """.format(db="owner")
 
-# engine = db.create_engine('mysql+mysqlconnector://root:root@mariadb:3306',{})
-# engine.execute(query)
-# db.create_engine('mysql+mysqlconnector://root:root@mariadb:3306/owner',{})
 
 class Owner(db.Model):
     __tablename__ = 'owner'
@@ -106,12 +98,10 @@ def add_new_owner():
             }
         ), 409
     
-    # app.logger.info(user.uid, user.display_name, user.email)
     hash_salt = bcrypt.gensalt()
     hash_password = bcrypt.hashpw(owner_password.encode('utf8'), hash_salt)
 
     owner = Owner(owner_name, owner_email, hash_password)
-    # app.logger.info(owner)
 
     try:
         db.session.add(owner)
